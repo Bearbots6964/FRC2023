@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.List;
 
 import org.photonvision.PhotonCamera;
-import org.photonvision.common.*;
-import org.photonvision.common.dataflow.*;
+
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
