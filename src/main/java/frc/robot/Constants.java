@@ -16,4 +16,16 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class VisionConstants {
+    public static final String kCameraName = "limelight";
+    public static final double kCameraHeightMeters = 0.6096;
+    public static final double kTargetHeightMeters = 1.524;
+    public static final double kCameraPitchRadians = 0;
+    
+    
+    // Set the camera type.
+    private static trackingType tape;
+    public static final trackingType kTrackingType = tape;
+  }
 }

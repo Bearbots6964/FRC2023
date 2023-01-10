@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -14,6 +15,16 @@ import org.photonvision.targeting.TargetCorner;
 
 public class Vision extends SubsystemBase {
     private PhotonCamera limelight;
+
+    // Constants such as camera and target height stored. Change per robot and goal!
+
+    final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
+
+    final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
+
+    // Angle between horizontal and the camera.
+
+    final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
     
     public Vision() {
         // Stuff goes here
@@ -30,40 +41,8 @@ public class Vision extends SubsystemBase {
         // This method will be called once per scheduler run during simulation
     }
 
-    public PhotonPipelineResult getPipeline() {
-        var result = limelight.getLatestResult();
-        return result;
+    public PhotonPipelineResult getLatestResult() {
+        return limelight.getLatestResult();
     }
-    public boolean hasTargets() {
-        boolean hasTargets = getPipeline().hasTargets();
-        return hasTargets;
-    }
-    public List<PhotonTrackedTarget> getTargetList() {
-        List<PhotonTrackedTarget> targetList = getPipeline().getTargets();
-        return targetList;
-    }
-    public PhotonTrackedTarget getBestTarget() {
-        PhotonTrackedTarget target = getPipeline().getBestTarget();
-        return target;
-    }
-    public double getBestTargetYaw() {
-        double yaw = getBestTarget().getYaw();
-        return yaw;
-    }
-    public double getBestTargetPitch() {
-        double pitch = getBestTarget().getPitch();
-        return pitch;
-    }
-    public double getBestTargetArea() {
-        double area = getBestTarget().getArea();
-        return area;
-    }
-    public double getBestTargetSkew() {
-        double skew = getBestTarget().getSkew();
-        return skew;
-    }
-    public List<TargetCorner> getBestTargetCorners() {
-        List<TargetCorner> corners = getBestTarget().getCorners();
-        return corners;
-    }
+    
 }
