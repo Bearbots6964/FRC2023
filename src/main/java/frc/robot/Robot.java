@@ -20,9 +20,6 @@ public class Robot extends TimedRobot {
   
   private RobotContainer m_robotContainer;
 
-  // Create a servo on PWM 0 (test)
-  private Servo testServo = new Servo(0);
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -33,7 +30,6 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     // Test values for the servo on startup (This is just a test that should be removed if it actually works)
-    testServo.set(0.5);
   }
 
   /**
