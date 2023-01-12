@@ -31,7 +31,7 @@ public class Vision extends SubsystemBase {
       Preferences.setInt(kLimelightPipelineKey, 1); // Default to tape
     }
   }
-  
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -45,6 +45,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Get the latest pipeline result.
+   *
    * @return The latest pipeline result.
    */
   public PhotonPipelineResult getLatestResult() {
@@ -53,12 +54,13 @@ public class Vision extends SubsystemBase {
 
   /**
    * Change the Limelight pipeline.
+   *
    * @param pipeline The pipeline to change to.
    */
   public void changePipeline(int pipeline) {
     limelight.setPipelineIndex(pipeline); // As of now, 1 is tape, 2 is tag
-    Preferences.setInt(kLimelightPipelineKey, pipeline); // Save the pipeline index to preferences so we know what we're doing
+    Preferences.setInt(
+        kLimelightPipelineKey,
+        pipeline); // Save the pipeline index to preferences so we know what we're doing
   }
-
-  
 }

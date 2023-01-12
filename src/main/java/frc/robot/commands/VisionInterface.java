@@ -4,16 +4,13 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.Constants;
 import frc.robot.subsystems.Vision;
 import frc.robot.trackingType;
-import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
-import org.photonvision.targeting.TargetCorner;
 
 public class VisionInterface extends CommandBase {
   private final Vision m_Vision;
@@ -42,17 +39,18 @@ public class VisionInterface extends CommandBase {
     var result = m_Vision.getLatestResult();
 
     // If the limelight has detected something, call the function in OnTrigger.java
-    if(result.hasTargets() == true) {
-        // The limelight has detected something! If it is an AprilTag, call the function in OnTrigger.java for them.
-        if (Preferences.getInt(Vision.kLimelightPipelineKey, 69) == 2) {
-            // Call the function in OnTrigger.java
-            onTrigger.onTag();
-        } else if (Preferences.getInt(Vision.kLimelightPipelineKey, 69) == 1) {
-            // Call the function in OnTrigger.java
-            onTrigger.onTape();
-        } else {
-            // Nothing has been detected. Carry on.
-        }
+    if (result.hasTargets() == true) {
+      // The limelight has detected something! If it is an AprilTag, call the function in
+      // OnTrigger.java for them.
+      if (Preferences.getInt(Vision.kLimelightPipelineKey, 69) == 2) {
+        // Call the function in OnTrigger.java
+        onTrigger.onTag();
+      } else if (Preferences.getInt(Vision.kLimelightPipelineKey, 69) == 1) {
+        // Call the function in OnTrigger.java
+        onTrigger.onTape();
+      } else {
+        // Nothing has been detected. Carry on.
+      }
     }
   }
 
