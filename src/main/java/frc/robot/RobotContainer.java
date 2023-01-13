@@ -24,8 +24,8 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  
-  private final Joystick m_driverJoystick = new Joystick(1);   
+
+  private final Joystick m_driverJoystick = new Joystick(1);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -48,8 +48,7 @@ public class RobotContainer {
     //     .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Not sure if it works because I don't know how to use simulations
-    new JoystickButton(m_driverJoystick, 1)
-      .whileTrue(m_servoSubsystem.servoTest());
+    new JoystickButton(m_driverJoystick, 1).whileTrue(m_servoSubsystem.servoTest());
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
