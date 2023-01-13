@@ -44,10 +44,10 @@ public class VisionInterface extends CommandBase {
       // OnTrigger.java for them.
       if (Preferences.getInt(Vision.kLimelightPipelineKey, 69) == 2) {
         // Call the function in OnTrigger.java
-        onTrigger.onTag();
+        OnTrigger.OnTag();
       } else if (Preferences.getInt(Vision.kLimelightPipelineKey, 69) == 1) {
         // Call the function in OnTrigger.java
-        onTrigger.onTape();
+        OnTrigger.OnTape();
       } else {
         // Nothing has been detected. Carry on.
       }

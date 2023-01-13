@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.servoSubsystem;
+import frc.robot.subsystems.ServoSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,7 +19,7 @@ import frc.robot.subsystems.servoSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final servoSubsystem m_servoSubsystem = new servoSubsystem();
+  private final ServoSubsystem m_servoSubsystem = new ServoSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
