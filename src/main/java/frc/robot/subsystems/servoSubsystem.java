@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // An actuator subsystem
-public class servoSubsystem extends SubsystemBase {
+public class ServoSubsystem extends SubsystemBase {
   // Create linear actuator on PWM 0.
   private final Servo testServo = new Servo(0);
 

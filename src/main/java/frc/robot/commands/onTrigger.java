@@ -3,7 +3,7 @@ package frc.robot.commands;
 import frc.robot.subsystems.*;
 
 /** A set of commands called when a trigger is called. */
-public class onTrigger {
+public class OnTrigger {
   // On limelight detection of an AprilTag
 
   /**
