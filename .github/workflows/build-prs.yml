@@ -9,26 +9,29 @@ jobs:
     container: wpilib/roborio-cross-ubuntu:2023-22.04
     steps:
       - uses: khan/pull-request-comment-trigger@v1.1.0
+        name: Check for comment
         id: check
         with:
           trigger: '#deploy'
           reaction: rocket
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-      - id: build
-      - uses: actions/checkout@v3
+      
+      - name: Checkout
+        uses: actions/checkout@v3
         if: steps.check.outputs.triggered == 'true'
-      - name: Add repository to git safe directories
-        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+        
+      - name: Build
         if: steps.check.outputs.triggered == 'true'
+        run: |
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+          chmod +x gradlew
+          ./gradlew build
+        
 
-    # Grant execute permission for gradlew
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-        if: steps.check.outputs.triggered == 'true'
+   
+    
+       
 
-    # Runs a single command using the runners shell
-      - name: Compile and run tests on robot code
-        run: ./gradlew build
-        if: steps.check.outputs.triggered == 'true'
+    
       
