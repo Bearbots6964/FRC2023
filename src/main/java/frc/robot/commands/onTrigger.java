@@ -10,14 +10,14 @@ public class OnTrigger {
    * Set of actions to do when a limelight detects an AprilTag. Edit this method to change what
    * happens when a tag is detected.
    */
-  public static void onTag() {
+  public static void OnTag() {
     // A tag has been detected. What should we do?
   }
   /**
    * Set of actions to do when a limelight detects a tape. Edit this method to change what happens
    * when a tape is detected.
    */
-  public static void onTape() {
+  public static void OnTape() {
     // A tape has been detected. What should we do?
   }
 
