@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.Vision;
-import frc.robot.trackingType;
+import frc.robot.TrackingType;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
@@ -14,8 +14,8 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 
 public class VisionInterface extends CommandBase {
   private final Vision m_Vision;
-  private trackingType tape;
-  private trackingType tag;
+  private TrackingType tape;
+  private TrackingType tag;
   /*
    * 1.   Constructor - Might have parameters for this command such as target positions of devices. Should also set the name of the command for debugging purposes.
    *  This will be used if the status is viewed in the dashboard. And the command should require (reserve) any devices is might use.
