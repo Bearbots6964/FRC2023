@@ -122,6 +122,10 @@ public class VisionInterface extends CommandBase {
   }
   */
 
+  /**
+   * Returns the latest result from the PhotonVision pipeline.
+   * @return The latest result from the PhotonVision pipeline.
+   */
   public PhotonPipelineResult result() {
     return m_Vision.getLatestResult();
   }
