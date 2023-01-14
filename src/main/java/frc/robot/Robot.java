@@ -28,6 +28,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    // Test values for the servo on startup (This is just a test that should be removed if it
+    // actually works)
   }
 
   /**
