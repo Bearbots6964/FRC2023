@@ -58,11 +58,14 @@ public class Move extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        m_drivebase.arcadeDrive(m_x, m_y);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        // Set everything to 0.
+        m_drivebase.arcadeDrive(0, 0);
     }
 
     // Returns true when the command should end.
