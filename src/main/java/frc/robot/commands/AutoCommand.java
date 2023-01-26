@@ -5,17 +5,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.RobotDrive;
+import frc.robot.subsystems.MechanumDrive;
+import edu.wpi.first.wpilibj.Timer;
 
 
 public class AutoCommand extends CommandBase {
   /** Example static factory for an autonomous command. */
-  private final RobotDrive drive_subsystem;
+  private final MechanumDrive driveSubsystem;
   private double speed;
+  private Timer timer = new Timer();
 
-  public AutoCommand(RobotDrive drive, double m_speed) {
-    drive_subsystem = drive;
+  public AutoCommand(MechanumDrive drive, double m_speed) {
+    driveSubsystem = drive;
     speed = m_speed;
-    //throw new UnsupportedOperationException("This is a utility class!");
+  }
+
+  @Override
+  public void initialize() {
+    timer.start();
+    driveSubsystem.preparePID();
+    if(driveSubsystem.count >= 3){
+        driveSubsystem.startPID();
+    }
+  }
+
+  @Override
+  public void execute() {
+    driveSubsystem.PIDDrive();  
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+  }
+
+  @Override
+  public boolean isFinished() {
+    return timer.get() > 15;
   }
 }

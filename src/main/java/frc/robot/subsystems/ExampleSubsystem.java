@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ExampleSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
+
   public ExampleSubsystem() {}
 
   /**
@@ -16,14 +17,7 @@ public class ExampleSubsystem extends SubsystemBase {
    *
    * @return a command
    */
-  public CommandBase exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
-  }
+ 
 
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
@@ -37,7 +31,7 @@ public class ExampleSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // This method will be called once per schedule
   }
 
   @Override

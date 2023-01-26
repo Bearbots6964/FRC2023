@@ -4,33 +4,24 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.MechanumDrive;
+import frc.robot.subsystems.testing;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-
-/** An example command that uses an example subsystem. */
-public class ChargeUpBalanceCommand extends CommandBase {
+public class ServoCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final MechanumDrive m_subsystem;
-  boolean isFinished = false;
-  boolean inErrorZone = false;
-  int count;
+  private final testing m_subsystem;
 
-  public ChargeUpBalanceCommand(MechanumDrive subsystem) {
+  public ServoCommand(testing subsystem) {
     m_subsystem = subsystem;
     addRequirements(subsystem);
   }
 
   @Override
-  public void initialize() {
-    if(m_subsystem.count >= 3){
-        m_subsystem.startPID();
-    }
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
-    m_subsystem.PIDDrive();  
+    m_subsystem.retractServo();
   }
 
   @Override

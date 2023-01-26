@@ -6,12 +6,18 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.*;
+import frc.robot.commands.ServoCommand;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import frc.robot.subsystems.*;
+
+
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.SPI;
@@ -32,30 +38,32 @@ public class RobotContainer {
   //RR 1/11/2022
   public static final XboxController m_driverController = new XboxController(3);
   public static final XboxController m_driverController2 = new XboxController(1);//change
-  public static final PS4Controller m_controller = new PS4Controller(3);
+  public static final Joystick m_joystick1 = new Joystick(2);  
 
   //INSTANTIATES ALL SUBSYSTEMS
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final RobotDrive m_RobotDrive = new RobotDrive();
+  private final MechanumDrive m_MechanumDrive = new MechanumDrive();
+  private final testing m_Testing = new testing();
 
   //INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_RobotDrive,.5);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_MechanumDrive,.5);
+  private final ServoCommand m_ServoCommand = new ServoCommand(m_Testing);
+  private final testLeftFront m_TestLeftFront = new testLeftFront(m_MechanumDrive);
 
 
 
-  private static AHRS m_gyro = new AHRS(SPI.Port.kMXP); //HC - 01/13/22
+
 
 
   public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-    //(ShootingRotate.m_AngleRotateEncoder).setPosition(0);
-    (RobotDrive.m_RLencoder).setPosition(0);
-    (RobotDrive.m_RRencoder).setPosition(0);
-    (RobotDrive.m_FLencoder).setPosition(0);
-    (RobotDrive.m_FRencoder).setPosition(0);
-    m_gyro.calibrate();
+    //Configure the button bindings
+    configureButtonBindings();    
+    // (RobotDrive.m_RLencoder).setPosition(0);
+    // (RobotDrive.m_RRencoder).setPosition(0);
+    // (RobotDrive.m_FLencoder).setPosition(0);
+    // (RobotDrive.m_FRencoder).setPosition(0);
+    // m_gyro.calibrate();
   }
 
 
@@ -84,7 +92,6 @@ public class RobotContainer {
     {
       axis=0;
     }
-    SmartDashboard.putNumber("Right Stick, X axis", axis);
     return axis;
   }
   
@@ -94,8 +101,37 @@ public class RobotContainer {
     {
       axis=0;
     }
-    SmartDashboard.putNumber("Right Stick, Y axis", axis);
     return axis;
+  }
+
+  public static double getJoystickXAxis(){
+    double axis = m_joystick1.getRawAxis(0);
+    if(Math.abs(axis) < 0.02){
+      axis = 0;
+    }
+    return axis*(getMaxSpeed());
+  }
+
+  public static double getJoystickYAxis(){
+    double axis = m_joystick1.getRawAxis(1);
+    if(Math.abs(axis) < 0.02){
+      axis = 0;
+    }
+    return axis*(getMaxSpeed());
+  }
+
+  //z-axis is twist
+  public static double getJoystickZAxis(){
+    double axis = m_joystick1.getRawAxis(2);
+    if(Math.abs(axis) < 0.2){
+      axis = 0;
+    }
+    return axis*(getMaxSpeed());
+  }
+
+  public static double getMaxSpeed()
+  {
+    return (m_joystick1.getRawAxis(3)+1)/2;
   }
 
 
@@ -106,7 +142,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //new JoystickButton(m_driverController, XboxController.Button.kB.value).whileHeld();
+    new JoystickButton(m_driverController, XboxController.Button.kB.value).whileHeld(m_TestLeftFront);
     //new JoystickButton(m_driverController, XboxController.Button.kX.value).whileHeld();
     //new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value).whileHeld();
     //new JoystickButton(m_driverController, XboxController.Button.kY.value).whileHeld();

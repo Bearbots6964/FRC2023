@@ -18,9 +18,16 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.util.function.FloatSupplier;
+import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -45,7 +52,7 @@ public class MechanumDrive extends SubsystemBase {
     public static RelativeEncoder m_RRencoder;
     public static RelativeEncoder m_FRencoder;
 
-    public AHRS gyro;
+    public static AHRS gyro;
     private Timer timer;
     private static double kP, kI, kD, P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;
     public double tolerance, error; 
@@ -63,12 +70,16 @@ public class MechanumDrive extends SubsystemBase {
 
 @Override
 public void periodic() {
-    mecanumDrive.driveCartesian(RobotContainer.getLeftStickY(), RobotContainer.getLeftStickX(), RobotContainer.getRightStickX());
+  mecanumDrive.driveCartesian(RobotContainer.getJoystickYAxis(), -RobotContainer.getJoystickXAxis(), -RobotContainer.getJoystickZAxis());
+  SmartDashboard.putNumber("pitch angle", gyro.getPitch());
+  SmartDashboard.putNumber("x axis", RobotContainer.getJoystickXAxis());
+  SmartDashboard.putNumber("y axis", RobotContainer.getJoystickYAxis());
+  SmartDashboard.putNumber("z axis", RobotContainer.getJoystickZAxis());
 }    
 
 public MechanumDrive() {
-leftFront = new CANSparkMax(1, MotorType.kBrushless);
-leftFront.restoreFactoryDefaults();  
+leftFront = new CANSparkMax(5, MotorType.kBrushless);
+leftFront.restoreFactoryDefaults() ;  
 leftFront.setInverted(true);
 leftFront.setIdleMode(IdleMode.kCoast);
 leftFront.burnFlash();
@@ -99,6 +110,19 @@ addChild("Mecanum Drive",mecanumDrive);
 mecanumDrive.setSafetyEnabled(true);
 mecanumDrive.setExpiration(0.1);
 mecanumDrive.setMaxOutput(1.0);
+
+timer = new Timer();
+automate = false;
+kP = 0.18;
+kI = 0.025;
+kD = 0.3; 
+tolerance = 0.5; 
+iLimit = 2.0;
+gyro = new AHRS(SPI.Port.kMXP);
+}
+
+public void runLeftFront(){
+  leftFront.set(0.5);
 }
 
 public void preparePID(){
@@ -160,4 +184,11 @@ public void preparePID(){
 public void simulationPeriodic() {
     // This method will be called once per scheduler run when in simulation
 }
+
+// // Sendable class
+// @Override
+// public void initSendable(SendableBuilder builder) {
+//   builder.setSmartDashboardType("Gyro");
+//   builder.addFloatProperty("Pitch Angle", null, null);
+// }
 }
