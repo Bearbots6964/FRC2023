@@ -4,17 +4,14 @@
 
 package frc.robot.commands;
 
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Claw;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.RotatingArm;
 
-
-public class RotateArmCommand extends CommandBase {
+public class OpenClawCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final RotatingArm m_subsystem;
+  private final Claw m_subsystem;
 
-  public RotateArmCommand(RotatingArm subsystem) {
+  public OpenClawCommand(Claw subsystem) {
     m_subsystem = subsystem;
     addRequirements(subsystem);
   }
@@ -24,7 +21,7 @@ public class RotateArmCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_subsystem.rotateArm(RobotContainer.getLeftStickX());
+    m_subsystem.openClaw();
   }
 
   @Override

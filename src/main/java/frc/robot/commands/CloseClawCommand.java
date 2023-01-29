@@ -4,14 +4,14 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.testing;
+import frc.robot.subsystems.Claw;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ServoCommand extends CommandBase {
+public class CloseClawCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final testing m_subsystem;
+  private final Claw m_subsystem;
 
-  public ServoCommand(testing subsystem) {
+  public CloseClawCommand(Claw subsystem) {
     m_subsystem = subsystem;
     addRequirements(subsystem);
   }
@@ -21,7 +21,7 @@ public class ServoCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_subsystem.retractServo();
+    m_subsystem.closeClaw();
   }
 
   @Override

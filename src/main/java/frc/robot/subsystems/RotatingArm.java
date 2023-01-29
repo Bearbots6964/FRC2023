@@ -30,6 +30,8 @@ public class RotatingArm extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("left stick x", RobotContainer.getLeftStickX());
     SmartDashboard.putNumber("left stick y", RobotContainer.getLeftStickY());
+    rotateArm(RobotContainer.getLeftStickX());
+    liftArm(RobotContainer.getLeftStickY());
   }
 
   public void rotateArm(double leftStickXaxis){
