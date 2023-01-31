@@ -1,5 +1,13 @@
 package frc.robot.subsystems;
 
+
+
+import frc.robot.Constants;
+
+
+
+
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -79,7 +87,16 @@ public class Drivebase extends SubsystemBase {
 
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+
+  /**
+   * Drives the robot using arcade drive.
+   *
+   * @param speed The forward/backward speed.
+   * @param rotation The rotation speed.
+   */
   public void arcadeDrive(double speed, double rotation) {
+    left.setInverted(Constants.Drivebase.Left.IsInverted);
+    right.setInverted(Constants.Drivebase.Right.IsInverted);
     drive.arcadeDrive(speed, rotation);
   }
 }

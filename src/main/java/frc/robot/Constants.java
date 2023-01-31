@@ -24,4 +24,15 @@ public class Constants {
    * static final int kLeftMotor2Port = 1; public static final int kRightMotor1Port = 2; public
    * static final int kRightMotor2Port = 3; }
    */
+  public class Drivebase {
+    public static final double MaxSpeed = 0.5; // Maximum speed, from 0 to 1.
+
+    public class Left {
+      public static final boolean IsInverted = true;
+    }
+
+    public class Right {
+      public static final boolean IsInverted = false;
+    }
+  }
 }
