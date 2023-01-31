@@ -25,7 +25,9 @@ public class OpenClawCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_subsystem.stopClaw();
+  }
 
   @Override
   public boolean isFinished() {

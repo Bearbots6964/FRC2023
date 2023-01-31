@@ -29,6 +29,10 @@ public class Claw extends SubsystemBase {
     clawMotor.set(-0.2);
   }
 
+  public void stopClaw() {
+    clawMotor.set(0);
+  }
+
   public void simulationPeriodic() {
   }
 }
