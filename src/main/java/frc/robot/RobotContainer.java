@@ -13,6 +13,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 import frc.robot.subsystems.*;
 
@@ -35,20 +36,19 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //RR 1/11/2022
-  public static final XboxController m_driverController = new XboxController(1);
+  public static final XboxController m_driverController = new XboxController(0);
   //public static final XboxController m_driverController2 = new XboxController(1);//change
-  public static final Joystick m_joystick1 = new Joystick(2);  
+  public static final Joystick m_joystick1 = new Joystick(1);  
 
   //INSTANTIATES ALL SUBSYSTEMS
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final MechanumDrive m_MechanumDrive = new MechanumDrive();
+  private final Mecanum m_MechanumDrive = new Mecanum();
   private final RotatingArm m_rotatingArm = new RotatingArm();
   private final Claw m_claw = new Claw();
-
+  private final PIDmecanum m_PIDmecanum = new PIDmecanum();
   //INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_MechanumDrive,.5);
-  private final testLeftFront m_TestLeftFront = new testLeftFront(m_MechanumDrive);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_MechanumDrive, m_PIDmecanum, .5);
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
 
@@ -110,7 +110,7 @@ public class RobotContainer {
     if(Math.abs(axis) < 0.02){
       axis = 0;
     }
-    return axis*(getMaxSpeed());
+    return axis;
   }
 
   public static double getJoystickYAxis(){
@@ -118,7 +118,7 @@ public class RobotContainer {
     if(Math.abs(axis) < 0.02){
       axis = 0;
     }
-    return axis*(getMaxSpeed());
+    return axis;
   }
 
   //z-axis is twist
@@ -127,14 +127,13 @@ public class RobotContainer {
     if(Math.abs(axis) < 0.2){
       axis = 0;
     }
-    return axis*(getMaxSpeed());
+    return axis;
   }
 
   public static double getMaxSpeed()
   {
     return (m_joystick1.getRawAxis(3)+1)/2;
   }
-
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by

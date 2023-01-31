@@ -5,33 +5,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.MechanumDrive;
+import frc.robot.subsystems.Mecanum;
+import frc.robot.subsystems.PIDmecanum;
 import edu.wpi.first.wpilibj.Timer;
 
 
 public class AutoCommand extends CommandBase {
   /** Example static factory for an autonomous command. */
-  private final MechanumDrive driveSubsystem;
+  private final Mecanum driveSubsystem1;
+  private final PIDmecanum driveSubsystem2;
   private double speed;
   private Timer timer = new Timer();
 
-  public AutoCommand(MechanumDrive drive, double m_speed) {
-    driveSubsystem = drive;
+  public AutoCommand(Mecanum drive1, PIDmecanum drive2, double m_speed) {
+    driveSubsystem1 = drive1;
+    driveSubsystem2 = drive2;
     speed = m_speed;
   }
 
   @Override
   public void initialize() {
     timer.start();
-    driveSubsystem.preparePID();
-    if(driveSubsystem.count >= 3){
-        driveSubsystem.startPID();
+    driveSubsystem2.preparePID();
+    if(driveSubsystem2.count >= 3){
+        driveSubsystem2.startPID();
     }
   }
 
   @Override
   public void execute() {
-    driveSubsystem.PIDDrive();  
+    driveSubsystem2.PIDDrive();  
   }
 
   @Override
