@@ -55,13 +55,10 @@ public class Move extends CommandBase {
   @Override
   public void execute() {
     m_drivebase.arcadeDrive(
-        RobotContainer.getInstance().getController().getLeftY(),
-        RobotContainer.getInstance().getController().getLeftX());
-    double leftAvg =
-        (float)
-                (m_drivebase.lFront.getEncoder().getVelocity()
-                    + m_drivebase.lRear.getEncoder().getVelocity())
-            / 2;
+      RobotContainer.getInstance().getController().getLeftY() / Constants.Drivebase.MaxSpeed,
+      RobotContainer.getInstance().getController().getLeftX() / Constants.Drivebase.MaxSpeed
+    );
+    
   }
 
   // Called once the command ends or is interrupted.
