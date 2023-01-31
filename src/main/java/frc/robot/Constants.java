@@ -26,11 +26,11 @@ public class Constants {
    */
   public class Drivebase {
     public static final double MaxSpeed = 0.5; // Maximum speed, from 0 to 1.
-    
+
     public class Left {
       public static final boolean IsInverted = true;
-
     }
+
     public class Right {
       public static final boolean IsInverted = false;
     }

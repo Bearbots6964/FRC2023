@@ -82,7 +82,6 @@ public class Drivebase extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  
   /**
    * Drives the robot using arcade drive.
    *
@@ -90,8 +89,8 @@ public class Drivebase extends SubsystemBase {
    * @param rotation The rotation speed.
    */
   public void arcadeDrive(double speed, double rotation) {
-      left.setInverted(Constants.Drivebase.Left.IsInverted);
-      right.setInverted(Constants.Drivebase.Right.IsInverted);
-      drive.arcadeDrive(speed, rotation);
+    left.setInverted(Constants.Drivebase.Left.IsInverted);
+    right.setInverted(Constants.Drivebase.Right.IsInverted);
+    drive.arcadeDrive(speed, rotation);
   }
 }
