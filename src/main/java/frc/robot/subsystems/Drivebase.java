@@ -9,8 +9,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
-
-
 /** */
 public class Drivebase extends SubsystemBase {
 
@@ -21,7 +19,6 @@ public class Drivebase extends SubsystemBase {
   private CANSparkMax rRear;
   private MotorControllerGroup right;
   private DifferentialDrive drive;
-
 
   /** */
   public Drivebase() {
