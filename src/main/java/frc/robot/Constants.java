@@ -28,19 +28,20 @@ public class Constants {
     public class Right {
       public static final boolean IsInverted = false;
 
-  public  class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-  }
+      public class OperatorConstants {
+        public static final int kDriverControllerPort = 0;
+      }
 
-  public  class VisionConstants {
-    public static final String kCameraName = "limelight";
-    public static final double kCameraHeightMeters = 0.6096;
-    public static final double kTargetHeightMeters = 1.524;
-    public static final double kCameraPitchRadians = 0;
+      public class VisionConstants {
+        public static final String kCameraName = "limelight";
+        public static final double kCameraHeightMeters = 0.6096;
+        public static final double kTargetHeightMeters = 1.524;
+        public static final double kCameraPitchRadians = 0;
 
-    // Set the camera type.
-    //private static final TrackingType tape;
-    //public static final TrackingType kTrackingType = tape;
+        // Set the camera type.
+        // private static final TrackingType tape;
+        // public static final TrackingType kTrackingType = tape;
+      }
+    }
   }
 }
-  }}
