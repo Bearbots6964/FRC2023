@@ -24,7 +24,6 @@ public final class Constants {
     public static final double kCameraPitchRadians = 0;
 
     // Set the camera type.
-    private static TrackingType tape;
-    public static final TrackingType kTrackingType = tape;
+
   }
 }
