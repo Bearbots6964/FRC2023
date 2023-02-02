@@ -5,11 +5,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.ServoSubsystem;
+import frc.robot.subsystems.Vision;
+
+// PUT IMPORTS BELOW THIS LINE
+
+// PUT IMPORTS ABOVE THIS LINE
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,14 +23,18 @@ import frc.robot.subsystems.ServoSubsystem;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer { 
-  // The robot's subsystems and commands are defined here...
-  private final ServoSubsystem m_servoSubsystem = new ServoSubsystem();
+  // PUT SUBSYSTEMS BELOW THIS LINE
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
+  // PUT SUBSYSTEMS ABOVE THIS LINE
+  
+
+  // PUT CONTROL SYSTEMS BELOW THIS LINE
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   private final Joystick m_driverJoystick = new Joystick(1);
+
+  // PUT CONTROL SYSTEMS ABOVE THIS LINE
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -43,16 +52,12 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // new Trigger(m_exampleSubsystem::exampleCondition)
-    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
+    // PUT BUTTON BINDINGS BELOW THIS LINE
 
-    // Not sure if it works because I don't know how to use simulations
-    new JoystickButton(m_driverJoystick, 1).whileTrue(m_servoSubsystem.servoTest());
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+   
+
+    // PUT BUTTON BINDINGS ABOVE THIS LINE
   }
 
   /**
@@ -60,8 +65,10 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  // An example command will be run in autonomous
-  // return Autos.exampleAuto(m_exampleSubsystem);
-  // }
+  public Command getAutonomousCommand() {
+    return null;
+    // PUT AUTONOMOUS COMMAND BELOW THIS LINE
+
+    // PUT AUTONOMOUS COMMAND ABOVE THIS LINE
+ }
 }
