@@ -26,7 +26,7 @@
     },
   ],
   "java.test.defaultConfig": "WPIlibUnitTests",
-  "asana.apiToken": "1/1203667757511647:397c3a12c5c77b1fb7a976edefb4cc8e",
+  
   "asana.workspaceId": "1200299095462682",
   "asana.selectedProjects": [
     "1203667746374557",
