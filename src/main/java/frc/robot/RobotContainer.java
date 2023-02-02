@@ -7,10 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.Vision;
 
 // PUT IMPORTS BELOW THIS LINE
 
@@ -22,11 +20,10 @@ import frc.robot.subsystems.Vision;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
-public class RobotContainer { 
+public class RobotContainer {
   // PUT SUBSYSTEMS BELOW THIS LINE
 
   // PUT SUBSYSTEMS ABOVE THIS LINE
-  
 
   // PUT CONTROL SYSTEMS BELOW THIS LINE
   private final CommandXboxController m_driverController =
@@ -54,9 +51,6 @@ public class RobotContainer {
   private void configureBindings() {
     // PUT BUTTON BINDINGS BELOW THIS LINE
 
-
-   
-
     // PUT BUTTON BINDINGS ABOVE THIS LINE
   }
 
@@ -70,5 +64,5 @@ public class RobotContainer {
     // PUT AUTONOMOUS COMMAND BELOW THIS LINE
 
     // PUT AUTONOMOUS COMMAND ABOVE THIS LINE
- }
+  }
 }

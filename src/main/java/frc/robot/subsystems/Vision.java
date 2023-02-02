@@ -4,9 +4,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import java.util.List;
-
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
@@ -17,9 +15,11 @@ public class Vision extends SubsystemBase {
   // ~-~-~-~-~-~-CONFIGURATION-~-~-~-~-~-~-~-
   // Constants such as camera and target height stored. Change per robot and goal!
 
-  final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24); // Height of the camera above the ground
+  final double CAMERA_HEIGHT_METERS =
+      Units.inchesToMeters(24); // Height of the camera above the ground
 
-  final double TARGET_HEIGHT_METERS = Units.feetToMeters(5); // Height of the target above the ground
+  final double TARGET_HEIGHT_METERS =
+      Units.feetToMeters(5); // Height of the target above the ground
 
   // Angle between horizontal and the camera.
 
@@ -30,7 +30,9 @@ public class Vision extends SubsystemBase {
 
   public Vision() {
     // Stuff goes here
-    limelight = new PhotonCamera("limelight"); // Create a PhotonCamera object. Name must match PhotonVision config
+    limelight =
+        new PhotonCamera(
+            "limelight"); // Create a PhotonCamera object. Name must match PhotonVision config
 
     // Set default pipeline
     if (!Preferences.containsKey(kLimelightPipelineKey)) {
@@ -72,6 +74,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Check for the existence of targets.
+   *
    * @return Whether or not there are targets.
    */
   public boolean hasTargets(PhotonPipelineResult result) {
@@ -80,6 +83,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Get the list of targets.
+   *
    * @param result The pipeline result.
    * @return The list of targets.
    */
@@ -89,6 +93,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Get the best target.
+   *
    * @param result The pipeline result.
    * @return The best target.
    */
@@ -98,6 +103,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Get the yaw of a target.
+   *
    * @param result The pipeline result.
    * @return The yaw of the target.
    */
@@ -107,6 +113,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Get the pitch of a target.
+   *
    * @param result The pipeline result.
    * @return The pitch of the target.
    */
@@ -116,6 +123,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Get the area of a target.
+   *
    * @param result The pipeline result.
    * @return The area of the target.
    */
@@ -125,6 +133,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Get the skew of a target. Only works for tape.
+   *
    * @param result The pipeline result.
    * @return The skew of the target.
    */
@@ -134,6 +143,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Get the ID of a target. Only works for tags.
+   *
    * @param result The pipeline result.
    * @return The ID of the target.
    */
@@ -143,6 +153,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Get the pose ambiguity of a target. Only works for tags.
+   *
    * @param result The pipeline result.
    * @return The pose ambiguity of the target.
    */
@@ -152,6 +163,7 @@ public class Vision extends SubsystemBase {
 
   /**
    * Return a list of the 4 corners in image space (origin top left, x right, y down) of the target.
+   *
    * @param result The pipeline result.
    * @return The list of corners.
    */
@@ -165,22 +177,19 @@ public class Vision extends SubsystemBase {
    *
    * <p>For fiducials, the order is known and is always counter-clock wise around the tag, like so
    *
-   * <p>spotless:off
-   * -> +X  3 ----- 2
-   * |      |       |
-   * V      |       |
-   * +Y     0 ----- 1
-   * spotless:on
+   * <p>spotless:off -> +X 3 ----- 2 | | | V | | +Y 0 ----- 1 spotless:on
+   *
    * @param result The pipeline result.
    * @return The list of detected corners.
    */
   public List<TargetCorner> getDetectedCorners(PhotonTrackedTarget result) {
     return result.getDetectedCorners();
   }
-  
+
   /**
    * Get the transform that maps camera space (X = forward, Y = left, Z = up) to object/fiducial tag
    * space (X forward, Y left, Z up) with the lowest reprojection error
+   *
    * @param result The pipeline result.
    * @return The transform3d object of the best guess.
    */
@@ -188,7 +197,7 @@ public class Vision extends SubsystemBase {
     return result.getBestCameraToTarget();
   }
 
-    /**
+  /**
    * Get the transform that maps camera space (X = forward, Y = left, Z = up) to object/fiducial tag
    * space (X forward, Y left, Z up) with the highest reprojection error
    */
