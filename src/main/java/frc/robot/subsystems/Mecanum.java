@@ -91,8 +91,8 @@ public class Mecanum extends SubsystemBase {
     mecanumDrive.driveCartesian(
         RobotContainer.getJoystickYAxis() * RobotContainer.getMaxSpeed(),
         -RobotContainer.getJoystickXAxis() * RobotContainer.getMaxSpeed(),
-        -RobotContainer.getJoystickZAxis() * RobotContainer.getMaxSpeed(),
-        this.getYawAngle());
+        -RobotContainer.getJoystickZAxis() * RobotContainer.getMaxSpeed()
+        );
     SmartDashboard.putNumber("x axis", RobotContainer.getJoystickXAxis());
     SmartDashboard.putNumber("y axis", RobotContainer.getJoystickYAxis());
     SmartDashboard.putNumber("z axis", RobotContainer.getJoystickZAxis());
