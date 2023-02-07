@@ -43,8 +43,7 @@ public class PIDmecanum extends SubsystemBase {
 
   public void preparePID(){
     if(!(error < limitError)){
-      Mecanum.m_left.set(0.2);
-      Mecanum.m_right.set(0.2);
+      Mecanum.allMotors.set(0.2);
       }
   }
 
@@ -80,12 +79,10 @@ public class PIDmecanum extends SubsystemBase {
 
   public void PIDDrive(){
     if(error > tolerance){
-      Mecanum.m_left.set(PIDmecanum.PID());
-      Mecanum.m_right.set(PIDmecanum.PID());
+      Mecanum.allMotors.set(PIDmecanum.PID());
     }
     else{
-      Mecanum.m_left.set(0);
-      Mecanum.m_right.set(0);
+      Mecanum.allMotors.set(0);
     }
   }
 

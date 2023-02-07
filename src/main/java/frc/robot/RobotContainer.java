@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.ServoSubsystem;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -40,11 +38,11 @@ import edu.wpi.first.wpilibj.DigitalInput;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
   // The robot's subsystems and commands are defined here...
   //RR 1/11/2022
-  public static final XboxController m_driverController = new XboxController(0);
-  //public static final XboxController m_driverController2 = new XboxController(1);//change
-  public static final Joystick m_joystick1 = new Joystick(1);  
+  public static final XboxController m_driverController = new XboxController(1);
+  public static final Joystick m_joystick1 = new Joystick(2);  
 
   //INSTANTIATES ALL SUBSYSTEMS
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -57,8 +55,8 @@ public class RobotContainer {
   private final AutoCommand m_AutoCommand = new AutoCommand(m_MechanumDrive, m_PIDmecanum, .5);
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
+  private final ChargeUpBalanceCommand m_ChargeUpBalanceCommand = new ChargeUpBalanceCommand(m_PIDmecanum);
 
-  private final Joystick m_driverJoystick = new Joystick(1);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -140,40 +138,17 @@ public class RobotContainer {
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // new Trigger(m_exampleSubsystem::exampleCondition)
-    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Not sure if it works because I don't know how to use simulations
-    new JoystickButton(m_driverJoystick, 1).whileTrue(m_servoSubsystem.servoTest());
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-  }
-
-  /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  // An example command will be run in autonomous
-  // return Autos.exampleAuto(m_exampleSubsystem);
-  // }
   private void configureButtonBindings() {
     //new JoystickButton(m_driverController, XboxController.Button.kB.value).whileHeld(m_TestLeftFront);
     //new JoystickButton(m_driverController, XboxController.Button.kX.value).whileHeld();
     //new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value).whileHeld();
-    new JoystickButton(m_driverController, XboxController.Button.kY.value).whileHeld(m_CloseClawCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kA.value).whileHeld(m_OpenClawCommand);
-    //new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value).whileHeld();
+    new JoystickButton(m_driverController, XboxController.Button.kY.value).whileHeld(m_ChargeUpBalanceCommand);
+    //new JoystickButton(m_driverController, XboxController.Button.kA.value).whileHeld(m_OpenClawCommand);
+    //new JoystickButton(m_joystick1, Joystick.Button.kLeftBumper.value).whileHeld(m_ChargeUpBalanceCommand);
 
     //new JoystickButton(m_driverController2, XboxController.Button.kA.value).whileHeld();
     //new JoystickButton(m_driverController2, XboxController.Button.kY.value).whileHeld();

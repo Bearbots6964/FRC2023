@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax;
@@ -28,7 +29,6 @@ public class Claw extends SubsystemBase {
   public void openClaw() {
     clawMotor.set(-0.2);
   }
-
   public void stopClaw() {
     clawMotor.set(0);
   }
