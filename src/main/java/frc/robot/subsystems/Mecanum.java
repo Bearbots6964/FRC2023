@@ -57,27 +57,6 @@ leftRear.setInverted(true);
 leftRear.setIdleMode(IdleMode.kCoast);
 leftRear.burnFlash();
 
-  public Mecanum() {
-    leftFront = new CANSparkMax(CANConstants.kLeftFrontMotorPort, MotorType.kBrushless);
-    leftFront.restoreFactoryDefaults();
-    leftFront.setInverted(true);
-    leftFront.setIdleMode(IdleMode.kCoast);
-    leftFront.burnFlash();
-
-    leftRear = new CANSparkMax(CANConstants.kLeftRearMotorPort, MotorType.kBrushless);
-    leftRear.restoreFactoryDefaults();
-    leftRear.setInverted(true);
-    leftRear.setIdleMode(IdleMode.kCoast);
-    leftRear.burnFlash();
-
-    m_left = new MotorControllerGroup(leftFront, leftRear);
-
-    rightFront = new CANSparkMax(3, MotorType.kBrushless);
-    rightFront.restoreFactoryDefaults();
-    rightFront.setInverted(false);
-    rightFront.setIdleMode(IdleMode.kCoast);
-    rightFront.burnFlash();
-
 rightRear = new CANSparkMax(4, MotorType.kBrushless);
 rightRear.restoreFactoryDefaults();  
 rightRear.setInverted(false);
