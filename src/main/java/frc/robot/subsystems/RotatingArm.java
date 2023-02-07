@@ -4,31 +4,24 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
-
-import java.time.YearMonth;
-
 import com.revrobotics.*;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
-
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
 public class RotatingArm extends SubsystemBase {
-    private CANSparkMax xMotor;
-    private CANSparkMax yMotor;
+  private CANSparkMax xMotor;
+  private CANSparkMax yMotor;
 
-    public static RelativeEncoder xEncoder;
-    public static RelativeEncoder yEncoder;
+  public static RelativeEncoder xEncoder;
+  public static RelativeEncoder yEncoder;
 
-    public static DigitalInput zeroDegreesLS = new DigitalInput(1);
+  public static DigitalInput zeroDegreesLS = new DigitalInput(1);
 
-    public double desiredArmAngle, currentArmAngle;
+  public double desiredArmAngle, currentArmAngle;
 
   public RotatingArm() {
     xMotor = new CANSparkMax(6, MotorType.kBrushless);
@@ -43,39 +36,40 @@ public class RotatingArm extends SubsystemBase {
     liftArm(RobotContainer.getLeftStickY());
   }
 
-  public void rotateArm(double leftStickXaxis){
+  public void rotateArm(double leftStickXaxis) {
     double speed = 0.4;
-    double motorDrive = leftStickXaxis*speed;
+    double motorDrive = leftStickXaxis * speed;
     xMotor.set(motorDrive);
   }
 
-  public void liftArm(double leftStickYaxis){
+  public void liftArm(double leftStickYaxis) {
     double speed = 0.4;
-    double motorDrive = leftStickYaxis*speed;
+    double motorDrive = leftStickYaxis * speed;
     yMotor.set(motorDrive);
   }
 
-  public void moveArmToZeroDeg(){
+  public void moveArmToZeroDeg() {
     double speedY = 0.2;
-    while(zeroDegreesLS.get() == true){
-      yMotor.set(-1*speedY);
+    while (zeroDegreesLS.get() == true) {
+      yMotor.set(-1 * speedY);
     }
     yMotor.set(0);
     yEncoder.setPosition(0);
     currentArmAngle = 0;
   }
 
-  public double degreesToRotations(double difference){
-    //0.42 degrees/spin of the motor
-    return difference/0.42;
+  public double degreesToRotations(double difference) {
+    // 0.42 degrees/spin of the motor
+    return difference / 0.42;
   }
 
-  //the diseredArmAngle is currently not set to anything because since we don't know the length of the amr, we can't calculate the angle it should be 
-  public void moveArmToNode(int level){
+  // the diseredArmAngle is currently not set to anything because since we don't know the length of
+  // the amr, we can't calculate the angle it should be
+  public void moveArmToNode(int level) {
     double speedY = 0.15;
     double difference = desiredArmAngle - currentArmAngle;
     yEncoder.setPosition(0);
-    while(Math.abs(yEncoder.getPosition()) < degreesToRotations(difference)){
+    while (Math.abs(yEncoder.getPosition()) < degreesToRotations(difference)) {
       yMotor.set(-speedY);
     }
   }

@@ -13,13 +13,12 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.*;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
@@ -57,11 +56,11 @@ leftRear.setInverted(true);
 leftRear.setIdleMode(IdleMode.kCoast);
 leftRear.burnFlash();
 
-rightFront = new CANSparkMax(3, MotorType.kBrushless);
-rightFront.restoreFactoryDefaults();  
-rightFront.setInverted(false);
-rightFront.setIdleMode(IdleMode.kCoast);
-rightFront.burnFlash();
+    rightFront = new CANSparkMax(3, MotorType.kBrushless);
+    rightFront.restoreFactoryDefaults();
+    rightFront.setInverted(false);
+    rightFront.setIdleMode(IdleMode.kCoast);
+    rightFront.burnFlash();
 
 rightRear = new CANSparkMax(4, MotorType.kBrushless);
 rightRear.restoreFactoryDefaults();  
@@ -160,7 +159,6 @@ public Rotation2d getYawAngle(){
   return Rotation2d.fromDegrees(PIDmecanum.gyro.getAngle());
 }
 
-@Override
-public void simulationPeriodic() {
-}
+  @Override
+  public void simulationPeriodic() {}
 }

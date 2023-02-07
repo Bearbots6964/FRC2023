@@ -4,15 +4,14 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Mecanum;
-import frc.robot.subsystems.PIDmecanum;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import frc.robot.subsystems.PIDmecanum;
 
 /** An example command that uses an example subsystem. */
 public class ChargeUpBalanceCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final PIDmecanum m_subsystem;
+
   boolean isFinished = false;
   boolean inErrorZone = false;
   int count;
@@ -25,14 +24,14 @@ public class ChargeUpBalanceCommand extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.preparePID();
-    if(m_subsystem.count >= 3){
-        m_subsystem.startPID();
+    if (m_subsystem.count >= 3) {
+      m_subsystem.startPID();
     }
   }
 
   @Override
   public void execute() {
-    m_subsystem.PIDDrive();  
+    m_subsystem.PIDDrive();
   }
 
   @Override

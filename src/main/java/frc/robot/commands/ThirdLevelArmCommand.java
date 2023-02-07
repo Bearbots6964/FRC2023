@@ -4,8 +4,8 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.RotatingArm;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.RotatingArm;
 
 public class ThirdLevelArmCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})

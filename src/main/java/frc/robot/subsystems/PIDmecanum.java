@@ -4,30 +4,28 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Mecanum;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PIDmecanum extends SubsystemBase {
-    public static AHRS gyro;
-    private static Timer timer;
-    private static double kP, kI, kD, P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;
-    public double tolerance;
-    public static double error, limitError; 
-    private static boolean automate;
-    public int count;
+  public static AHRS gyro;
+  private static Timer timer;
+  private static double kP, kI, kD, P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;
+  public double tolerance;
+  public static double error, limitError;
+  private static boolean automate;
+  public int count;
 
   public PIDmecanum() {
     timer = new Timer();
     automate = false;
     kP = 0.18;
     kI = 0.025;
-    kD = 0.3; 
-    tolerance = 0.5; 
+    kD = 0.3;
+    tolerance = 0.5;
     iLimit = 2.0;
     gyro = new AHRS(SPI.Port.kMXP);
   }
@@ -36,7 +34,7 @@ public class PIDmecanum extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("pitch angle", gyro.getPitch());
     error = gyro.getPitch();
-    if(error > 14.1 && error < 15.1){
+    if (error > 14.1 && error < 15.1) {
       limitError = error;
     }
   }
@@ -47,7 +45,7 @@ public class PIDmecanum extends SubsystemBase {
       }
   }
 
-  public void startPID(){
+  public void startPID() {
     switchToAuto();
     errorSum = 0;
     lastError = 0;
@@ -56,13 +54,13 @@ public class PIDmecanum extends SubsystemBase {
     lastError = gyro.getPitch();
   }
 
-  public static double PID(){
-     //integral
-     if(Math.abs(error) < iLimit){
+  public static double PID() {
+    // integral
+    if (Math.abs(error) < iLimit) {
       errorSum += error;
     }
 
-    //derivative
+    // derivative
     double deltaT = timer.getFPGATimestamp() - lastTimeStamp;
     errorRate = (error - lastError) / deltaT;
     lastError = error;
@@ -86,15 +84,14 @@ public class PIDmecanum extends SubsystemBase {
     }
   }
 
-  public void switchToAuto(){
+  public void switchToAuto() {
     automate = true;
   }
 
-  public void switchToJoystick(){
+  public void switchToJoystick() {
     automate = false;
   }
 
   @Override
-  public void simulationPeriodic() {
-  }
+  public void simulationPeriodic() {}
 }

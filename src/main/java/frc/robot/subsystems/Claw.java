@@ -8,19 +8,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.*;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Claw extends SubsystemBase {
-    private CANSparkMax clawMotor;
+  private CANSparkMax clawMotor;
 
   public Claw() {
     clawMotor = new CANSparkMax(8, MotorType.kBrushless);
   }
 
-  public void periodic() {
-  }
+  public void periodic() {}
 
   public void closeClaw() {
     clawMotor.set(0.2);
@@ -33,6 +32,5 @@ public class Claw extends SubsystemBase {
     clawMotor.set(0);
   }
 
-  public void simulationPeriodic() {
-  }
+  public void simulationPeriodic() {}
 }

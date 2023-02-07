@@ -12,24 +12,13 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.*;
+import edu.wpi.first.wpilibj.smartdashboard.*;
+// import frc.robot.Constants.AutoConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.math.geometry.Rotation2d;
-
+import frc.robot.commands.*;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.*;
-
-
-import edu.wpi.first.wpilibj.smartdashboard.*;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.SPI;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.PS4Controller;
-// import frc.robot.Constants.AutoConstants;
-
-import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -44,13 +33,13 @@ public class RobotContainer {
   public static final XboxController m_driverController = new XboxController(1);
   public static final Joystick m_joystick1 = new Joystick(2);  
 
-  //INSTANTIATES ALL SUBSYSTEMS
+  // INSTANTIATES ALL SUBSYSTEMS
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Mecanum m_MechanumDrive = new Mecanum();
   private final RotatingArm m_rotatingArm = new RotatingArm();
   private final Claw m_claw = new Claw();
   private final PIDmecanum m_PIDmecanum = new PIDmecanum();
-  //INSTANTIATES ALL COMMANDS
+  // INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_MechanumDrive, m_PIDmecanum, .5);
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
@@ -60,8 +49,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    //Configure the button bindings
-    configureButtonBindings();    
+    // Configure the button bindings
+    configureButtonBindings();
     // (RobotDrive.m_RLencoder).setPosition(0);
     // (RobotDrive.m_RRencoder).setPosition(0);
     // (RobotDrive.m_FLencoder).setPosition(0);
@@ -69,72 +58,65 @@ public class RobotContainer {
     // m_gyro.calibrate();
   }
 
-
-
-  public static double getLeftStickY(){
+  public static double getLeftStickY() {
     double axis = m_driverController.getRawAxis(1);
-    if(Math.abs(axis) < 0.02)
-    {
+    if (Math.abs(axis) < 0.02) {
       axis = 0;
     }
-    return axis*-1;
+    return axis * -1;
   }
 
-  public static double getLeftStickX(){
-    double axis=m_driverController.getRawAxis(0);
-    if(axis<0.02&&axis>-0.02)
-    {
-      axis=0;
+  public static double getLeftStickX() {
+    double axis = m_driverController.getRawAxis(0);
+    if (axis < 0.02 && axis > -0.02) {
+      axis = 0;
     }
     return axis;
   }
 
-  public static double getRightStickX(){
-    double axis=m_driverController.getRawAxis(4);
-    if(axis<0.02&&axis>-0.02)
-    {
-      axis=0;
-    }
-    return axis;
-  }
-  
-  public static double  getRightStickY(){
-    double axis=m_driverController.getRawAxis(5);
-    if(axis<0.02&&axis>-0.02)
-    {
-      axis=0;
+  public static double getRightStickX() {
+    double axis = m_driverController.getRawAxis(4);
+    if (axis < 0.02 && axis > -0.02) {
+      axis = 0;
     }
     return axis;
   }
 
-  public static double getJoystickXAxis(){
+  public static double getRightStickY() {
+    double axis = m_driverController.getRawAxis(5);
+    if (axis < 0.02 && axis > -0.02) {
+      axis = 0;
+    }
+    return axis;
+  }
+
+  public static double getJoystickXAxis() {
     double axis = m_joystick1.getRawAxis(0);
-    if(Math.abs(axis) < 0.02){
+    if (Math.abs(axis) < 0.02) {
       axis = 0;
     }
     return axis;
   }
 
-  public static double getJoystickYAxis(){
+  public static double getJoystickYAxis() {
     double axis = m_joystick1.getRawAxis(1);
-    if(Math.abs(axis) < 0.02){
+    if (Math.abs(axis) < 0.02) {
       axis = 0;
     }
     return axis;
   }
 
-  //z-axis is twist
-  public static double getJoystickZAxis(){
+  // z-axis is twist
+  public static double getJoystickZAxis() {
     double axis = m_joystick1.getRawAxis(2);
-    if(Math.abs(axis) < 0.2){
+    if (Math.abs(axis) < 0.2) {
       axis = 0;
     }
     return axis;
   }
 
-  public static double getMaxSpeed()
-  {
-    return (m_joystick1.getRawAxis(3)+1)/2;
+  public static double getMaxSpeed() {
+    return (m_joystick1.getRawAxis(3) + 1) / 2;
   }
 
   /**
@@ -150,8 +132,8 @@ public class RobotContainer {
     //new JoystickButton(m_driverController, XboxController.Button.kA.value).whileHeld(m_OpenClawCommand);
     //new JoystickButton(m_joystick1, Joystick.Button.kLeftBumper.value).whileHeld(m_ChargeUpBalanceCommand);
 
-    //new JoystickButton(m_driverController2, XboxController.Button.kA.value).whileHeld();
-    //new JoystickButton(m_driverController2, XboxController.Button.kY.value).whileHeld();
+    // new JoystickButton(m_driverController2, XboxController.Button.kA.value).whileHeld();
+    // new JoystickButton(m_driverController2, XboxController.Button.kY.value).whileHeld();
 
   }
 
