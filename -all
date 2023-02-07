@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
-import frc.robot.constants.CANConstants;
 
 public class Mecanum extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -44,13 +43,13 @@ public class Mecanum extends SubsystemBase {
   public static RelativeEncoder m_FRencoder;
 
   public Mecanum() {
-    leftFront = new CANSparkMax(CANConstants.kLeftFrontMotorPort, MotorType.kBrushless);
+    leftFront = new CANSparkMax(5, MotorType.kBrushless);
     leftFront.restoreFactoryDefaults();
     leftFront.setInverted(true);
     leftFront.setIdleMode(IdleMode.kCoast);
     leftFront.burnFlash();
 
-    leftRear = new CANSparkMax(CANConstants.kLeftRearMotorPort, MotorType.kBrushless);
+    leftRear = new CANSparkMax(2, MotorType.kBrushless);
     leftRear.restoreFactoryDefaults();
     leftRear.setInverted(true);
     leftRear.setIdleMode(IdleMode.kCoast);

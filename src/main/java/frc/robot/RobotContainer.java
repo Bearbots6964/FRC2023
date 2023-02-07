@@ -30,10 +30,12 @@ public class RobotContainer {
 
   // INSTANTIATES ALL SUBSYSTEMS
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Mecanum m_MechanumDrive = new Mecanum();
+  // Change whether you want to use mecanum or tank here...
+  // private final Mecanum m_MechanumDrive = new Mecanum();
+  private final Tank m_Tank = new Tank();
   private final RotatingArm m_rotatingArm = new RotatingArm();
   private final Claw m_claw = new Claw();
-  private final PIDmecanum m_PIDmecanum = new PIDmecanum();
+  // private final PIDmecanum m_PIDmecanum = new PIDmecanum();
   // INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_MechanumDrive, m_PIDmecanum, .5);
