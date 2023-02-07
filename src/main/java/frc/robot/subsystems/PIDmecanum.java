@@ -39,11 +39,10 @@ public class PIDmecanum extends SubsystemBase {
     }
   }
 
-  public void preparePID() {
-    if (!(error < limitError)) {
-      Mecanum.m_left.set(0.2);
-      Mecanum.m_right.set(0.2);
-    }
+  public void preparePID(){
+    if(!(error < limitError)){
+      Mecanum.allMotors.set(0.2);
+      }
   }
 
   public void startPID() {
@@ -76,13 +75,12 @@ public class PIDmecanum extends SubsystemBase {
     return outputSpeed;
   }
 
-  public void PIDDrive() {
-    if (error > tolerance) {
-      Mecanum.m_left.set(PIDmecanum.PID());
-      Mecanum.m_right.set(PIDmecanum.PID());
-    } else {
-      Mecanum.m_left.set(0);
-      Mecanum.m_right.set(0);
+  public void PIDDrive(){
+    if(error > tolerance){
+      Mecanum.allMotors.set(PIDmecanum.PID());
+    }
+    else{
+      Mecanum.allMotors.set(0);
     }
   }
 
