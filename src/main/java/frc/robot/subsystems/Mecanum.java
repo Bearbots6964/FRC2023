@@ -37,7 +37,7 @@ public class Mecanum extends SubsystemBase{
     public CANSparkMax rightFront;
     public CANSparkMax rightRear;
 
-    public static MotorControllerGroup leftMotors, rightMotors, allMotors;
+    public MotorControllerGroup leftMotors, rightMotors, allMotors;
     public MecanumDrive mecanumDrive;
 
    // Here's the layout:
@@ -103,14 +103,20 @@ private double forword = 0, rotate = 0, strafe = 0;
  }    
   
 public void driveForward(){
+  //mecanumDrive.driveCartesian(RobotContainer.getJoystickYAxis()* RobotContainer.getMaxSpeed(), 0.0, 0.0);
   forword = RobotContainer.getJoystickYAxis()* RobotContainer.getMaxSpeed();
 }
+
 public void rotate(){
+  //mecanumDrive.driveCartesian(0.0, 0.0, -RobotContainer.getJoystickZAxis() * RobotContainer.getMaxSpeed());
   rotate =  -RobotContainer.getJoystickZAxis() * RobotContainer.getMaxSpeed();
 }
+
  public void strafe(){
+  //mecanumDrive.driveCartesian(0.0, RobotContainer.getJoystickXAxis() * RobotContainer.getMaxSpeed(), 0.0);
   strafe = RobotContainer.getJoystickXAxis() * RobotContainer.getMaxSpeed();
  }
+
 //  public void driveForward(double yAxis){
 //     leftFront.set(yAxis);
 //     leftRear.set(yAxis);

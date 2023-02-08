@@ -18,8 +18,11 @@ public class PIDmecanum extends SubsystemBase {
   public static double error, limitError;
   private static boolean automate;
   public int count;
+  public Mecanum mecanum;
 
-  public PIDmecanum() {
+  public PIDmecanum(Mecanum mechanum) {
+    this.mecanum = mechanum;
+
     timer = new Timer();
     automate = false;
     kP = 0.18;
@@ -39,9 +42,13 @@ public class PIDmecanum extends SubsystemBase {
     }
   }
 
+  public void testMoveForward(){
+    mecanum.allMotors.set(0.2);
+  }
+
   public void preparePID(){
     if(!(error < limitError)){
-      Mecanum.allMotors.set(0.2);
+      mecanum.allMotors.set(0.2);
       }
   }
 
@@ -77,10 +84,10 @@ public class PIDmecanum extends SubsystemBase {
 
   public void PIDDrive(){
     if(error > tolerance){
-      Mecanum.allMotors.set(PIDmecanum.PID());
-    }
+      mecanum.allMotors.set(PIDmecanum.PID());
+    }  
     else{
-      Mecanum.allMotors.set(0);
+      mecanum.allMotors.set(0);
     }
   }
 

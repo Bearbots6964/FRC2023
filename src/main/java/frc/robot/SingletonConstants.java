@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SingletonConstants {
     private static SingletonConstants instance;
 
+    private static double clawSpeed;
+
     private SingletonConstants(){}
 
     public static SingletonConstants getInstance() {
@@ -27,6 +29,7 @@ public class SingletonConstants {
             fis = new FileInputStream(fileName);
             prop = new Properties();
             prop.load(fis);
+            //clawSpeed = Double.parseDouble(prop.getProperty("clawspeed"));
         } catch(FileNotFoundException fnfe){
             fnfe.printStackTrace();
         } catch(IOException ioe){

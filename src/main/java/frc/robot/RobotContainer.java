@@ -38,7 +38,7 @@ public class RobotContainer {
   private final Mecanum m_MechanumDrive = new Mecanum();
   private final RotatingArm m_rotatingArm = new RotatingArm();
   private final Claw m_claw = new Claw();
-  private final PIDmecanum m_PIDmecanum = new PIDmecanum();
+  private final PIDmecanum m_PIDmecanum = new PIDmecanum(m_MechanumDrive);
   // INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_MechanumDrive, m_PIDmecanum, .5);
@@ -51,11 +51,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    // (RobotDrive.m_RLencoder).setPosition(0);
-    // (RobotDrive.m_RRencoder).setPosition(0);
-    // (RobotDrive.m_FLencoder).setPosition(0);
-    // (RobotDrive.m_FRencoder).setPosition(0);
-    // m_gyro.calibrate();
   }
 
   public static double getLeftStickY() {

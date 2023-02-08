@@ -23,15 +23,11 @@ public class ChargeUpBalanceCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    m_subsystem.preparePID();
-    if (m_subsystem.count >= 3) {
-      m_subsystem.startPID();
-    }
+    m_subsystem.testMoveForward();
   }
 
   @Override
   public void execute() {
-    m_subsystem.PIDDrive();
   }
 
   @Override
