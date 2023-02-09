@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class PIDmecanum extends SubsystemBase {
+public class PID extends SubsystemBase {
   public static AHRS gyro;
   private static Timer timer;
   private static double kP, kI, kD, P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;
@@ -19,10 +19,12 @@ public class PIDmecanum extends SubsystemBase {
   private static boolean automate;
   public int count;
   public Mecanum mecanum;
+  public Tank tank;
 
-  public PIDmecanum(Mecanum mechanum) {
+  public PID(Mecanum mechanum, Tank tank) {
     this.mecanum = mechanum;
-
+    this.tank = tank;
+    
     timer = new Timer();
     automate = false;
     kP = 0.18;
@@ -48,7 +50,7 @@ public class PIDmecanum extends SubsystemBase {
 
   public void preparePID(){
     if(!(error < limitError)){
-      mecanum.allMotors.set(0.2);
+      mecanum.setAll(0.2);
       }
   }
 
@@ -84,7 +86,7 @@ public class PIDmecanum extends SubsystemBase {
 
   public void PIDDrive(){
     if(error > tolerance){
-      mecanum.allMotors.set(PIDmecanum.PID());
+      mecanum.allMotors.set(PID.PID());
     }  
     else{
       mecanum.allMotors.set(0);

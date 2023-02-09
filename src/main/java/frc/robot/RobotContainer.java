@@ -36,15 +36,16 @@ public class RobotContainer {
   // INSTANTIATES ALL SUBSYSTEMS
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Mecanum m_MechanumDrive = new Mecanum();
+  private final Tank m_TankDrive = new Tank();
   private final RotatingArm m_rotatingArm = new RotatingArm();
   private final Claw m_claw = new Claw();
-  private final PIDmecanum m_PIDmecanum = new PIDmecanum(m_MechanumDrive);
+  private final PID m_PID = new PID(m_MechanumDrive, m_TankDrive);
   // INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_MechanumDrive, m_PIDmecanum, .5);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_TankDrive, m_PID, .5);
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
-  private final ChargeUpBalanceCommand m_ChargeUpBalanceCommand = new ChargeUpBalanceCommand(m_PIDmecanum);
+  private final ChargeUpBalanceCommand m_ChargeUpBalanceCommand = new ChargeUpBalanceCommand(m_PID, m_TankDrive);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */

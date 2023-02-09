@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.math.geometry.Rotation2d;
-import frc.robot.subsystems.PIDmecanum;
+import frc.robot.subsystems.PID;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.Interfaces.*;
@@ -39,6 +39,8 @@ public class Mecanum extends SubsystemBase{
 
     public MotorControllerGroup leftMotors, rightMotors, allMotors;
     public MecanumDrive mecanumDrive;
+
+    public boolean automate; 
 
    // Here's the layout:
     // 5  ^  3
@@ -56,11 +58,11 @@ leftRear.setInverted(true);
 leftRear.setIdleMode(IdleMode.kCoast);
 leftRear.burnFlash();
 
-    rightFront = new CANSparkMax(3, MotorType.kBrushless);
-    rightFront.restoreFactoryDefaults();
-    rightFront.setInverted(false);
-    rightFront.setIdleMode(IdleMode.kCoast);
-    rightFront.burnFlash();
+rightFront = new CANSparkMax(3, MotorType.kBrushless);
+rightFront.restoreFactoryDefaults();
+rightFront.setInverted(false);
+rightFront.setIdleMode(IdleMode.kCoast);
+rightFront.burnFlash();
 
 rightRear = new CANSparkMax(4, MotorType.kBrushless);
 rightRear.restoreFactoryDefaults();  
@@ -72,12 +74,13 @@ leftMotors = new MotorControllerGroup(leftFront, leftRear);
 rightMotors = new MotorControllerGroup(rightFront, rightRear);
 allMotors = new MotorControllerGroup(leftFront, leftRear);
 
-
 mecanumDrive = new MecanumDrive(leftFront, leftRear, rightFront, rightRear);
 addChild("Mecanum Drive",mecanumDrive);
 mecanumDrive.setSafetyEnabled(true);
 mecanumDrive.setExpiration(0.1);
 mecanumDrive.setMaxOutput(1.0);
+
+automate = false;
 }
 
  /**
@@ -88,35 +91,49 @@ mecanumDrive.setMaxOutput(1.0);
  * @param x      Right and left value, also perhaps from a joystick.
  * @param z      Rotation value, from-AHA! You thought I was about to type "perhaps from a joystick!" You fool! It might come from a SEPERATE joystick, because a joystick only has 2 axes!
  */
-private double forword = 0, rotate = 0, strafe = 0;
-
  @Override
  public void periodic() {
-   mecanumDrive.driveCartesian(RobotContainer.getJoystickYAxis() * RobotContainer.getMaxSpeed(), -RobotContainer.getJoystickXAxis() * RobotContainer.getMaxSpeed(), -RobotContainer.getJoystickZAxis() * RobotContainer.getMaxSpeed());
-
-   //mecanumDrive.driveCartesian(forword,strafe,rotate);
-
+  /* 
+  if(automate == false){
+    mecanumDrive.driveCartesian(RobotContainer.getJoystickYAxis() * RobotContainer.getMaxSpeed(), -RobotContainer.getJoystickXAxis() * RobotContainer.getMaxSpeed(), -RobotContainer.getJoystickZAxis() * RobotContainer.getMaxSpeed());
+  } 
+  */
+  
    SmartDashboard.putNumber("x axis", RobotContainer.getJoystickXAxis());
    SmartDashboard.putNumber("y axis", RobotContainer.getJoystickYAxis());
    SmartDashboard.putNumber("z axis", RobotContainer.getJoystickZAxis());
    SmartDashboard.putNumber("max speed", RobotContainer.getMaxSpeed());
  }    
-  
-public void driveForward(){
-  //mecanumDrive.driveCartesian(RobotContainer.getJoystickYAxis()* RobotContainer.getMaxSpeed(), 0.0, 0.0);
-  forword = RobotContainer.getJoystickYAxis()* RobotContainer.getMaxSpeed();
-}
 
-public void rotate(){
-  //mecanumDrive.driveCartesian(0.0, 0.0, -RobotContainer.getJoystickZAxis() * RobotContainer.getMaxSpeed());
-  rotate =  -RobotContainer.getJoystickZAxis() * RobotContainer.getMaxSpeed();
-}
-
- public void strafe(){
-  //mecanumDrive.driveCartesian(0.0, RobotContainer.getJoystickXAxis() * RobotContainer.getMaxSpeed(), 0.0);
-  strafe = RobotContainer.getJoystickXAxis() * RobotContainer.getMaxSpeed();
+ public void setAll(double speed){
+  leftFront.set(speed);
+  leftRear.set(speed);
+  rightFront.set(speed);
+  rightRear.set(speed);
  }
 
+public Rotation2d getYawAngle(){
+  return Rotation2d.fromDegrees(PID.gyro.getAngle());
+}
+
+@Override
+  public void simulationPeriodic() {}
+}
+
+//  public void driveForward(){
+//   //mecanumDrive.driveCartesian(RobotContainer.getJoystickYAxis()* RobotContainer.getMaxSpeed(), 0.0, 0.0);
+//   forword = RobotContainer.getJoystickYAxis()* RobotContainer.getMaxSpeed();
+// }
+
+// public void rotate(){
+//   //mecanumDrive.driveCartesian(0.0, 0.0, -RobotContainer.getJoystickZAxis() * RobotContainer.getMaxSpeed());
+//   rotate =  -RobotContainer.getJoystickZAxis() * RobotContainer.getMaxSpeed();
+// }
+
+//  public void strafe(){
+//   //mecanumDrive.driveCartesian(0.0, RobotContainer.getJoystickXAxis() * RobotContainer.getMaxSpeed(), 0.0);
+//   strafe = RobotContainer.getJoystickXAxis() * RobotContainer.getMaxSpeed();
+//  }
 //  public void driveForward(double yAxis){
 //     leftFront.set(yAxis);
 //     leftRear.set(yAxis);
@@ -160,11 +177,3 @@ public void rotate(){
 //     rightRear.set(xAxis);
 //   }
 //  }
-
-public Rotation2d getYawAngle(){
-  return Rotation2d.fromDegrees(PIDmecanum.gyro.getAngle());
-}
-
-  @Override
-  public void simulationPeriodic() {}
-}
