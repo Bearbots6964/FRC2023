@@ -21,7 +21,10 @@ public class Tank extends SubsystemBase {
   public DifferentialDrive Tank = new DifferentialDrive(left, right);
   public boolean automate = false;
 
+
+  /** */
   public Tank() {
+
     leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
     leftFront.restoreFactoryDefaults();
     leftFront.setInverted(true);
@@ -57,10 +60,11 @@ public class Tank extends SubsystemBase {
   }
 
 
-
   @Override
   public void periodic() {
-    Tank.arcadeDrive(-RobotContainer.getLeftStickY(), -RobotContainer.getLeftStickX());
+    if(automate == false){
+        arcadeDrive(RobotContainer.getJoystickYAxis(), RobotContainer.getJoystickZAxis());
+    }
   }
 
   /**
