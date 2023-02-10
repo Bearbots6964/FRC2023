@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-public class PIDmecanum extends SubsystemBase {
+// TODO@totbas1 - Migrate PID loop to tank base exclusively
+// In the meantime, I'll try not to touch this file :-)
+public class PID extends SubsystemBase {
   public static AHRS gyro;
   private static Timer timer;
   private static double kP, kI, kD, P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;
@@ -18,8 +19,13 @@ public class PIDmecanum extends SubsystemBase {
   public static double error, limitError;
   private static boolean automate;
   public int count;
+  public Mecanum mecanum;
+  public Tank tank;
 
-  public PIDmecanum() {
+  public PID(Mecanum mechanum, Tank tank) {
+    this.mecanum = mechanum;
+    this.tank = tank;
+    
     timer = new Timer();
     automate = false;
     kP = 0.18;
@@ -39,9 +45,13 @@ public class PIDmecanum extends SubsystemBase {
     }
   }
 
+  public void testMoveForward(){
+    mecanum.allMotors.set(0.2);
+  }
+
   public void preparePID(){
     if(!(error < limitError)){
-      Mecanum.allMotors.set(0.2);
+      mecanum.setAll(0.2);
       }
   }
 
@@ -77,10 +87,10 @@ public class PIDmecanum extends SubsystemBase {
 
   public void PIDDrive(){
     if(error > tolerance){
-      Mecanum.allMotors.set(PIDmecanum.PID());
-    }
+      mecanum.allMotors.set(PID.PID());
+    }  
     else{
-      Mecanum.allMotors.set(0);
+      mecanum.allMotors.set(0);
     }
   }
 

@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Odometry extends SubsystemBase {
   // put some stuff here
-  private final AHRS NavX = new AHRS(SerialPort.Port.kMXP);
+  private final AHRS NavX = PID.gyro;
   private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(26.0)); // this is the distance between the tracks
   
   // Initialize the wheelSpeeds and linear/angularVelocity variables

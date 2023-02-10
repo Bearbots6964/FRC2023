@@ -3,38 +3,38 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
+import frc.robot.subsystems.Tank;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Mecanum;
-import frc.robot.subsystems.PIDmecanum;
+import frc.robot.subsystems.PID;
 
 public class AutoCommand extends CommandBase {
   /** Example static factory for an autonomous command. */
-  private final Mecanum driveSubsystem1;
+  private final Tank drive;
 
-  private final PIDmecanum driveSubsystem2;
+  private final PID pid;
   private double speed;
   private Timer timer = new Timer();
 
-  public AutoCommand(Mecanum drive1, PIDmecanum drive2, double m_speed) {
-    driveSubsystem1 = drive1;
-    driveSubsystem2 = drive2;
+  public AutoCommand(Tank drive1, PID m_pid, double m_speed) {
+    drive = drive1;
+    pid = m_pid;
     speed = m_speed;
   }
 
   @Override
   public void initialize() {
     timer.start();
-    driveSubsystem2.preparePID();
-    if (driveSubsystem2.count >= 3) {
-      driveSubsystem2.startPID();
+    pid.preparePID();
+    if (pid.count >= 3) {
+      pid.startPID();
     }
   }
 
   @Override
   public void execute() {
-    driveSubsystem2.PIDDrive();
+    pid.PIDDrive();
   }
 
   @Override

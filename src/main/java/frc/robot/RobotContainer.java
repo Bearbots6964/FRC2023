@@ -35,29 +35,23 @@ public class RobotContainer {
 
   // INSTANTIATES ALL SUBSYSTEMS
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  // Change whether you want to use mecanum or tank here...
-   private final Mecanum m_MechanumDrive = new Mecanum();
-  //private final Tank m_Tank = new Tank();
+  private final Mecanum m_MechanumDrive = new Mecanum();
+  private final Tank m_TankDrive = new Tank();
   private final RotatingArm m_rotatingArm = new RotatingArm();
   private final Claw m_claw = new Claw();
-   private final PIDmecanum m_PIDmecanum = new PIDmecanum();
+  private final PID m_PID = new PID(m_MechanumDrive, m_TankDrive);
   // INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_MechanumDrive, m_PIDmecanum, .5);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_TankDrive, m_PID, .5);
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
-  private final ChargeUpBalanceCommand m_ChargeUpBalanceCommand = new ChargeUpBalanceCommand(m_PIDmecanum);
+  private final ChargeUpBalanceCommand m_ChargeUpBalanceCommand = new ChargeUpBalanceCommand(m_PID, m_TankDrive);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    // (RobotDrive.m_RLencoder).setPosition(0);
-    // (RobotDrive.m_RRencoder).setPosition(0);
-    // (RobotDrive.m_FLencoder).setPosition(0);
-    // (RobotDrive.m_FRencoder).setPosition(0);
-    // m_gyro.calibrate();
   }
 
   public static double getLeftStickY() {
