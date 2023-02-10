@@ -29,12 +29,14 @@ public abstract class Tank extends SubsystemBase {
     leftFront.restoreFactoryDefaults();
     leftFront.setInverted(true);
     leftFront.setIdleMode(IdleMode.kCoast);
+    leftFront.setOpenLoopRampRate(CANConstants.kRampRate);
     leftFront.burnFlash();
 
     leftRear = new CANSparkMax(CANConstants.kLeftRearMotorPort, MotorType.kBrushless);
     leftRear.restoreFactoryDefaults();
     leftRear.setInverted(true);
     leftRear.setIdleMode(IdleMode.kCoast);
+    leftRear.setOpenLoopRampRate(CANConstants.kRampRate);
     leftRear.burnFlash();
 
     left = new MotorControllerGroup(leftFront, leftRear);
@@ -43,12 +45,14 @@ public abstract class Tank extends SubsystemBase {
     rightFront.restoreFactoryDefaults();
     rightFront.setInverted(false);
     rightFront.setIdleMode(IdleMode.kCoast);
+    rightFront.setOpenLoopRampRate(CANConstants.kRampRate);
     rightFront.burnFlash();
 
     rightRear = new CANSparkMax(CANConstants.kRightRearMotorPort, MotorType.kBrushless);
     rightRear.restoreFactoryDefaults();
     rightRear.setInverted(false);
     rightRear.setIdleMode(IdleMode.kCoast);
+    rightRear.setOpenLoopRampRate(CANConstants.kRampRate);
     rightRear.burnFlash();
     right = new MotorControllerGroup(rightFront, rightRear);
   }
@@ -60,4 +64,10 @@ public abstract class Tank extends SubsystemBase {
     Tank.arcadeDrive(-RobotContainer.getLeftStickY(), -RobotContainer.getLeftStickX());
   }
 
+  /**
+   * Get the total distance travelled by a motor controller group, averaged across the two motors.
+   */
+  public double getDistance() {
+    return (leftFront.getEncoder().getPosition() + rightFront.getEncoder().getPosition()) / 2;
+  }
 }

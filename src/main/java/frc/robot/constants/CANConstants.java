@@ -5,4 +5,8 @@ public class CANConstants {
     public static final int kLeftRearMotorPort = 2;
     public static final int kRightFrontMotorPort = 3;
     public static final int kRightRearMotorPort = 4;
+
+    // ramp rate kRampRate (double)
+    // universal across all drivebase motors to prevent current spikes
+    public static final double kRampRate = 1;
 }
