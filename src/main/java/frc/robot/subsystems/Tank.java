@@ -84,4 +84,14 @@ public class Tank extends SubsystemBase {
   public double getDistance() {
     return (leftFront.getEncoder().getPosition() + rightFront.getEncoder().getPosition()) / 2;
   }
+
+  /**
+   * Change the ramp rate of the motor controllers.
+   */
+  public void setRampRate(double rampRate) {
+    leftFront.setOpenLoopRampRate(rampRate);
+    leftRear.setOpenLoopRampRate(rampRate);
+    rightFront.setOpenLoopRampRate(rampRate);
+    rightRear.setOpenLoopRampRate(rampRate);
+  }
 }
