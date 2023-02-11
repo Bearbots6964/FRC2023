@@ -18,7 +18,7 @@ public class Tank extends SubsystemBase {
   public CANSparkMax rightRear;
   public MotorControllerGroup right;
 
-  public DifferentialDrive Tank = new DifferentialDrive(left, right);
+  public DifferentialDrive tank;
   public boolean automate = false;
 
 
@@ -57,6 +57,9 @@ public class Tank extends SubsystemBase {
     rightRear.burnFlash();
     right = new MotorControllerGroup(rightFront, rightRear);
     addChild("right", right);
+
+    tank = new DifferentialDrive(left, right);
+    addChild("tank", tank);
   }
 
 
@@ -74,9 +77,7 @@ public class Tank extends SubsystemBase {
    * @param rotation The rotation speed.
    */
   public void arcadeDrive(double speed, double rotation) {
-    left.setInverted(true);
-    right.setInverted(false);
-    Tank.arcadeDrive(speed, rotation);
+    tank.arcadeDrive(speed * RobotContainer.getMaxSpeed(), rotation * RobotContainer.getMaxSpeed());
   }
   /**
    * Get the total distance travelled by a motor controller group, averaged across the two motors.
