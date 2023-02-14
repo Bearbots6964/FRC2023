@@ -8,78 +8,66 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.commands.*;
-
-/** */
+import frc.robot.Constants;
 public class Tank extends SubsystemBase {
-
-  public CANSparkMax lFront;
-  public CANSparkMax lRear;
-  public CANSparkMax rFront;
-  public CANSparkMax rRear;
-
+  public CANSparkMax leftFront;
+  public CANSparkMax leftRear;
   public MotorControllerGroup left;
+
+  public CANSparkMax rightFront;
+  public CANSparkMax rightRear;
   public MotorControllerGroup right;
 
-  public DifferentialDrive drive;
-
-  public boolean automate;
+  public DifferentialDrive tank;
+  public boolean automate = false;
 
 
   /** */
   public Tank() {
-    /*LEFT */
-    lFront = new CANSparkMax(4, MotorType.kBrushless);
-    lFront.restoreFactoryDefaults();
-    lFront.setInverted(false);
-    lFront.setIdleMode(IdleMode.kCoast);
-    lFront.burnFlash();
 
-    lRear = new CANSparkMax(14, MotorType.kBrushless);
-    lRear.restoreFactoryDefaults();
-    lRear.setInverted(false);
-    lRear.setIdleMode(IdleMode.kCoast);
-    lRear.burnFlash();
+    leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
+    leftFront.restoreFactoryDefaults();
+    leftFront.setInverted(true);
+    leftFront.setIdleMode(IdleMode.kCoast);
+    leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    leftFront.burnFlash();
 
-    left = new MotorControllerGroup(lFront, lRear);
-    addChild("Left", left);
+    leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
+    leftRear.restoreFactoryDefaults();
+    leftRear.setInverted(true);
+    leftRear.setIdleMode(IdleMode.kCoast);
+    leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    leftRear.burnFlash();
 
-    /*RIGHT */
-    rFront = new CANSparkMax(2, MotorType.kBrushless);
-    rFront.restoreFactoryDefaults();
-    rFront.setInverted(false);
-    rFront.setIdleMode(IdleMode.kCoast);
-    rFront.burnFlash();
+    left = new MotorControllerGroup(leftFront, leftRear);
+    addChild("left", left);
 
-    rRear = new CANSparkMax(13, MotorType.kBrushless);
-    rRear.restoreFactoryDefaults();
-    rRear.setInverted(false);
-    rRear.setIdleMode(IdleMode.kCoast);
-    rRear.burnFlash();
+    rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
+    rightFront.restoreFactoryDefaults();
+    rightFront.setInverted(false);
+    rightFront.setIdleMode(IdleMode.kCoast);
+    rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    rightFront.burnFlash();
 
-    right = new MotorControllerGroup(rFront, rRear);
-    addChild("Right", right);
+    rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
+    rightRear.restoreFactoryDefaults();
+    rightRear.setInverted(false);
+    rightRear.setIdleMode(IdleMode.kCoast);
+    rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    rightRear.burnFlash();
+    right = new MotorControllerGroup(rightFront, rightRear);
+    addChild("right", right);
 
-
-    drive = new DifferentialDrive(left, right);
-    addChild("Drive", drive);
-    drive.setSafetyEnabled(true);
-    drive.setExpiration(0.1);
-    drive.setMaxOutput(1.0);
-
-    automate = false;
+    tank = new DifferentialDrive(left, right);
+    addChild("tank", tank);
   }
+
 
   @Override
   public void periodic() {
     if(automate == false){
         arcadeDrive(RobotContainer.getJoystickYAxis(), RobotContainer.getJoystickZAxis());
     }
-  }
-
-  @Override
-  public void simulationPeriodic() {
-
   }
 
   /**
@@ -89,8 +77,22 @@ public class Tank extends SubsystemBase {
    * @param rotation The rotation speed.
    */
   public void arcadeDrive(double speed, double rotation) {
-    left.setInverted(true);
-    right.setInverted(false);
-    drive.arcadeDrive(speed, rotation);
+    tank.arcadeDrive(speed * RobotContainer.getMaxSpeed(), rotation * RobotContainer.getMaxSpeed());
+  }
+  /**
+   * Get the total distance travelled by a motor controller group, averaged across the two motors.
+   */
+  public double getDistance() {
+    return (leftFront.getEncoder().getPosition() + rightFront.getEncoder().getPosition()) / 2;
+  }
+
+  /**
+   * Change the ramp rate of the motor controllers.
+   */
+  public void setRampRate(double rampRate) {
+    leftFront.setOpenLoopRampRate(rampRate);
+    leftRear.setOpenLoopRampRate(rampRate);
+    rightFront.setOpenLoopRampRate(rampRate);
+    rightRear.setOpenLoopRampRate(rampRate);
   }
 }
