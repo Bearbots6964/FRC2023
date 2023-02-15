@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// TODO@totbas1 - Migrate PID loop to tank base exclusively
+// TODO@totbas1 - Have PID require either mecanum OR tank -- update in the initializer for each command to the base to correspond to the selected one
 // In the meantime, I'll try not to touch this file :-)
 public class PID extends SubsystemBase {
   public static AHRS gyro;
