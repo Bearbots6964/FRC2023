@@ -21,6 +21,8 @@ public class CloseClawCommand extends CommandBase {
 
   @Override
   public void execute() {
+    // check if the power draw for the motor is over 2 amps -- if so, end the command
+   // if (m_subsystem.get)
     m_subsystem.closeClaw();
   }
 
