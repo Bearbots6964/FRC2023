@@ -10,7 +10,7 @@ import frc.robot.subsystems.Tank;
 import frc.robot.subsystems.PID;
 
 /** An example command that uses an example subsystem. */
-public class ChargeUpBalanceCommand extends CommandBase {
+public class BalanceCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final PID pid;
   private final Tank driveBase;
@@ -19,7 +19,7 @@ public class ChargeUpBalanceCommand extends CommandBase {
   boolean inErrorZone = false;
   int count;
 
-  public ChargeUpBalanceCommand(PID m_pid, Tank m_driveBase) {
+  public BalanceCommand(PID m_pid, Tank m_driveBase) {
     pid = m_pid;
     driveBase = m_driveBase;
 

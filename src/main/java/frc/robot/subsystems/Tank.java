@@ -25,8 +25,6 @@ public class Tank extends SubsystemBase {
 
   public boolean automate;
 
-
-  /** */
   public Tank() {
     /*LEFT */
     lFront = new CANSparkMax(4, MotorType.kBrushless);
@@ -60,7 +58,6 @@ public class Tank extends SubsystemBase {
     right = new MotorControllerGroup(rFront, rRear);
     addChild("Right", right);
 
-
     drive = new DifferentialDrive(left, right);
     addChild("Drive", drive);
     drive.setSafetyEnabled(true);
@@ -72,14 +69,10 @@ public class Tank extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(automate == false){
-        arcadeDrive(RobotContainer.getJoystickYAxis(), RobotContainer.getJoystickZAxis());
-    }
   }
 
   @Override
   public void simulationPeriodic() {
-
   }
 
   /**

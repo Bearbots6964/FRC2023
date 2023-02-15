@@ -16,7 +16,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    // Constants copied and pasted from 2020 code
     public static final class AutoConstants{
         public final XboxController m_driverController = new XboxController(1);
         public final Joystick m_driverJoystick = new Joystick(2);

@@ -12,34 +12,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
-public class RotatingArm extends SubsystemBase {
-  private CANSparkMax xMotor;
+public class Arm extends SubsystemBase {
   private CANSparkMax yMotor;
 
-  public static RelativeEncoder xEncoder;
   public static RelativeEncoder yEncoder;
 
   public static DigitalInput zeroDegreesLS = new DigitalInput(1);
 
   public double desiredArmAngle, currentArmAngle;
 
-  public RotatingArm() {
-    xMotor = new CANSparkMax(6, MotorType.kBrushless);
+  public Arm() {
     yMotor = new CANSparkMax(7, MotorType.kBrushless);
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("left stick x", RobotContainer.getLeftStickX());
-    SmartDashboard.putNumber("left stick y", RobotContainer.getLeftStickY());
-    rotateArm(RobotContainer.getLeftStickX());
-    liftArm(RobotContainer.getLeftStickY());
-  }
-
-  public void rotateArm(double leftStickXaxis) {
-    double speed = 0.4;
-    double motorDrive = leftStickXaxis * speed;
-    xMotor.set(motorDrive);
+    
   }
 
   public void liftArm(double leftStickYaxis) {
@@ -65,7 +53,7 @@ public class RotatingArm extends SubsystemBase {
 
   // the diseredArmAngle is currently not set to anything because since we don't know the length of
   // the amr, we can't calculate the angle it should be
-  public void moveArmToNode(int level) {
+  public void liftArmToNode(int level) {
     double speedY = 0.15;
     double difference = desiredArmAngle - currentArmAngle;
     yEncoder.setPosition(0);

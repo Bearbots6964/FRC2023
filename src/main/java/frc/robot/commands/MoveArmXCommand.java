@@ -5,13 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.RotatingArm;
+import frc.robot.subsystems.Turret;
+import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class FirstLevelArmCommand extends CommandBase {
+public class MoveArmXCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final RotatingArm m_subsystem;
+  private final Turret m_subsystem;
 
-  public FirstLevelArmCommand(RotatingArm subsystem) {
+  public MoveArmXCommand(Turret subsystem) {
     m_subsystem = subsystem;
     addRequirements(subsystem);
   }
@@ -21,7 +23,8 @@ public class FirstLevelArmCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_subsystem.moveArmToNode(1);
+    SmartDashboard.putNumber("left stick x", RobotContainer.getLeftStickX());
+    m_subsystem.rotateArm(RobotContainer.getJoystickXAxis());
   }
 
   @Override

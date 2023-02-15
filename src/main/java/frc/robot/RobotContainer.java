@@ -35,23 +35,43 @@ public class RobotContainer {
 
   // INSTANTIATES ALL SUBSYSTEMS
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Mecanum m_MechanumDrive = new Mecanum();
-  private final Tank m_TankDrive = new Tank();
-  private final RotatingArm m_rotatingArm = new RotatingArm();
+  private final Arm m_Arm = new Arm();
   private final Claw m_claw = new Claw();
-  private final PID m_PID = new PID(m_MechanumDrive, m_TankDrive);
+  private final Mecanum m_MechanumDrive = new Mecanum();
+  private final Tank m_Tank = new Tank();
+  private final Turret m_Turret = new Turret();
+  private final Vision m_Vision = new Vision();
+  private final PID m_PID = new PID(m_MechanumDrive, m_Tank);
+
   // INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_TankDrive, m_PID, .5);
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
-  private final ChargeUpBalanceCommand m_ChargeUpBalanceCommand = new ChargeUpBalanceCommand(m_PID, m_TankDrive);
+  private final BalanceCommand m_ChargeUpBalanceCommand = new BalanceCommand(m_PID, m_Tank);
+  private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand = new ArmToFirstLevelCommand(m_Turret, m_Arm);
+  private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new ArmToSecondLevelCommand(m_Turret, m_Arm);
+  private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new ArmToThirdLevelCommand(m_Turret, m_Arm);
+  private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_Tank, m_PID, m_Turret, m_Arm, m_Claw, m_Vision);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+  }
+
+    /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
+  private void configureButtonBindings() {
+    //new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value).whileTrue(m_CloseClawCommand);
+    //new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value).whileTrue(m_OpenClawCommand);
+
+    new JoystickButton(m_joystick1, Joystick.ButtonType.kTrigger.value).whileTrue(m_CloseClawCommand);
+    new JoystickButton(m_joystick1, Joystick.ButtonType.kTop.value).whileTrue(m_OpenClawCommand);
   }
 
   public static double getLeftStickY() {
@@ -113,24 +133,6 @@ public class RobotContainer {
 
   public static double getMaxSpeed() {
     return (m_joystick1.getRawAxis(3) + 1) / 2;
-  }
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  private void configureButtonBindings() {
-    //new JoystickButton(m_driverController, XboxController.Button.kB.value).whileHeld(m_TestLeftFront);
-    //new JoystickButton(m_driverController, XboxController.Button.kX.value).whileHeld();
-    //new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value).whileHeld();
-    new JoystickButton(m_driverController, XboxController.Button.kY.value).whileHeld(m_ChargeUpBalanceCommand);
-    //new JoystickButton(m_driverController, XboxController.Button.kA.value).whileHeld(m_OpenClawCommand);
-    //new JoystickButton(m_joystick1, Joystick.Button.kLeftBumper.value).whileHeld(m_ChargeUpBalanceCommand);
-
-    // new JoystickButton(m_driverController2, XboxController.Button.kA.value).whileHeld();
-    // new JoystickButton(m_driverController2, XboxController.Button.kY.value).whileHeld();
-
   }
 
   public Command getAutonomousCommand() {

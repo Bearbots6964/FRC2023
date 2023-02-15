@@ -5,15 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.RotatingArm;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Turret;
 
-public class ThirdLevelArmCommand extends CommandBase {
+
+public class ArmToFirstLevelCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final RotatingArm m_subsystem;
+  private final Turret xSubsystem;
+  private final Arm ySubsystem;
 
-  public ThirdLevelArmCommand(RotatingArm subsystem) {
-    m_subsystem = subsystem;
-    addRequirements(subsystem);
+  public ArmToFirstLevelCommand(Turret xSubsystem1, Arm ySubsystem1) {
+    xSubsystem = xSubsystem1;
+    ySubsystem = ySubsystem1;
+    addRequirements(xSubsystem);
+    addRequirements(ySubsystem);
   }
 
   @Override
@@ -21,7 +26,7 @@ public class ThirdLevelArmCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_subsystem.moveArmToNode(3);
+    ySubsystem.liftArmToNode(1);
   }
 
   @Override
