@@ -69,6 +69,8 @@ public class Tank extends SubsystemBase {
     drive.setMaxOutput(1.0);
 
     automate = false;
+ 
+    }
   }
 
 
@@ -88,7 +90,7 @@ public class Tank extends SubsystemBase {
    */
   public void arcadeDrive(double speed, double rotation) {
     try {
-      tank.arcadeDrive(speed * RobotContainer.getMaxSpeed(), rotation * RobotContainer.getMaxSpeed());
+      drive.arcadeDrive(speed * RobotContainer.getMaxSpeed(), rotation * RobotContainer.getMaxSpeed());
     } catch (Exception e) {
       throw e;
     }
