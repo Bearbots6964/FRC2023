@@ -52,7 +52,7 @@ public class RobotContainer {
   private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new ArmToSecondLevelCommand(m_Turret, m_Arm);
   private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new ArmToThirdLevelCommand(m_Turret, m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_Tank, m_PID, m_Turret, m_Arm, m_Claw, m_Vision);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_Tank, m_PID, m_Turret, m_Arm, m_claw, m_Vision);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
