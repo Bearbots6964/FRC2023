@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Turret;
 
-
 public class ArmToFirstLevelCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Turret xSubsystem;
+
   private final Arm ySubsystem;
 
   public ArmToFirstLevelCommand(Turret xSubsystem1, Arm ySubsystem1) {

@@ -5,8 +5,10 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// TODO@totbas1 - Have PID require either mecanum OR tank -- update in the initializer for each command to the base to correspond to the selected one
+// TODO@totbas1 - Have PID require either mecanum OR tank -- update in the initializer for each
+// command to the base to correspond to the selected one
 // In the meantime, I'll try not to touch this file :-)
+
 public class PID extends SubsystemBase {
   public static AHRS gyro;
   private static Timer timer;
@@ -21,7 +23,7 @@ public class PID extends SubsystemBase {
   public PID(Mecanum mechanum, Tank tank) {
     this.mecanum = mechanum;
     this.tank = tank;
-    
+
     timer = new Timer();
     automate = false;
     kP = 0.18;
@@ -41,14 +43,14 @@ public class PID extends SubsystemBase {
     }
   }
 
-  public void testMoveForward(){
+  public void testMoveForward() {
     mecanum.allMotors.set(0.2);
   }
 
-  public void preparePID(){
-    if(!(error < limitError)){
+  public void preparePID() {
+    if (!(error < limitError)) {
       mecanum.setAll(0.2);
-      }
+    }
   }
 
   public void startPID() {
@@ -81,11 +83,10 @@ public class PID extends SubsystemBase {
     return outputSpeed;
   }
 
-  public void PIDDrive(){
-    if(error > tolerance){
+  public void PIDDrive() {
+    if (error > tolerance) {
       mecanum.allMotors.set(PID.PID());
-    }  
-    else{
+    } else {
       mecanum.allMotors.set(0);
     }
   }

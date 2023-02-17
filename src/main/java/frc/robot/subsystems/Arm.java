@@ -8,9 +8,7 @@ import com.revrobotics.*;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
 
 public class Arm extends SubsystemBase {
   private CANSparkMax yMotor;
@@ -26,9 +24,7 @@ public class Arm extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    
-  }
+  public void periodic() {}
 
   public void liftArm(double leftStickYaxis) {
     double speed = 0.4;

@@ -11,6 +11,7 @@ import frc.robot.subsystems.Turret;
 public class ArmToThirdLevelCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Turret xSubsystem;
+
   private final Arm ySubsystem;
 
   public ArmToThirdLevelCommand(Turret xSubsystem1, Arm ySubsystem1) {

@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.I2C;
 
 public class Vision extends SubsystemBase {
   private PhotonCamera limelight;
