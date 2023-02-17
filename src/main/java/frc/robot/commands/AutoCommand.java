@@ -25,7 +25,8 @@ public class AutoCommand extends CommandBase {
   private final Vision vision;
   private Timer timer = new Timer();
 
-  public AutoCommand(Tank drive1, PID m_pid, Turret m_turret, Arm m_arm, Claw m_claw, Vision m_vision) {
+  public AutoCommand(
+      Tank drive1, PID m_pid, Turret m_turret, Arm m_arm, Claw m_claw, Vision m_vision) {
     drive = drive1;
     pid = m_pid;
     turret = m_turret;
