@@ -59,7 +59,7 @@ public class Tank extends SubsystemBase {
     right = new MotorControllerGroup(rightFront, rightRear);
     addChild("right", right);
 
-    right = new MotorControllerGroup(rFront, rRear);
+    right = new MotorControllerGroup(rightFront, rightRear);
     addChild("Right", right);
 
     drive = new DifferentialDrive(left, right);
