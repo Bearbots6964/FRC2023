@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -9,8 +5,11 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+// TODO@totbas1 - Have PID require either mecanum OR tank -- update in the initializer for each
+// command to the base to correspond to the selected one
+// In the meantime, I'll try not to touch this file :-)
 
-public class PIDmecanum extends SubsystemBase {
+public class PID extends SubsystemBase {
   public static AHRS gyro;
   private static Timer timer;
   private static double kP, kI, kD, P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;
@@ -18,8 +17,11 @@ public class PIDmecanum extends SubsystemBase {
   public static double error, limitError;
   private static boolean automate;
   public int count;
+  public Tank tank;
 
-  public PIDmecanum() {
+  public PID(Tank tank) {
+    this.tank = tank;
+
     timer = new Timer();
     automate = false;
     kP = 0.18;
@@ -39,10 +41,13 @@ public class PIDmecanum extends SubsystemBase {
     }
   }
 
+  public void testMoveForward() {
+    tank.setAllMotors(0.2);
+  }
+
   public void preparePID() {
     if (!(error < limitError)) {
-      Mecanum.m_left.set(0.2);
-      Mecanum.m_right.set(0.2);
+      tank.setAllMotors(0.2);
     }
   }
 
@@ -78,11 +83,9 @@ public class PIDmecanum extends SubsystemBase {
 
   public void PIDDrive() {
     if (error > tolerance) {
-      Mecanum.m_left.set(PIDmecanum.PID());
-      Mecanum.m_right.set(PIDmecanum.PID());
+      tank.setAllMotors(PID.PID());
     } else {
-      Mecanum.m_left.set(0);
-      Mecanum.m_right.set(0);
+      tank.setAllMotors(0);
     }
   }
 

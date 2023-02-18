@@ -4,14 +4,16 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Claw;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Turret;
 
-public class CloseClawCommand extends CommandBase {
+public class MoveArmXCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Claw m_subsystem;
+  private final Turret m_subsystem;
 
-  public CloseClawCommand(Claw subsystem) {
+  public MoveArmXCommand(Turret subsystem) {
     m_subsystem = subsystem;
     addRequirements(subsystem);
   }
@@ -21,15 +23,12 @@ public class CloseClawCommand extends CommandBase {
 
   @Override
   public void execute() {
-    // check if the power draw for the motor is over 2 amps -- if so, end the command
-    // if (m_subsystem.get)
-    m_subsystem.closeClaw();
+    SmartDashboard.putNumber("left stick x", RobotContainer.getLeftStickX());
+    m_subsystem.rotateArm(RobotContainer.getJoystickXAxis());
   }
 
   @Override
-  public void end(boolean interrupted) {
-    m_subsystem.stopClaw();
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {

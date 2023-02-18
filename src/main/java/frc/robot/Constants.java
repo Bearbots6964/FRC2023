@@ -17,22 +17,7 @@ import edu.wpi.first.wpilibj.XboxController;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-  }
-
-  public static class VisionConstants {
-    public static final String kCameraName = "limelight";
-    public static final double kCameraHeightMeters = 0.6096;
-    public static final double kTargetHeightMeters = 1.524;
-    public static final double kCameraPitchRadians = 0;
-
-    // Set the camera type.
-    private static TrackingType tape;
-    public static final TrackingType kTrackingType = tape;
-  }
-
-  public class AutoConstants {
+  public static final class AutoConstants {
     public final XboxController m_driverController = new XboxController(1);
     public final Joystick m_driverJoystick = new Joystick(2);
 
@@ -61,6 +46,25 @@ public final class Constants {
 
     public static final double kEncoderDistancePerPulse = 5;
   }
-}
 
-    // Constants copied and pasted from 2020 code
+  public static final class CanConstants {
+    public static final int kLeftFrontMotorPort = 3;
+    public static final int kLeftRearMotorPort = 2;
+    public static final int kRightFrontMotorPort = 4;
+    public static final int kRightRearMotorPort = 5;
+    public static final double kRampRate = 0.1;
+
+    public static final String kBaseType = "tank";
+  }
+
+  public static final class OperatorConstants {
+    public static final int kDriverControllerPort = 0;
+  }
+
+  public static final class VisionConstants {
+    public static final String kCameraName = "limelight";
+    public static final double kCameraHeightMeters = 0.6096;
+    public static final double kTargetHeightMeters = 1.524;
+    public static final double kCameraPitchRadians = 0;
+  }
+}

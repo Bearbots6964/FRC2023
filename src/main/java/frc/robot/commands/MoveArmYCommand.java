@@ -4,34 +4,27 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.PIDmecanum;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Arm;
 
-/** An example command that uses an example subsystem. */
-public class ChargeUpBalanceCommand extends CommandBase {
+public class MoveArmYCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final PIDmecanum m_subsystem;
+  private final Arm m_subsystem;
 
-  boolean isFinished = false;
-  boolean inErrorZone = false;
-  int count;
-
-  public ChargeUpBalanceCommand(PIDmecanum subsystem) {
+  public MoveArmYCommand(Arm subsystem) {
     m_subsystem = subsystem;
     addRequirements(subsystem);
   }
 
   @Override
-  public void initialize() {
-    m_subsystem.preparePID();
-    if (m_subsystem.count >= 3) {
-      m_subsystem.startPID();
-    }
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
-    m_subsystem.PIDDrive();
+    SmartDashboard.putNumber("left stick y", RobotContainer.getLeftStickY());
+    m_subsystem.liftArm(RobotContainer.getJoystickYAxis());
   }
 
   @Override
