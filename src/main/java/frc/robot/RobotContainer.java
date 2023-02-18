@@ -49,7 +49,7 @@ public class RobotContainer {
       new ArmToThirdLevelCommand(m_Turret, m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final AutoCommand m_AutoCommand =
-      new AutoCommand(m_Tank, m_PID, m_Turret, m_Arm, m_claw, m_Vision);
+      new AutoCommand(m_Tank, m_PID, m_Turret, m_Arm, m_claw, m_vision);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
