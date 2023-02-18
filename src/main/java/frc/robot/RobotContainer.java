@@ -31,7 +31,6 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Arm m_Arm = new Arm();
   private final Claw m_claw = new Claw();
-  private final Mecanum m_MechanumDrive = new Mecanum();
   private final Tank m_Tank = new Tank();
   private final Turret m_Turret = new Turret();
   private final Vision m_Vision = new Vision();

@@ -10,7 +10,7 @@ import frc.robot.subsystems.Tank;
 
 public class DriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Drivebase m_drivebase;
+  private final Tank m_drivebase;
   private double m_x;
   private double m_y;
 
