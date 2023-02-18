@@ -15,7 +15,7 @@ public class DriveCommand extends CommandBase {
   private double m_y;
 
   public DriveCommand(Tank subsystem) {
-  m_drivebase = subsystem;
+    m_drivebase = subsystem;
     addRequirements(m_drivebase);
   }
 
@@ -24,7 +24,9 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_drivebase.arcadeDrive(RobotContainer.getLeftStickY() / RobotContainer.getMaxSpeed(), RobotContainer.getRightStickX() / RobotContainer.getMaxSpeed());
+    m_drivebase.arcadeDrive(
+        RobotContainer.getLeftStickY() / RobotContainer.getMaxSpeed(),
+        RobotContainer.getRightStickX() / RobotContainer.getMaxSpeed());
   }
 
   @Override
