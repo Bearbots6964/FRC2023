@@ -22,9 +22,10 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
+    //double check getMaxSpeed(), might be wrong
     m_drivebase.arcadeDrive(
-        RobotContainer.getLeftStickY() / RobotContainer.getMaxSpeed(),
-        RobotContainer.getRightStickX() / RobotContainer.getMaxSpeed());
+        RobotContainer.getLeftStickY() * RobotContainer.getMaxSpeed(),
+        RobotContainer.getRightStickX() * RobotContainer.getMaxSpeed());
   }
 
   @Override

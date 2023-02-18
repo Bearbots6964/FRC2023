@@ -48,11 +48,12 @@ public final class Constants {
   }
 
   public static final class CanConstants {
-    public static final int kLeftFrontMotorPort = 5;
+    public static final int kLeftFrontMotorPort = 3;
     public static final int kLeftRearMotorPort = 2;
-    public static final int kRightFrontMotorPort = 3;
-    public static final int kRightRearMotorPort = 4;
-    public static final double kRampRate = 1;
+    public static final int kRightFrontMotorPort = 4;
+    public static final int kRightRearMotorPort = 5;
+    public static final double kRampRate = 0.1;
+    
 
     public static final String kBaseType = "tank";
   }

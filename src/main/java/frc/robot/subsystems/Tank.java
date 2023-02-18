@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanConstants;
 import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -43,8 +44,7 @@ public class Tank extends SubsystemBase {
       left = new MotorControllerGroup(leftFront, leftRear);
       addChild("left", left);
 
-      rightFront =
-          new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
+      rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
       rightFront.restoreFactoryDefaults();
       rightFront.setInverted(false);
       rightFront.setIdleMode(IdleMode.kCoast);
@@ -74,7 +74,10 @@ public class Tank extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    SmartDashboard.putNumber("leftStickY", RobotContainer.getLeftStickY());
+    SmartDashboard.putNumber("rightStickX", RobotContainer.getRightStickX());
+  }
 
   @Override
   public void simulationPeriodic() {}
@@ -87,8 +90,7 @@ public class Tank extends SubsystemBase {
    */
   public void arcadeDrive(double speed, double rotation) {
     try {
-      drive.arcadeDrive(
-          speed * RobotContainer.getMaxSpeed(), rotation * RobotContainer.getMaxSpeed());
+      drive.arcadeDrive(-speed, rotation);
     } catch (Exception e) {
       throw e;
     }

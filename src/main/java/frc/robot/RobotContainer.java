@@ -77,7 +77,7 @@ public class RobotContainer {
 
   public static double getLeftStickY() {
     double axis = m_driverController.getRawAxis(1);
-    if (Math.abs(axis) < 0.02) {
+    if (Math.abs(axis) < 0.05) {
       axis = 0;
     }
     return axis * -1;
@@ -85,7 +85,7 @@ public class RobotContainer {
 
   public static double getLeftStickX() {
     double axis = m_driverController.getRawAxis(0);
-    if (axis < 0.02 && axis > -0.02) {
+    if (axis < 0.05 && axis > -0.05) {
       axis = 0;
     }
     return axis;
@@ -93,7 +93,7 @@ public class RobotContainer {
 
   public static double getRightStickX() {
     double axis = m_driverController.getRawAxis(4);
-    if (axis < 0.02 && axis > -0.02) {
+    if (axis < 0.05 && axis > -0.05) {
       axis = 0;
     }
     return axis;
@@ -101,7 +101,7 @@ public class RobotContainer {
 
   public static double getRightStickY() {
     double axis = m_driverController.getRawAxis(5);
-    if (axis < 0.02 && axis > -0.02) {
+    if (axis < 0.05 && axis > -0.05) {
       axis = 0;
     }
     return axis;
@@ -109,7 +109,7 @@ public class RobotContainer {
 
   public static double getJoystickXAxis() {
     double axis = m_joystick1.getRawAxis(0);
-    if (Math.abs(axis) < 0.02) {
+    if (Math.abs(axis) < 0.05) {
       axis = 0;
     }
     return axis;
