@@ -5,11 +5,11 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanConstants;
 import frc.robot.RobotContainer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -44,7 +44,8 @@ public class Tank extends SubsystemBase {
       left = new MotorControllerGroup(leftFront, leftRear);
       addChild("left", left);
 
-      rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
+      rightFront =
+          new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
       rightFront.restoreFactoryDefaults();
       rightFront.setInverted(false);
       rightFront.setIdleMode(IdleMode.kCoast);
