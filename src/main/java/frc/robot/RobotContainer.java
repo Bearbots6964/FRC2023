@@ -33,7 +33,7 @@ public class RobotContainer {
   private final Claw m_claw = new Claw();
   private final Tank m_Tank = new Tank();
   private final Turret m_Turret = new Turret();
-  private final Vision m_Vision = new Vision();
+  private final Vision m_vision = new Vision();
   private final PID m_PID = new PID(m_Tank);
 
   // INSTANTIATES ALL COMMANDS
