@@ -6,6 +6,13 @@
 	],
 	"settings": {
 		"java.configuration.updateBuildConfiguration": "automatic",
-		"java.server.launchMode": "Standard"
+		"java.server.launchMode": "Standard",
+		"java.configuration.runtimes": [
+			{
+			  "name": "FRC",
+			  "path": "/Users/parker/wpilib/2023/jdk",
+			  "default": true
+			}
+		  ]
 	}
 }
