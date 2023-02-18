@@ -10,11 +10,13 @@ import frc.robot.subsystems.Tank;
 
 public class DriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Tank m_subsystem;
+  private final Drivebase m_drivebase;
+  private double m_x;
+  private double m_y;
 
   public DriveCommand(Tank subsystem) {
-    m_subsystem = subsystem;
-    addRequirements(subsystem);
+  m_drivebase = subsystem;
+    addRequirements(m_drivebase);
   }
 
   @Override
@@ -22,14 +24,21 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_subsystem.arcadeDrive(RobotContainer.getLeftStickY(), RobotContainer.getRightStickX());
+    m_drivebase.arcadeDrive(RobotContainer.getLeftStickY() / RobotContainer.getMaxSpeed(), RobotContainer.getRightStickX() / RobotContainer.getMaxSpeed());
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_drivebase.arcadeDrive(0, 0);
+  }
 
   @Override
   public boolean isFinished() {
+    return false;
+  }
+
+  @Override
+  public boolean runsWhenDisabled() {
     return false;
   }
 }

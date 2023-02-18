@@ -35,7 +35,7 @@ public class RobotContainer {
   private final Tank m_Tank = new Tank();
   private final Turret m_Turret = new Turret();
   private final Vision m_Vision = new Vision();
-  private final PID m_PID = new PID(m_MechanumDrive, m_Tank);
+  private final PID m_PID = new PID(m_Tank);
 
   // INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
@@ -56,6 +56,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    // Set the default tank command to DriveCommand
+    m_Tank.setDefaultCommand(m_DriveCommand);
   }
 
   /**

@@ -115,4 +115,15 @@ public class Tank extends SubsystemBase {
       throw e;
     }
   }
+
+  public void setAllMotors(double speed) {
+    try {
+      leftFront.set(speed);
+      leftRear.set(speed);
+      rightFront.set(speed);
+      rightRear.set(speed);
+    } catch (Exception e) {
+      throw e;
+    }
+  }
 }

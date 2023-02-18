@@ -17,11 +17,9 @@ public class PID extends SubsystemBase {
   public static double error, limitError;
   private static boolean automate;
   public int count;
-  public Mecanum mecanum;
   public Tank tank;
 
-  public PID(Mecanum mechanum, Tank tank) {
-    this.mecanum = mechanum;
+  public PID(Tank tank) {
     this.tank = tank;
 
     timer = new Timer();
@@ -44,12 +42,12 @@ public class PID extends SubsystemBase {
   }
 
   public void testMoveForward() {
-    mecanum.allMotors.set(0.2);
+    tank.setAllMotors(0.2);
   }
 
   public void preparePID() {
     if (!(error < limitError)) {
-      mecanum.setAll(0.2);
+      tank.setAllMotors(0.2);
     }
   }
 
@@ -85,9 +83,9 @@ public class PID extends SubsystemBase {
 
   public void PIDDrive() {
     if (error > tolerance) {
-      mecanum.allMotors.set(PID.PID());
+      tank.setAllMotors(PID.PID());
     } else {
-      mecanum.allMotors.set(0);
+      tank.setAllMotors(0);
     }
   }
 
