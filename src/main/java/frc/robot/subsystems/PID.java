@@ -10,11 +10,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // In the meantime, I'll try not to touch this file :-)
 
 public class PID extends SubsystemBase {
-  public static AHRS gyro;
+  public AHRS gyro;
   private static Timer timer;
-  private static double kP, kI, kD, P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;
-  public double tolerance;
-  public static double error, limitError;
+  private double kP, kI, kD, P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;
+  public double tolerance, error, limitError;
   private static boolean automate;
   public int count;
   public Tank tank;
@@ -35,6 +34,7 @@ public class PID extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("pitch angle", gyro.getPitch());
+    SmartDashboard.putBoolean("gyro cal", gyro.isCalibrating());
     error = gyro.getPitch();
     if (error > 14.1 && error < 15.1) {
       limitError = error;
@@ -60,7 +60,7 @@ public class PID extends SubsystemBase {
     lastError = gyro.getPitch();
   }
 
-  public static double PID() {
+  public double PID() {
     // integral
     if (Math.abs(error) < iLimit) {
       errorSum += error;
@@ -79,14 +79,6 @@ public class PID extends SubsystemBase {
     double outputSpeed = P + I + D;
 
     return outputSpeed;
-  }
-
-  public void PIDDrive() {
-    if (error > tolerance) {
-      tank.setAllMotors(PID.PID());
-    } else {
-      tank.setAllMotors(0);
-    }
   }
 
   public void switchToAuto() {
