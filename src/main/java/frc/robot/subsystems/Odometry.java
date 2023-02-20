@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Odometry extends SubsystemBase {
   // put some stuff here
-  private final AHRS NavX = PID.gyro;
+  //private final AHRS NavX = PID.gyro;
   private final DifferentialDriveKinematics kinematics =
       new DifferentialDriveKinematics(
           Units.inchesToMeters(26.0)); // this is the distance between the tracks
@@ -70,9 +70,9 @@ public class Odometry extends SubsystemBase {
    *
    * @return The angle of the gyroscope as a {@link edu.wpi.first.math.geometry.Rotation2d} object.
    */
-  public Rotation2d getRotation2d() {
-    return NavX.getRotation2d();
-  }
+  // public Rotation2d getRotation2d() {
+  //   return NavX.getRotation2d();
+  // }
 
   /**
    * Returns the differential drive odometry object.

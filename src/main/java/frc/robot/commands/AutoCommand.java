@@ -46,7 +46,6 @@ public class AutoCommand extends CommandBase {
 
   @Override
   public void execute() {
-    pid.PIDDrive();
   }
 
   @Override

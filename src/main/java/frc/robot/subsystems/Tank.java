@@ -30,32 +30,31 @@ public class Tank extends SubsystemBase {
       leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
       leftFront.restoreFactoryDefaults();
       leftFront.setInverted(true);
-      leftFront.setIdleMode(IdleMode.kCoast);
+      leftFront.setIdleMode(IdleMode.kBrake);
       leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       leftFront.burnFlash();
 
       leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
       leftRear.restoreFactoryDefaults();
       leftRear.setInverted(true);
-      leftRear.setIdleMode(IdleMode.kCoast);
+      leftRear.setIdleMode(IdleMode.kBrake);
       leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       leftRear.burnFlash();
 
       left = new MotorControllerGroup(leftFront, leftRear);
       addChild("left", left);
 
-      rightFront =
-          new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
+      rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
       rightFront.restoreFactoryDefaults();
       rightFront.setInverted(false);
-      rightFront.setIdleMode(IdleMode.kCoast);
+      rightFront.setIdleMode(IdleMode.kBrake);
       rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightFront.burnFlash();
 
       rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
       rightRear.restoreFactoryDefaults();
       rightRear.setInverted(false);
-      rightRear.setIdleMode(IdleMode.kCoast);
+      rightRear.setIdleMode(IdleMode.kBrake);
       rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightRear.burnFlash();
       right = new MotorControllerGroup(rightFront, rightRear);
@@ -66,7 +65,7 @@ public class Tank extends SubsystemBase {
 
       drive = new DifferentialDrive(left, right);
       addChild("Drive", drive);
-      drive.setSafetyEnabled(true);
+      drive.setSafetyEnabled(false);
       drive.setExpiration(0.1);
       drive.setMaxOutput(1.0);
 

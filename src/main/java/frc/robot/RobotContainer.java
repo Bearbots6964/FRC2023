@@ -41,15 +41,13 @@ public class RobotContainer {
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
   private final BalanceCommand m_ChargeUpBalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand =
-      new ArmToFirstLevelCommand(m_Turret, m_Arm);
-  private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand =
-      new ArmToSecondLevelCommand(m_Turret, m_Arm);
-  private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand =
-      new ArmToThirdLevelCommand(m_Turret, m_Arm);
+  private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand = new ArmToFirstLevelCommand(m_Turret, m_Arm);
+  private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new ArmToSecondLevelCommand(m_Turret, m_Arm);
+  private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new ArmToThirdLevelCommand(m_Turret, m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
-  private final AutoCommand m_AutoCommand =
-      new AutoCommand(m_Tank, m_PID, m_Turret, m_Arm, m_claw, m_vision);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_Tank, m_PID, m_Turret, m_Arm, m_claw, m_vision);
+  private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -65,13 +63,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   private void configureButtonBindings() {
-    // new JoystickButton(m_driverController,
-    // XboxController.Button.kRightBumper.value).whileTrue(m_CloseClawCommand);
-    // new JoystickButton(m_driverController,
-    // XboxController.Button.kLeftBumper.value).whileTrue(m_OpenClawCommand);
+    // new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value).whileTrue(m_CloseClawCommand);
+    // new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value).whileTrue(m_OpenClawCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kA.value).whileTrue(m_BalanceCommand);
 
-    new JoystickButton(m_joystick1, Joystick.ButtonType.kTrigger.value)
-        .whileTrue(m_CloseClawCommand);
+    new JoystickButton(m_joystick1, Joystick.ButtonType.kTrigger.value).whileTrue(m_CloseClawCommand);
     new JoystickButton(m_joystick1, Joystick.ButtonType.kTop.value).whileTrue(m_OpenClawCommand);
   }
 
