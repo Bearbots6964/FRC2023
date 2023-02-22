@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.PID;
@@ -25,8 +26,7 @@ public class AutoCommand extends CommandBase {
   private final Vision vision;
   private Timer timer = new Timer();
 
-  public AutoCommand(
-      Tank drive1, PID m_pid, Turret m_turret, Arm m_arm, Claw m_claw, Vision m_vision) {
+  public AutoCommand(Tank drive1, PID m_pid, Turret m_turret, Arm m_arm, Claw m_claw, Vision m_vision) {
     drive = drive1;
     pid = m_pid;
     turret = m_turret;
@@ -38,21 +38,21 @@ public class AutoCommand extends CommandBase {
   @Override
   public void initialize() {
     timer.start();
-    pid.preparePID();
-    if (pid.count >= 3) {
-      pid.startPID();
-    }
+
   }
 
   @Override
   public void execute() {
+    drive.setAllMotors(-0.1);
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    
+  }
 
   @Override
   public boolean isFinished() {
-    return timer.get() > 15;
+    return timer.get() > 3;
   }
 }

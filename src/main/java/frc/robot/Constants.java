@@ -29,8 +29,7 @@ public final class Constants {
     public static final double kPDriveVel = 5;
 
     public static final double kTrackwidthMeters = 0.55;
-    public final DifferentialDriveKinematics kDriveKinematics =
-        new DifferentialDriveKinematics(kTrackwidthMeters);
+    public final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
     public static final double kMaxSpeedMetersPerSecond = 5;
     public static final double kMaxAccelerationMetersPerSecondSquared = 5;
@@ -53,6 +52,9 @@ public final class Constants {
     public static final int kRightFrontMotorPort = 4;
     public static final int kRightRearMotorPort = 5;
     public static final double kRampRate = 0.1;
+
+    public static double maxSpeed = 0.5;
+    public static final double maxSpeedIncrement = 0.1;
 
     public static final String kBaseType = "tank";
   }
