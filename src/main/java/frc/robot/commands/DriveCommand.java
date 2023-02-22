@@ -4,7 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
@@ -24,8 +26,10 @@ public class DriveCommand extends CommandBase {
   public void execute() {
     // double check getMaxSpeed(), might be wrong
     m_drivebase.arcadeDrive(
-        RobotContainer.getLeftStickY() * RobotContainer.getMaxSpeed(),
-        RobotContainer.getRightStickX() * RobotContainer.getMaxSpeed());
+        RobotContainer.getLeftStickY() * Constants.CanConstants.maxSpeed,
+        RobotContainer.getRightStickX() * Constants.CanConstants.maxSpeed);
+    
+    SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
   }
 
   @Override

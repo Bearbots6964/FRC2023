@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PID;
@@ -38,6 +40,7 @@ public class BalanceCommand extends CommandBase {
     onRamp = false;
   }
 
+//avoid while loops inside execute
   @Override
   public void execute() {
     double pitchOffset = initPitch - pid.gyro.getPitch();
@@ -51,7 +54,7 @@ public class BalanceCommand extends CommandBase {
     } else {
       onRamp = true;
 
-      if(pitchOffset < 15){
+      if(pitchOffset < 12){
         driveBase.setAllMotors(0);
       } else {
         driveBase.setAllMotors(-0.15);

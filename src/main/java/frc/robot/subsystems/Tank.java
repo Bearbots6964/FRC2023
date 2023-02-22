@@ -14,15 +14,16 @@ import frc.robot.RobotContainer;
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
   public CANSparkMax leftRear;
-  public MotorControllerGroup left;
-
   public CANSparkMax rightFront;
   public CANSparkMax rightRear;
+
+  public MotorControllerGroup left;
   public MotorControllerGroup right;
+  public MotorControllerGroup all;
 
   public DifferentialDrive drive;
 
-  public boolean automate;
+  public boolean brakeMode;
 
   /** */
   public Tank() {
@@ -57,11 +58,12 @@ public class Tank extends SubsystemBase {
       rightRear.setIdleMode(IdleMode.kBrake);
       rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightRear.burnFlash();
+
       right = new MotorControllerGroup(rightFront, rightRear);
       addChild("right", right);
 
-      right = new MotorControllerGroup(rightFront, rightRear);
-      addChild("Right", right);
+      all = new MotorControllerGroup(leftFront, leftRear, rightFront, rightRear);
+      addChild("All", all);
 
       drive = new DifferentialDrive(left, right);
       addChild("Drive", drive);
@@ -69,7 +71,8 @@ public class Tank extends SubsystemBase {
       drive.setExpiration(0.1);
       drive.setMaxOutput(1.0);
 
-      automate = false;
+      brakeMode = true;
+      SmartDashboard.putBoolean("brakeMode", brakeMode);
     }
   }
 
@@ -77,6 +80,42 @@ public class Tank extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("leftStickY", RobotContainer.getLeftStickY());
     SmartDashboard.putNumber("rightStickX", RobotContainer.getRightStickX());
+  }
+
+  public void increaseMaxSpeed(){
+    if(Constants.CanConstants.maxSpeed >= 1){
+      Constants.CanConstants.maxSpeed = 1;
+    } else {
+      Constants.CanConstants.maxSpeed += Constants.CanConstants.maxSpeedIncrement;
+    }
+  }
+
+  public void decreaseMaxSpeed(){
+    if(Constants.CanConstants.maxSpeed <= 0){
+      Constants.CanConstants.maxSpeed = 0;
+    } else {
+      Constants.CanConstants.maxSpeed -= Constants.CanConstants.maxSpeedIncrement;
+    }
+  }
+
+  public void switchIdleMode(){
+    if(brakeMode == true){
+      leftFront.setIdleMode(IdleMode.kCoast);
+      leftRear.setIdleMode(IdleMode.kCoast);
+      rightFront.setIdleMode(IdleMode.kCoast);
+      rightRear.setIdleMode(IdleMode.kCoast);
+    }
+
+    if(brakeMode == false){
+      leftFront.setIdleMode(IdleMode.kBrake);
+      leftRear.setIdleMode(IdleMode.kBrake);
+      rightFront.setIdleMode(IdleMode.kBrake);
+      rightRear.setIdleMode(IdleMode.kBrake);
+    }
+
+    brakeMode = !brakeMode;
+
+    SmartDashboard.putBoolean("brakekMode", brakeMode);
   }
 
   @Override
