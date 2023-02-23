@@ -31,14 +31,14 @@ public class Tank extends SubsystemBase {
       leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
       leftFront.restoreFactoryDefaults();
       leftFront.setInverted(true);
-      leftFront.setIdleMode(IdleMode.kBrake);
+      leftFront.setIdleMode(IdleMode.kCoast);
       leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       leftFront.burnFlash();
 
       leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
       leftRear.restoreFactoryDefaults();
       leftRear.setInverted(true);
-      leftRear.setIdleMode(IdleMode.kBrake);
+      leftRear.setIdleMode(IdleMode.kCoast);
       leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       leftRear.burnFlash();
 
@@ -48,14 +48,14 @@ public class Tank extends SubsystemBase {
       rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
       rightFront.restoreFactoryDefaults();
       rightFront.setInverted(false);
-      rightFront.setIdleMode(IdleMode.kBrake);
+      rightFront.setIdleMode(IdleMode.kCoast);
       rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightFront.burnFlash();
 
       rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
       rightRear.restoreFactoryDefaults();
       rightRear.setInverted(false);
-      rightRear.setIdleMode(IdleMode.kBrake);
+      rightRear.setIdleMode(IdleMode.kCoast);
       rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightRear.burnFlash();
 
@@ -71,7 +71,7 @@ public class Tank extends SubsystemBase {
       drive.setExpiration(0.1);
       drive.setMaxOutput(1.0);
 
-      brakeMode = true;
+      brakeMode = false;
       SmartDashboard.putBoolean("brakeMode", brakeMode);
     }
   }

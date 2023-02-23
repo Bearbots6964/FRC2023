@@ -34,6 +34,11 @@ public class BalanceCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    driveBase.leftFront.setIdleMode(IdleMode.kBrake);
+    driveBase.leftRear.setIdleMode(IdleMode.kBrake);
+    driveBase.rightFront.setIdleMode(IdleMode.kBrake);
+    driveBase.rightRear.setIdleMode(IdleMode.kBrake);
+
     initPitch = pid.gyro.getPitch();
     SmartDashboard.putNumber("init pitch", initPitch);
     max = 0;
