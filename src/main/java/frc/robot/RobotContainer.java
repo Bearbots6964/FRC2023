@@ -45,8 +45,8 @@ public class RobotContainer {
   private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new ArmToSecondLevelCommand(m_Turret, m_Arm);
   private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new ArmToThirdLevelCommand(m_Turret, m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_Tank, m_PID, m_Turret, m_Arm, m_claw, m_vision);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand = new IncreaseMaxSpeedCommand(m_Tank);
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand = new DecreaseMaxSpeedCommand(m_Tank);
   private final SwitchIdleModeCommmand m_SwitchIdleModeCommmand = new SwitchIdleModeCommmand(m_Tank);
