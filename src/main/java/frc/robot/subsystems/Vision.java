@@ -43,22 +43,17 @@ public class Vision extends SubsystemBase {
    * @return The fetched property.
    */ 
   public Array[] getProperties() { // we don't know what type we return until we process it in the if statement
-    var tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
-    var ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-    var tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    var ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    var tl = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    var cl = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    var tshort = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    var tlong = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    var thor = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    var tvert = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-
-
-
-
-
-
+    // // 
+    var tx =     NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    var ty =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+    var tv =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+    var ta =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+    var tl =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("tl").getDouble(0);
+    var cl =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("cl").getDouble(0);
+    var tshort = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tshort").getDouble(0);
+    var tlong =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("tlong").getDouble(0);
+    var thor =   NetworkTableInstance.getDefault().getTable("limelight").getEntry("thor").getDouble(0);
+    var tvert =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("tvert").getDouble(0);
 
 
   }
