@@ -82,6 +82,20 @@ public class Tank extends SubsystemBase {
     SmartDashboard.putNumber("rightStickX", RobotContainer.getRightStickX());
   }
 
+    /**
+   * Drives the robot using arcade drive.
+   *
+   * @param speed The forward/backward speed.
+   * @param rotation The rotation speed.
+   */
+  public void arcadeDrive(double speed, double rotation) {
+    try {
+      drive.arcadeDrive(-speed, rotation);
+    } catch (Exception e) {
+      throw e;
+    }
+  }
+
   public void increaseMaxSpeed(){
     if(Constants.CanConstants.maxSpeed >= 1){
       Constants.CanConstants.maxSpeed = 1;
@@ -121,19 +135,7 @@ public class Tank extends SubsystemBase {
   @Override
   public void simulationPeriodic() {}
 
-  /**
-   * Drives the robot using arcade drive.
-   *
-   * @param speed The forward/backward speed.
-   * @param rotation The rotation speed.
-   */
-  public void arcadeDrive(double speed, double rotation) {
-    try {
-      drive.arcadeDrive(-speed, rotation);
-    } catch (Exception e) {
-      throw e;
-    }
-  }
+
   /**
    * Get the total distance travelled by a motor controller group, averaged across the two motors.
    */
@@ -157,12 +159,13 @@ public class Tank extends SubsystemBase {
     }
   }
 
+  //for some reason -speed is forward. dont ask me why
   public void setAllMotors(double speed) {
     try {
-      leftFront.set(speed);
-      leftRear.set(speed);
-      rightFront.set(speed);
-      rightRear.set(speed);
+      leftFront.set(-speed);
+      leftRear.set(-speed);
+      rightFront.set(-speed);
+      rightRear.set(-speed);
     } catch (Exception e) {
       throw e;
     }
