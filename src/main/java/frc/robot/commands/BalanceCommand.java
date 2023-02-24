@@ -40,7 +40,7 @@ public class BalanceCommand extends CommandBase {
     driveBase.rightFront.setIdleMode(IdleMode.kBrake);
     driveBase.rightRear.setIdleMode(IdleMode.kBrake);
 
-    initPitch = pid.gyro.getPitch();
+    pid.resetPitch();
     SmartDashboard.putNumber("init pitch", initPitch);
     max = 0;
     onRamp = false;
@@ -50,7 +50,6 @@ public class BalanceCommand extends CommandBase {
   @Override
   public void execute() {
     double pitchOffset = initPitch - pid.gyro.getPitch();
-    SmartDashboard.putNumber("pitch offset", pitchOffset);
     
     if(pitchOffset > max) { max = pitchOffset;}
     SmartDashboard.putNumber("max offset", max);
