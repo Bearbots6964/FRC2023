@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PID extends SubsystemBase {
   public AHRS gyro;
-  private final double kP = 0.18; 
+  private final double kP = 0.18;
   private final double kI = 0.025;
   private final double kD = 0.3;
   private double P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;

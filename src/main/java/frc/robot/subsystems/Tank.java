@@ -82,7 +82,7 @@ public class Tank extends SubsystemBase {
     SmartDashboard.putNumber("rightStickX", RobotContainer.getRightStickX());
   }
 
-    /**
+  /**
    * Drives the robot using arcade drive.
    *
    * @param speed The forward/backward speed.
@@ -96,31 +96,31 @@ public class Tank extends SubsystemBase {
     }
   }
 
-  public void increaseMaxSpeed(){
-    if(Constants.CanConstants.maxSpeed >= 1){
+  public void increaseMaxSpeed() {
+    if (Constants.CanConstants.maxSpeed >= 1) {
       Constants.CanConstants.maxSpeed = 1;
     } else {
       Constants.CanConstants.maxSpeed += Constants.CanConstants.maxSpeedIncrement;
     }
   }
 
-  public void decreaseMaxSpeed(){
-    if(Constants.CanConstants.maxSpeed <= 0){
+  public void decreaseMaxSpeed() {
+    if (Constants.CanConstants.maxSpeed <= 0) {
       Constants.CanConstants.maxSpeed = 0;
     } else {
       Constants.CanConstants.maxSpeed -= Constants.CanConstants.maxSpeedIncrement;
     }
   }
 
-  public void switchIdleMode(){
-    if(brakeMode == true){
+  public void switchIdleMode() {
+    if (brakeMode == true) {
       leftFront.setIdleMode(IdleMode.kCoast);
       leftRear.setIdleMode(IdleMode.kCoast);
       rightFront.setIdleMode(IdleMode.kCoast);
       rightRear.setIdleMode(IdleMode.kCoast);
     }
 
-    if(brakeMode == false){
+    if (brakeMode == false) {
       leftFront.setIdleMode(IdleMode.kBrake);
       leftRear.setIdleMode(IdleMode.kBrake);
       rightFront.setIdleMode(IdleMode.kBrake);
@@ -133,18 +133,7 @@ public class Tank extends SubsystemBase {
   }
 
   @Override
-  public void simulationPeriodic() {}
-
-
-  /**
-   * Get the total distance travelled by a motor controller group, averaged across the two motors.
-   */
-  public double getDistance() {
-    try {
-      return (leftFront.getEncoder().getPosition() + rightFront.getEncoder().getPosition()) / 2;
-    } catch (Exception e) {
-      throw e;
-    }
+  public void simulationPeriodic() {
   }
 
   /** Change the ramp rate of the motor controllers. */
@@ -159,7 +148,7 @@ public class Tank extends SubsystemBase {
     }
   }
 
-  //for some reason -speed is forward. dont ask me why
+  // for some reason -speed is forward. dont ask me why
   public void setAllMotors(double speed) {
     try {
       leftFront.set(-speed);
@@ -169,5 +158,15 @@ public class Tank extends SubsystemBase {
     } catch (Exception e) {
       throw e;
     }
+  }
+
+  public double getLeftDistance() {
+    double numRotations = (leftFront.getEncoder().getPosition() + leftRear.getEncoder().getPosition()) / 2;
+    return -numRotations * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
+  }
+
+  public double getRightDistance() {
+    double numRotations = (rightFront.getEncoder().getPosition() + rightRear.getEncoder().getPosition()) / 2;
+    return -numRotations * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
   }
 }
