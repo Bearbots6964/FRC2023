@@ -3,6 +3,7 @@ name: Check PR Status
 on:
   pull_request: 
     types: opened
+  workflow_dispatch:
 jobs:
   approved:
     runs-on: ubuntu-latest
