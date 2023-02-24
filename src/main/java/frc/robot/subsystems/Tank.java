@@ -14,15 +14,16 @@ import frc.robot.RobotContainer;
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
   public CANSparkMax leftRear;
-  public MotorControllerGroup left;
-
   public CANSparkMax rightFront;
   public CANSparkMax rightRear;
+
+  public MotorControllerGroup left;
   public MotorControllerGroup right;
+  public MotorControllerGroup all;
 
   public DifferentialDrive drive;
 
-  public boolean automate;
+  public boolean brakeMode;
 
   /** */
   public Tank() {
@@ -30,47 +31,48 @@ public class Tank extends SubsystemBase {
       leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
       leftFront.restoreFactoryDefaults();
       leftFront.setInverted(true);
-      leftFront.setIdleMode(IdleMode.kCoast);
+      leftFront.setIdleMode(IdleMode.kBrake);
       leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       leftFront.burnFlash();
 
       leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
       leftRear.restoreFactoryDefaults();
       leftRear.setInverted(true);
-      leftRear.setIdleMode(IdleMode.kCoast);
+      leftRear.setIdleMode(IdleMode.kBrake);
       leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       leftRear.burnFlash();
 
       left = new MotorControllerGroup(leftFront, leftRear);
       addChild("left", left);
 
-      rightFront =
-          new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
+      rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
       rightFront.restoreFactoryDefaults();
       rightFront.setInverted(false);
-      rightFront.setIdleMode(IdleMode.kCoast);
+      rightFront.setIdleMode(IdleMode.kBrake);
       rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightFront.burnFlash();
 
       rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
       rightRear.restoreFactoryDefaults();
       rightRear.setInverted(false);
-      rightRear.setIdleMode(IdleMode.kCoast);
+      rightRear.setIdleMode(IdleMode.kBrake);
       rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightRear.burnFlash();
+
       right = new MotorControllerGroup(rightFront, rightRear);
       addChild("right", right);
 
-      right = new MotorControllerGroup(rightFront, rightRear);
-      addChild("Right", right);
+      all = new MotorControllerGroup(leftFront, leftRear, rightFront, rightRear);
+      addChild("All", all);
 
       drive = new DifferentialDrive(left, right);
       addChild("Drive", drive);
-      drive.setSafetyEnabled(true);
+      drive.setSafetyEnabled(false);
       drive.setExpiration(0.1);
       drive.setMaxOutput(1.0);
 
-      automate = false;
+      brakeMode = true;
+      SmartDashboard.putBoolean("brakeMode", brakeMode);
     }
   }
 
@@ -78,6 +80,42 @@ public class Tank extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("leftStickY", RobotContainer.getLeftStickY());
     SmartDashboard.putNumber("rightStickX", RobotContainer.getRightStickX());
+  }
+
+  public void increaseMaxSpeed(){
+    if(Constants.CanConstants.maxSpeed >= 1){
+      Constants.CanConstants.maxSpeed = 1;
+    } else {
+      Constants.CanConstants.maxSpeed += Constants.CanConstants.maxSpeedIncrement;
+    }
+  }
+
+  public void decreaseMaxSpeed(){
+    if(Constants.CanConstants.maxSpeed <= 0){
+      Constants.CanConstants.maxSpeed = 0;
+    } else {
+      Constants.CanConstants.maxSpeed -= Constants.CanConstants.maxSpeedIncrement;
+    }
+  }
+
+  public void switchIdleMode(){
+    if(brakeMode == true){
+      leftFront.setIdleMode(IdleMode.kCoast);
+      leftRear.setIdleMode(IdleMode.kCoast);
+      rightFront.setIdleMode(IdleMode.kCoast);
+      rightRear.setIdleMode(IdleMode.kCoast);
+    }
+
+    if(brakeMode == false){
+      leftFront.setIdleMode(IdleMode.kBrake);
+      leftRear.setIdleMode(IdleMode.kBrake);
+      rightFront.setIdleMode(IdleMode.kBrake);
+      rightRear.setIdleMode(IdleMode.kBrake);
+    }
+
+    brakeMode = !brakeMode;
+
+    SmartDashboard.putBoolean("brakekMode", brakeMode);
   }
 
   @Override

@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PID;
 import frc.robot.subsystems.Tank;
@@ -18,6 +21,8 @@ public class BalanceCommand extends CommandBase {
   boolean isFinished = false;
   boolean inErrorZone = false;
   int count;
+  private double initPitch, max;
+  private boolean onRamp;
 
   public BalanceCommand(PID m_pid, Tank m_driveBase) {
     pid = m_pid;
@@ -28,13 +33,32 @@ public class BalanceCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    initPitch = pid.gyro.getPitch();
+    SmartDashboard.putNumber("init pitch", initPitch);
+    max = 0;
+    onRamp = false;
+  }
 
+//avoid while loops inside execute
   @Override
   public void execute() {
-    driveBase.automate = true;
-    while (PID.gyro.getPitch() < 14) {
-      pid.testMoveForward();
+    double pitchOffset = initPitch - pid.gyro.getPitch();
+    SmartDashboard.putNumber("pitch offset", pitchOffset);
+    
+    if(pitchOffset > max) { max = pitchOffset;}
+    SmartDashboard.putNumber("max offset", max);
+
+    if(pitchOffset < 19 && !onRamp){
+      driveBase.setAllMotors(-0.25);
+    } else {
+      onRamp = true;
+
+      if(pitchOffset < 12){
+        driveBase.setAllMotors(0);
+      } else {
+        driveBase.setAllMotors(-0.15);
+      }
     }
   }
 
