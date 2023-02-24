@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,9 +19,13 @@ public class Arm extends SubsystemBase {
   public static DigitalInput zeroDegreesLS = new DigitalInput(1);
 
   public double desiredArmAngle, currentArmAngle;
+  
+  public double gearRatio = 87;
 
   public Arm() {
     yMotor = new CANSparkMax(7, MotorType.kBrushless);
+    yMotor.setIdleMode(IdleMode.kBrake);
+    yMotor.setSmartCurrentLimit(1, 5);
   }
 
   @Override
