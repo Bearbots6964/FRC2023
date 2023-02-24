@@ -34,7 +34,9 @@ public class RobotContainer {
   private final Tank m_Tank = new Tank();
   private final Turret m_Turret = new Turret();
   private final Vision m_vision = new Vision();
-  private final PID m_PID = new PID(m_Tank);
+  private final PID m_PID = new PID();
+  private final Odometry m_Odometry = new Odometry(m_PID.gyro, m_Tank);
+
 
   // INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);

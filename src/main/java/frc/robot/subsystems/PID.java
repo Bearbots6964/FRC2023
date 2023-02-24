@@ -11,68 +11,54 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PID extends SubsystemBase {
   public AHRS gyro;
-  private static Timer timer;
-  private double kP, kI, kD, P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;
-  public double tolerance, error, limitError;
-  private static boolean automate;
+  private final double kP = 0.18;
+  private final double kI = 0.025;
+  private final double kD = 0.3;
+  private double P, I, D, errorSum, errorRate, lastTimeStamp, iLimit, lastError;
+  public double toleranceDeg;
   public int count;
   public Tank tank;
 
-  public PID(Tank tank) {
-    this.tank = tank;
+  private float initPitch;
 
-    timer = new Timer();
-    automate = false;
-    kP = 0.18;
-    kI = 0.025;
-    kD = 0.3;
-    tolerance = 0.5;
+  public PID() {
+    toleranceDeg = 0.5;
     iLimit = 2.0;
     gyro = new AHRS(SPI.Port.kMXP);
+
+    initPitch = gyro.getPitch();
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("pitch angle", gyro.getPitch());
     SmartDashboard.putBoolean("gyro cal", gyro.isCalibrating());
-    error = gyro.getPitch();
-    if (error > 14.1 && error < 15.1) {
-      limitError = error;
-    }
-  }
+    SmartDashboard.putNumber("yaw angle", gyro.getYaw());
+    SmartDashboard.putNumber("pitch offset", getPitchOffset());
 
-  public void testMoveForward() {
-    tank.setAllMotors(0.2);
-  }
-
-  public void preparePID() {
-    if (!(error < limitError)) {
-      tank.setAllMotors(0.2);
-    }
   }
 
   public void startPID() {
-    switchToAuto();
     errorSum = 0;
-    lastError = 0;
-    timer.start();
-    lastTimeStamp = timer.getFPGATimestamp();
-    lastError = gyro.getPitch();
+    lastTimeStamp = Timer.getFPGATimestamp();
+    lastError = getPitchOffset();
   }
 
-  public double PID() {
+  public double PIDoutput() {
+    float errorDeg = getPitchOffset();
+
     // integral
-    if (Math.abs(error) < iLimit) {
-      errorSum += error;
+    if (Math.abs(errorDeg) < iLimit) {
+      errorSum += errorDeg;
     }
 
     // derivative
-    double deltaT = timer.getFPGATimestamp() - lastTimeStamp;
-    errorRate = (error - lastError) / deltaT;
-    lastError = error;
-    lastTimeStamp = timer.getFPGATimestamp();
+    double deltaT = Timer.getFPGATimestamp() - lastTimeStamp;
+    errorRate = (errorDeg - lastError) / deltaT;
+    lastError = errorDeg;
+    lastTimeStamp = Timer.getFPGATimestamp();
 
-    P = kP * error;
+    P = kP * errorDeg;
     I = kI * errorSum;
     D = kD * errorRate;
 
@@ -81,12 +67,12 @@ public class PID extends SubsystemBase {
     return outputSpeed;
   }
 
-  public void switchToAuto() {
-    automate = true;
+  public void resetPitch() {
+    initPitch = gyro.getPitch();
   }
 
-  public void switchToJoystick() {
-    automate = false;
+  private float getPitchOffset() {
+    return initPitch - gyro.getPitch();
   }
 
   @Override
