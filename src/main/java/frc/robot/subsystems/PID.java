@@ -55,7 +55,7 @@ public class PID extends SubsystemBase {
     SmartDashboard.putNumber("accel y in", gyro.getWorldLinearAccelY() * 39.37);
     SmartDashboard.putNumber("accel z in", gyro.getWorldLinearAccelZ() * 39.37);
 
-    // create Shuffleboard widgets for the gyro and accelerometer
+    /**  create Shuffleboard widgets for the gyro and accelerometer
     Shuffleboard.getTab("Gyro")
         .add("pitch angle", gyro.getPitch())
         .withWidget("Number Slider")
@@ -115,8 +115,7 @@ public class PID extends SubsystemBase {
         .withWidget("Number Slider")
         .withProperties(Map.of("min", -10, "max", 10))
         .getEntry();
-
-
+    */
   }
 
   public void startPID() {

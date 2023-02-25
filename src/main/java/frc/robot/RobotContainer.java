@@ -64,7 +64,23 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Create basic FMS info widget on Shuffleboard using NetworkTables and its entries
-    
+    NetworkTableEntry matchTypeEntry = NetworkTableInstance.getDefault().getEntry("/FMSInfo/MatchType");
+    NetworkTableEntry matchNumberEntry = NetworkTableInstance.getDefault().getEntry("/FMSInfo/MatchNumber");
+    NetworkTableEntry replayNumberEntry = NetworkTableInstance.getDefault().getEntry("/FMSInfo/ReplayNumber");
+    NetworkTableEntry eventEntry = NetworkTableInstance.getDefault().getEntry("/FMSInfo/EventName");
+    NetworkTableEntry gameSpecificMessageEntry = NetworkTableInstance.getDefault().getEntry("/FMSInfo/GameSpecificMessage");
+    NetworkTableEntry matchTimeEntry = NetworkTableInstance.getDefault().getEntry("/FMSInfo/MatchTime");
+    ShuffleboardTab tab = Shuffleboard.getTab("FMS Info");
+
+
+    // Show what command your subsystem is running on the SmartDashboard
+    SmartDashboard.putData(m_Tank);
+    SmartDashboard.putData(m_Arm);
+    SmartDashboard.putData(m_Turret);
+    SmartDashboard.putData(m_claw);
+    SmartDashboard.putData(m_PID);
+    SmartDashboard.putData(m_Odometry);
+
 
   }
 
