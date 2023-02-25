@@ -24,6 +24,30 @@ public final class Constants {
     public static final double wheelDiameterMeters = 0.1524;
     public static final double tankDriveGearRatio = 8.45;
     public static final double encoderFactor = wheelDiameterMeters * Math.PI / tankDriveGearRatio;
+
+    public static final class DrivePID {
+      public static final double proportionConstant = 0.18;
+      public static final double integralConstant = 0.025;
+      public static final double derivativeConstant = 0.3;
+
+      public static final double integratorMinMeters = 0.01;
+      public static final double integratorMaxMeters = 0.5;
+
+      public static final double positionToleranceMeters = 0.5;
+      public static final double velocityToleranceMetersPerSec = 0.5;
+    }
+
+    public static final class PitchPID {
+      public static final double proportionConstant = 0.18;
+      public static final double integralConstant = 0.025;
+      public static final double derivativeConstant = 0.3;
+
+      public static final double integratorMinDeg = 0.01;
+      public static final double integratorMaxDeg = 0.5;
+
+      public static final double positionToleranceDeg = 0.5;
+      public static final double velocityToleranceDegPerSec = 1;
+    }
   }
 
   public static final class CanConstants {

@@ -4,79 +4,83 @@
 
 package frc.robot.commands;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax.IdleMode;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.PID;
 import frc.robot.subsystems.Tank;
 
 /** An example command that uses an example subsystem. */
 public class BalanceCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final PID pid;
-
+  private final AHRS gyro;
   private final Tank driveBase;
-
-  boolean isFinished = false;
-  boolean inErrorZone = false;
-  int count;
-  private double initPitch, max;
+  private final PIDController pitchPIDController;
+  private final double goalPitch = 0;
+  private double initPitch;
   private boolean onRamp;
 
-  public BalanceCommand(PID m_pid, Tank m_driveBase) {
-    pid = m_pid;
+  public BalanceCommand(AHRS gyro, Tank m_driveBase) {
+    this.gyro = gyro;
     driveBase = m_driveBase;
-    // i feel so smart now boi
-    addRequirements(pid);
+
     addRequirements(driveBase);
+
+    pitchPIDController = new PIDController(
+        Constants.AutoConstants.PitchPID.proportionConstant,
+        Constants.AutoConstants.PitchPID.integralConstant,
+        Constants.AutoConstants.PitchPID.derivativeConstant
+    );
+
+    pitchPIDController.setTolerance(
+        Constants.AutoConstants.PitchPID.positionToleranceDeg,
+        Constants.AutoConstants.PitchPID.velocityToleranceDegPerSec
+    );
+
+    pitchPIDController.setIntegratorRange(
+        Constants.AutoConstants.PitchPID.integratorMinDeg,
+        Constants.AutoConstants.PitchPID.integratorMaxDeg
+    );
   }
 
-  // makes me feel safe
   @Override
   public void initialize() {
     driveBase.leftFront.setIdleMode(IdleMode.kBrake);
     driveBase.leftRear.setIdleMode(IdleMode.kBrake);
     driveBase.rightFront.setIdleMode(IdleMode.kBrake);
     driveBase.rightRear.setIdleMode(IdleMode.kBrake);
+    
+    pitchPIDController.reset();
 
-    pid.resetPitch();
-    initPitch = pid.gyro.getPitch();
+    initPitch = gyro.getPitch();
     SmartDashboard.putNumber("init pitch", initPitch);
-    max = 0;
     onRamp = false;
   }
 
   // avoid while loops inside execute
   @Override
   public void execute() {
-    double pitchOffset = initPitch - pid.gyro.getPitch();
+    double pitchOffset = initPitch - gyro.getPitch();
+
     SmartDashboard.putNumber("pitch offset", pitchOffset);
 
-    if (pitchOffset > max) {
-      max = pitchOffset;
-    }
-    SmartDashboard.putNumber("max offset", max);
-
-    if (pitchOffset < 15.7 && !onRamp) {
-      driveBase.setAllMotors(0.35);
+    if (pitchOffset < 19 && !onRamp) {
+      driveBase.setAllMotors(0.25);
     } else {
       onRamp = true;
 
-      if (Math.abs(pitchOffset) < 3.5) {
+      if (pitchPIDController.atSetpoint()) {
         driveBase.setAllMotors(0);
       } else {
-        driveBase.setAllMotors(
-            0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
-        SmartDashboard.putNumber(
-            "motor speed", 0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
+        driveBase.setAllMotors(0.15 * pitchPIDController.calculate(pitchOffset, goalPitch));
       }
     }
   }
 
-  // makes the thing go brrrrr
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {

@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -24,15 +26,16 @@ public class RobotContainer {
   public static final XboxController m_armController = new XboxController(0);
   public static final XboxController m_driverController = new XboxController(1);
 
+  private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+
   // INSTANTIATES ALL SUBSYSTEMS
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Arm m_Arm = new Arm();
   private final Claw m_claw = new Claw();
   private final Tank m_Tank = new Tank();
   private final Turret m_Turret = new Turret();
-  // private final Vision m_vision = new Vision();
-  private final PID m_PID = new PID();
-  private final Odometry m_Odometry = new Odometry(m_PID.gyro, m_Tank);
+  private final Vision m_vision = new Vision();
+  private final Odometry m_Odometry = new Odometry(gyro, m_Tank);
 
 
   // INSTANTIATES ALL COMMANDS
@@ -46,8 +49,8 @@ public class RobotContainer {
   private final MoveArmXCommand m_MoveArmXCommand = new MoveArmXCommand(m_Turret);
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
-  private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank);
+  private final BalanceCommand m_BalanceCommand = new BalanceCommand(gyro, m_Tank);
+  private final AutoCommand m_AutoCommand = new AutoCommand(gyro, m_Tank);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand = new IncreaseMaxSpeedCommand(m_Tank);
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand = new DecreaseMaxSpeedCommand(m_Tank);
   private final SwitchIdleModeCommmand m_SwitchIdleModeCommmand = new SwitchIdleModeCommmand(m_Tank);

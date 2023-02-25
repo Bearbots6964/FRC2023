@@ -4,12 +4,12 @@
 
 package frc.robot.commands;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
 
-
 public class AutoCommand extends SequentialCommandGroup {
-  public AutoCommand(PID m_pid, Tank m_driveBase) {
-    addCommands(new BalanceCommand(m_pid, m_driveBase));
+  public AutoCommand(AHRS gyro, Tank m_driveBase) {
+    addCommands(new BalanceCommand(gyro, m_driveBase));
   }
 }
