@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Claw extends SubsystemBase {
   private CANSparkMax clawMotor;
 
+  // gear ratio is 100:1
+
   public Claw() {
     clawMotor = new CANSparkMax(8, MotorType.kBrushless);
   }
