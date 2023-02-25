@@ -36,8 +36,8 @@ public class RobotContainer {
 
   // INSTANTIATES ALL COMMANDS
   // private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
-  // private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
-  // private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
+  private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
+  private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
   // private final BalanceCommand m_ChargeUpBalanceCommand = new BalanceCommand(m_PID, m_Tank);
   // private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand = new ArmToFirstLevelCommand(m_Turret, m_Arm);
   // private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new ArmToSecondLevelCommand(m_Turret, m_Arm);
@@ -69,8 +69,8 @@ public class RobotContainer {
     new JoystickButton(m_driverController, XboxController.Button.kBack.value).whileTrue(m_DecreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kX.value).whileTrue(m_SwitchIdleModeCommmand);
 
-    // new JoystickButton(m_joystick1, Joystick.ButtonType.kTrigger.value).whileTrue(m_CloseClawCommand);
-    // new JoystickButton(m_joystick1, Joystick.ButtonType.kTop.value).whileTrue(m_OpenClawCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kA.value).whileTrue(m_CloseClawCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kB.value).whileTrue(m_OpenClawCommand);
   }
 
   public static double getLeftStickY() {
