@@ -18,14 +18,16 @@ public class Turret extends SubsystemBase {
   public Turret() {
     xMotor = new CANSparkMax(6, MotorType.kBrushless);
     xMotor.setIdleMode(IdleMode.kBrake);
-    xMotor.setSmartCurrentLimit(1, 5);
+    xMotor.setSmartCurrentLimit(5, 10);
+    xMotor.burnFlash();
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+  }
 
   public void rotateArm(double leftStickXaxis) {
-    double speed = 0.4;
+    double speed = -1;
     double motorDrive = leftStickXaxis * speed;
     xMotor.set(motorDrive);
   }

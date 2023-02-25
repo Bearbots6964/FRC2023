@@ -25,14 +25,15 @@ public class Arm extends SubsystemBase {
   public Arm() {
     yMotor = new CANSparkMax(7, MotorType.kBrushless);
     yMotor.setIdleMode(IdleMode.kBrake);
-    yMotor.setSmartCurrentLimit(1, 5);
+    yMotor.setSmartCurrentLimit(5, 10);
+    yMotor.burnFlash();
   }
 
   @Override
   public void periodic() {}
 
   public void liftArm(double leftStickYaxis) {
-    double speed = 0.4;
+    double speed = 0.8;
     double motorDrive = leftStickYaxis * speed;
     yMotor.set(motorDrive);
   }

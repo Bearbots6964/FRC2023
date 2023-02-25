@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
@@ -29,7 +30,7 @@ public class RobotContainer {
   private final Claw m_claw = new Claw();
   private final Tank m_Tank = new Tank();
   private final Turret m_Turret = new Turret();
-  private final Vision m_vision = new Vision();
+  // private final Vision m_vision = new Vision();
   private final PID m_PID = new PID();
   private final Odometry m_Odometry = new Odometry(m_PID.gyro, m_Tank);
 
@@ -69,13 +70,13 @@ public class RobotContainer {
     new JoystickButton(m_driverController, XboxController.Button.kBack.value).whileTrue(m_DecreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kX.value).whileTrue(m_SwitchIdleModeCommmand);
 
-    new JoystickButton(m_driverController, XboxController.Button.kA.value).whileTrue(m_CloseClawCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kB.value).whileTrue(m_OpenClawCommand);
+    new JoystickButton(m_armController, XboxController.Button.kA.value).whileTrue(m_CloseClawCommand);
+    new JoystickButton(m_armController, XboxController.Button.kB.value).whileTrue(m_OpenClawCommand);
   }
 
   public static double getLeftStickY() {
     double axis = m_driverController.getRawAxis(1);
-    if (Math.abs(axis) < 0.05) {
+    if (Math.abs(axis) < 0.03) {
       axis = 0;
     }
     return axis * -1;
@@ -83,7 +84,7 @@ public class RobotContainer {
 
   public static double getLeftStickX() {
     double axis = m_driverController.getRawAxis(0);
-    if (axis < 0.05 && axis > -0.05) {
+    if (Math.abs(axis) < 0.03) {
       axis = 0;
     }
     return axis;
@@ -91,7 +92,7 @@ public class RobotContainer {
 
   public static double getRightStickX() {
     double axis = m_driverController.getRawAxis(4);
-    if (axis < 0.05 && axis > -0.05) {
+    if (Math.abs(axis) < 0.03) {
       axis = 0;
     }
     return axis;
@@ -99,7 +100,7 @@ public class RobotContainer {
 
   public static double getRightStickY() {
     double axis = m_driverController.getRawAxis(5);
-    if (axis < 0.05 && axis > -0.05) {
+    if (Math.abs(axis) < 0.03) {
       axis = 0;
     }
     return axis;
@@ -107,6 +108,8 @@ public class RobotContainer {
 
   public static double getArmControllerLeftStickY() {
     double axis = m_armController.getRawAxis(1);
+    SmartDashboard.putNumber("arm left stick y", axis);
+
     if (Math.abs(axis) < 0.05) {
       axis = 0;
     }
@@ -115,6 +118,8 @@ public class RobotContainer {
 
   public static double getArmControllerRightStickX() {
     double axis = m_armController.getRawAxis(4);
+    SmartDashboard.putNumber("arm right stick x", axis);
+
     if (Math.abs(axis) < 0.05) {
       axis = 0;
     }

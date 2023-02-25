@@ -23,7 +23,6 @@ public class MoveArmYCommand extends CommandBase {
 
   @Override
   public void execute() {
-    SmartDashboard.putNumber("arm left stick y", RobotContainer.getArmControllerLeftStickY());
     m_subsystem.liftArm(RobotContainer.getArmControllerLeftStickY());
   }
 
