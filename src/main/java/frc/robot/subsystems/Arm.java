@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
@@ -27,10 +28,17 @@ public class Arm extends SubsystemBase {
     yMotor.setIdleMode(IdleMode.kBrake);
     yMotor.setSmartCurrentLimit(5, 10);
     yMotor.burnFlash();
+
+    yEncoder = yMotor.getEncoder();
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    SmartDashboard.putNumber("Arm Encoder", yEncoder.getPosition());
+    SmartDashboard.putNumber("Arm Angle", currentArmAngle);
+    SmartDashboard.putBoolean("Zero Degrees LS", zeroDegreesLS.get());
+
+  }
 
   public void liftArm(double leftStickYaxis) {
     double speed = 0.8;

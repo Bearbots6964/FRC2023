@@ -10,6 +10,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.shuffleboard.*;
+
+import java.util.function.Supplier;
+
+import edu.wpi.first.networktables.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -57,6 +62,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    // Create basic FMS info widget on Shuffleboard using NetworkTables and its entries
+    
+
   }
 
   /**
@@ -70,8 +79,8 @@ public class RobotContainer {
     new JoystickButton(m_driverController, XboxController.Button.kBack.value).whileTrue(m_DecreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kX.value).whileTrue(m_SwitchIdleModeCommmand);
 
-    new JoystickButton(m_armController, XboxController.Button.kA.value).whileTrue(m_CloseClawCommand);
-    new JoystickButton(m_armController, XboxController.Button.kB.value).whileTrue(m_OpenClawCommand);
+    new JoystickButton(m_armController, XboxController.Button.kRightBumper.value).whileTrue(m_CloseClawCommand);
+    new JoystickButton(m_armController, XboxController.Button.kLeftBumper.value).whileTrue(m_OpenClawCommand);
   }
 
   public static double getLeftStickY() {

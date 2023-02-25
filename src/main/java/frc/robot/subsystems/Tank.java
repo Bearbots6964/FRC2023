@@ -31,14 +31,14 @@ public class Tank extends SubsystemBase {
       leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
       leftFront.restoreFactoryDefaults();
       leftFront.setInverted(true);
-      leftFront.setIdleMode(IdleMode.kCoast);
+      leftFront.setIdleMode(IdleMode.kBrake);
       leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       leftFront.burnFlash();
 
       leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
       leftRear.restoreFactoryDefaults();
       leftRear.setInverted(true);
-      leftRear.setIdleMode(IdleMode.kCoast);
+      leftRear.setIdleMode(IdleMode.kBrake);
       leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       leftRear.burnFlash();
 
@@ -48,14 +48,14 @@ public class Tank extends SubsystemBase {
       rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
       rightFront.restoreFactoryDefaults();
       rightFront.setInverted(false);
-      rightFront.setIdleMode(IdleMode.kCoast);
+      rightFront.setIdleMode(IdleMode.kBrake);
       rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightFront.burnFlash();
 
       rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
       rightRear.restoreFactoryDefaults();
       rightRear.setInverted(false);
-      rightRear.setIdleMode(IdleMode.kCoast);
+      rightRear.setIdleMode(IdleMode.kBrake);
       rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightRear.burnFlash();
 
@@ -79,8 +79,21 @@ public class Tank extends SubsystemBase {
 
   @Override
   public void periodic() {
+
     SmartDashboard.putNumber("leftStickY", RobotContainer.getLeftStickY());
     SmartDashboard.putNumber("rightStickX", RobotContainer.getRightStickX());
+
+    SmartDashboard.putNumber("leftFront", leftFront.get());
+    SmartDashboard.putNumber("leftRear", leftRear.get());
+    SmartDashboard.putNumber("rightFront", rightFront.get());
+    SmartDashboard.putNumber("rightRear", rightRear.get());
+
+    SmartDashboard.putNumber("left", left.get());
+    SmartDashboard.putNumber("right", right.get());
+
+    SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
+
+
   }
 
   /**

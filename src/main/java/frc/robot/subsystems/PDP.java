@@ -21,6 +21,11 @@ public class PDP extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("PDP Voltage", pdp.getVoltage());
+
+    // Put the current of each channel into SmartDashboard
+    for (int i = 0; i < 16; i++) {
+      SmartDashboard.putNumber("PDP Channel " + i, pdp.getCurrent(i));
+    }
   }
   /**
    * @return the voltage of the PDP in Volts
