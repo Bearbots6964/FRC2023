@@ -4,12 +4,13 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-// import frc.robot.Constants.AutoConstants;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.*;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.*;
@@ -27,6 +28,8 @@ public class RobotContainer {
   public static final XboxController m_driverController = new XboxController(1);
   public static final Joystick m_joystick1 = new Joystick(2);
 
+  private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+
   // INSTANTIATES ALL SUBSYSTEMS
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Arm m_Arm = new Arm();
@@ -34,21 +37,19 @@ public class RobotContainer {
   private final Tank m_Tank = new Tank();
   private final Turret m_Turret = new Turret();
   private final Vision m_vision = new Vision();
-  private final PID m_PID = new PID();
-  private final Odometry m_Odometry = new Odometry(m_PID.gyro, m_Tank);
+  private final Odometry m_Odometry = new Odometry(gyro, m_Tank);
 
 
   // INSTANTIATES ALL COMMANDS
   private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
-  private final BalanceCommand m_ChargeUpBalanceCommand = new BalanceCommand(m_PID, m_Tank);
   private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand = new ArmToFirstLevelCommand(m_Turret, m_Arm);
   private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new ArmToSecondLevelCommand(m_Turret, m_Arm);
   private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new ArmToThirdLevelCommand(m_Turret, m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
-  private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank);
+  private final BalanceCommand m_BalanceCommand = new BalanceCommand(gyro, m_Tank);
+  private final AutoCommand m_AutoCommand = new AutoCommand(gryo, m_Tank);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand = new IncreaseMaxSpeedCommand(m_Tank);
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand = new DecreaseMaxSpeedCommand(m_Tank);
   private final SwitchIdleModeCommmand m_SwitchIdleModeCommmand = new SwitchIdleModeCommmand(m_Tank);
