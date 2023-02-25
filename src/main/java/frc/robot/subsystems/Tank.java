@@ -74,6 +74,11 @@ public class Tank extends SubsystemBase {
 
       brakeMode = false;
       SmartDashboard.putBoolean("brakeMode", brakeMode);
+
+      leftFront.setSmartCurrentLimit(40, 60);
+      leftRear.setSmartCurrentLimit(40, 60);
+      rightFront.setSmartCurrentLimit(40, 60);
+      rightRear.setSmartCurrentLimit(40, 60);
     }
   }
 
