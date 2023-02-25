@@ -14,7 +14,7 @@ import frc.robot.subsystems.Tank;
 
 /** An example command that uses an example subsystem. */
 public class BalanceCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final PID pid;
 
   private final Tank driveBase;
@@ -28,11 +28,12 @@ public class BalanceCommand extends CommandBase {
   public BalanceCommand(PID m_pid, Tank m_driveBase) {
     pid = m_pid;
     driveBase = m_driveBase;
-
+//i feel so smart now boi
     addRequirements(pid);
     addRequirements(driveBase);
   }
 
+  // makes me feel safe
   @Override
   public void initialize() {
     driveBase.leftFront.setIdleMode(IdleMode.kBrake);
@@ -41,34 +42,41 @@ public class BalanceCommand extends CommandBase {
     driveBase.rightRear.setIdleMode(IdleMode.kBrake);
 
     pid.resetPitch();
+    initPitch = pid.gyro.getPitch();
     SmartDashboard.putNumber("init pitch", initPitch);
     max = 0;
     onRamp = false;
   }
 
-//avoid while loops inside execute
+  // avoid while loops inside execute
   @Override
   public void execute() {
     double pitchOffset = initPitch - pid.gyro.getPitch();
-    
-    if(pitchOffset > max) { max = pitchOffset;}
+    SmartDashboard.putNumber("pitch offset", pitchOffset);
+
+    if (pitchOffset > max) {
+      max = pitchOffset;
+    }
     SmartDashboard.putNumber("max offset", max);
 
-    if(pitchOffset < 19 && !onRamp){
-      driveBase.setAllMotors(0.25);
+    if (pitchOffset < 15.7 && !onRamp) {
+      driveBase.setAllMotors(0.35);
     } else {
       onRamp = true;
 
-      if(Math.abs(pitchOffset) < 3){
+      if (Math.abs(pitchOffset) < 3.5) {
         driveBase.setAllMotors(0);
       } else {
-        driveBase.setAllMotors(0.15 * (pitchOffset/Constants.OperatorConstants.ProportionalDivisor));
+        driveBase.setAllMotors(0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
+        SmartDashboard.putNumber("motor speed", 0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
       }
     }
   }
 
+  // makes the thing go brrrrr
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {
