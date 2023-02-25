@@ -4,14 +4,10 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.*;
-// import frc.robot.Constants.AutoConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.*;
 
 /**
@@ -24,11 +20,11 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   // RR 1/11/2022
+  public static final XboxController m_armController = new XboxController(0);
   public static final XboxController m_driverController = new XboxController(1);
-  public static final Joystick m_joystick1 = new Joystick(2);
 
   // INSTANTIATES ALL SUBSYSTEMS
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Arm m_Arm = new Arm();
   private final Claw m_claw = new Claw();
   private final Tank m_Tank = new Tank();
@@ -39,13 +35,15 @@ public class RobotContainer {
 
 
   // INSTANTIATES ALL COMMANDS
-  private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
-  private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
-  private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
-  private final BalanceCommand m_ChargeUpBalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand = new ArmToFirstLevelCommand(m_Turret, m_Arm);
-  private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new ArmToSecondLevelCommand(m_Turret, m_Arm);
-  private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new ArmToThirdLevelCommand(m_Turret, m_Arm);
+  // private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
+  // private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
+  // private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
+  // private final BalanceCommand m_ChargeUpBalanceCommand = new BalanceCommand(m_PID, m_Tank);
+  // private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand = new ArmToFirstLevelCommand(m_Turret, m_Arm);
+  // private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new ArmToSecondLevelCommand(m_Turret, m_Arm);
+  // private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new ArmToThirdLevelCommand(m_Turret, m_Arm);
+  private final MoveArmXCommand m_MoveArmXCommand = new MoveArmXCommand(m_Turret);
+  private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank);
@@ -71,9 +69,8 @@ public class RobotContainer {
     new JoystickButton(m_driverController, XboxController.Button.kBack.value).whileTrue(m_DecreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kX.value).whileTrue(m_SwitchIdleModeCommmand);
 
-
-    new JoystickButton(m_joystick1, Joystick.ButtonType.kTrigger.value).whileTrue(m_CloseClawCommand);
-    new JoystickButton(m_joystick1, Joystick.ButtonType.kTop.value).whileTrue(m_OpenClawCommand);
+    // new JoystickButton(m_joystick1, Joystick.ButtonType.kTrigger.value).whileTrue(m_CloseClawCommand);
+    // new JoystickButton(m_joystick1, Joystick.ButtonType.kTop.value).whileTrue(m_OpenClawCommand);
   }
 
   public static double getLeftStickY() {
@@ -108,33 +105,20 @@ public class RobotContainer {
     return axis;
   }
 
-  public static double getJoystickXAxis() {
-    double axis = m_joystick1.getRawAxis(0);
+  public static double getArmControllerLeftStickY() {
+    double axis = m_armController.getRawAxis(1);
+    if (Math.abs(axis) < 0.05) {
+      axis = 0;
+    }
+    return axis * -1;
+  }
+
+  public static double getArmControllerRightStickX() {
+    double axis = m_armController.getRawAxis(4);
     if (Math.abs(axis) < 0.05) {
       axis = 0;
     }
     return axis;
-  }
-
-  public static double getJoystickYAxis() {
-    double axis = m_joystick1.getRawAxis(1);
-    if (Math.abs(axis) < 0.02) {
-      axis = 0;
-    }
-    return axis;
-  }
-
-  // z-axis is twist
-  public static double getJoystickZAxis() {
-    double axis = m_joystick1.getRawAxis(2);
-    if (Math.abs(axis) < 0.2) {
-      axis = 0;
-    }
-    return axis;
-  }
-
-  public static double getMaxSpeed() {
-    return (m_joystick1.getRawAxis(3) + 1) / 2;
   }
 
   public Command getAutonomousCommand() {
@@ -145,5 +129,7 @@ public class RobotContainer {
   public void initTeleop() {
     // Set the default tank command to DriveCommand
     m_Tank.setDefaultCommand(m_DriveCommand);
+    m_Turret.setDefaultCommand(m_MoveArmXCommand);
+    m_Arm.setDefaultCommand(m_MoveArmYCommand);
   }
 }

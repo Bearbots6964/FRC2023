@@ -23,8 +23,8 @@ public class MoveArmXCommand extends CommandBase {
 
   @Override
   public void execute() {
-    SmartDashboard.putNumber("left stick x", RobotContainer.getLeftStickX());
-    m_subsystem.rotateArm(RobotContainer.getJoystickXAxis());
+    SmartDashboard.putNumber("arm right stick x", RobotContainer.getArmControllerRightStickX());
+    m_subsystem.rotateArm(RobotContainer.getArmControllerRightStickX());
   }
 
   @Override
