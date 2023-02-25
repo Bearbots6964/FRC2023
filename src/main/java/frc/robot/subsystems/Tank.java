@@ -69,6 +69,7 @@ public class Tank extends SubsystemBase {
       addChild("Drive", drive);
       drive.setSafetyEnabled(false);
       drive.setExpiration(0.1);
+      
       drive.setMaxOutput(1.0);
 
       brakeMode = false;
@@ -90,7 +91,7 @@ public class Tank extends SubsystemBase {
    */
   public void arcadeDrive(double speed, double rotation) {
     try {
-      drive.arcadeDrive(-speed, rotation);
+      drive.arcadeDrive(-speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));
     } catch (Exception e) {
       throw e;
     }
