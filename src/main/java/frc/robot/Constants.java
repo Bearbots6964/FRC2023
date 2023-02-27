@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -21,29 +20,10 @@ public final class Constants {
     public final XboxController m_driverController = new XboxController(1);
     public final Joystick m_driverJoystick = new Joystick(2);
 
-    // BEN DRIVE CONSTANTS
-    public static final double ksVolts = 5;
-    public static final double kvVoltSecondsPerMeter = 5;
-    public static final double kaVoltSecondsSquaredPerMeter = 5;
-
-    public static final double kPDriveVel = 5;
-
-    public static final double kTrackwidthMeters = 0.55;
-    public final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
-
-    public static final double kMaxSpeedMetersPerSecond = 5;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 5;
-
-    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-    public static final double kRamseteB = 2;
-    public static final double kRamseteZeta = 0.7;
-
-    public final int[] kLeftEncoderPorts = {0, 1};
-    public final int[] kRightEncoderPorts = {2, 3};
-    public static final boolean kLeftEncoderReversed = false;
-    public static final boolean kRightEncoderReversed = false;
-
-    public static final double kEncoderDistancePerPulse = 5;
+    //wheel diameter is 6in, 0.1524 in meters
+    public static final double wheelDiameterMeters = 0.1524;
+    public static final double tankDriveGearRatio = 8.45;
+    public static final double encoderFactor = wheelDiameterMeters * Math.PI / tankDriveGearRatio;
   }
 
   public static final class CanConstants {
@@ -51,9 +31,9 @@ public final class Constants {
     public static final int kLeftRearMotorPort = 2;
     public static final int kRightFrontMotorPort = 4;
     public static final int kRightRearMotorPort = 5;
-    public static final double kRampRate = 0.1;
+    public static final double kRampRate = 0.25;
 
-    public static double maxSpeed = 0.5;
+    public static double maxSpeed = 0.7;
     public static final double maxSpeedIncrement = 0.1;
 
     public static final String kBaseType = "tank";

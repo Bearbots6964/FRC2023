@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,13 +17,17 @@ public class Turret extends SubsystemBase {
 
   public Turret() {
     xMotor = new CANSparkMax(6, MotorType.kBrushless);
+    xMotor.setIdleMode(IdleMode.kBrake);
+    xMotor.setSmartCurrentLimit(5, 10);
+    xMotor.burnFlash();
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+  }
 
   public void rotateArm(double leftStickXaxis) {
-    double speed = 0.4;
+    double speed = -1;
     double motorDrive = leftStickXaxis * speed;
     xMotor.set(motorDrive);
   }

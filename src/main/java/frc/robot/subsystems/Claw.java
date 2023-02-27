@@ -4,26 +4,31 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.*;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Claw extends SubsystemBase {
   private CANSparkMax clawMotor;
 
+  // gear ratio is 100:1
+
   public Claw() {
     clawMotor = new CANSparkMax(8, MotorType.kBrushless);
+    clawMotor.setIdleMode(IdleMode.kBrake);
+    clawMotor.setSmartCurrentLimit(6, 7);
+    clawMotor.burnFlash();
   }
 
   public void periodic() {}
 
   public void closeClaw() {
-    clawMotor.set(0.2);
+    clawMotor.set(0.75);
   }
 
   public void openClaw() {
-    clawMotor.set(-0.2);
+    clawMotor.set(-0.5);
   }
 
   public void stopClaw() {
