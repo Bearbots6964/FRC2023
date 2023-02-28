@@ -45,7 +45,8 @@ public class Tank extends SubsystemBase {
       left = new MotorControllerGroup(leftFront, leftRear);
       addChild("left", left);
 
-      rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
+      rightFront =
+          new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
       rightFront.restoreFactoryDefaults();
       rightFront.setInverted(false);
       rightFront.setIdleMode(IdleMode.kCoast);
@@ -69,7 +70,7 @@ public class Tank extends SubsystemBase {
       addChild("Drive", drive);
       drive.setSafetyEnabled(false);
       drive.setExpiration(0.1);
-      
+
       drive.setMaxOutput(1.0);
 
       brakeMode = false;
@@ -96,7 +97,8 @@ public class Tank extends SubsystemBase {
    */
   public void arcadeDrive(double speed, double rotation) {
     try {
-      drive.arcadeDrive(-speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));
+      drive.arcadeDrive(
+          -speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));
     } catch (Exception e) {
       throw e;
     }
@@ -139,8 +141,7 @@ public class Tank extends SubsystemBase {
   }
 
   @Override
-  public void simulationPeriodic() {
-  }
+  public void simulationPeriodic() {}
 
   /** Change the ramp rate of the motor controllers. */
   public void setRampRate(double rampRate) {
@@ -167,12 +168,16 @@ public class Tank extends SubsystemBase {
   }
 
   public double getLeftDistance() {
-    double numRotations = (leftFront.getEncoder().getPosition() + leftRear.getEncoder().getPosition()) / 2;
-    return -numRotations * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
+    double numRotations =
+        (leftFront.getEncoder().getPosition() + leftRear.getEncoder().getPosition()) / 2;
+    return -numRotations
+        * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
   }
 
   public double getRightDistance() {
-    double numRotations = (rightFront.getEncoder().getPosition() + rightRear.getEncoder().getPosition()) / 2;
-    return -numRotations * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
+    double numRotations =
+        (rightFront.getEncoder().getPosition() + rightRear.getEncoder().getPosition()) / 2;
+    return -numRotations
+        * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
   }
 }
