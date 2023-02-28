@@ -1,13 +1,13 @@
 name: Check PR Status
 
 on:
-  pull_request_review: 
-    types: submitted
+  pull_request: 
+    types: opened
+  workflow_dispatch:
 jobs:
   approved:
     runs-on: ubuntu-latest
     container: wpilib/roborio-cross-ubuntu:2023-22.04
-    if: github.event.review.state == 'approved'
     steps:
       - uses: khan/pull-request-comment-trigger@v1.1.0
         name: Check for comment
