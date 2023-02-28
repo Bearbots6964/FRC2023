@@ -29,7 +29,7 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    var result = limelight.getLatestResult();
+
   }
 
   @Override
@@ -42,8 +42,8 @@ public class Vision extends SubsystemBase {
    * @param property The property to fetch.
    * @return The fetched property.
    */ 
-  public Array[] getProperties() { // we don't know what type we return until we process it in the if statement
-    // // 
+  public double[] getProperties() { // we don't know what type we return until we process it in the if statement
+    //
     var tx =     NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     var ty =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     var tv =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
@@ -55,20 +55,10 @@ public class Vision extends SubsystemBase {
     var thor =   NetworkTableInstance.getDefault().getTable("limelight").getEntry("thor").getDouble(0);
     var tvert =  NetworkTableInstance.getDefault().getTable("limelight").getEntry("tvert").getDouble(0);
 
-
+    return new double[] {tx, ty, tv, ta, tl, cl, tshort, tlong, thor, tvert};
   }
 
 
 
-  /**
-   * Change the Limelight pipeline.
-   *
-   * @param pipeline The pipeline to change to.
-   */
-  public void changePipeline(int pipeline) {
-    limelight.setPipelineIndex(pipeline); // As of now, 1 is tape, 2 is tag
-    Preferences.setInt(
-        kLimelightPipelineKey,
-        pipeline); // Save the pipeline index to preferences so we know what we're doing
-  }
+
 }

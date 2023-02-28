@@ -19,6 +19,7 @@ public class SwitchIdleModeCommmand extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.switchIdleMode();
+    end(false);
     
   }
 
