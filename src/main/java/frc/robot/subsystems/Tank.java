@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanConstants;
 import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -24,7 +27,10 @@ public class Tank extends SubsystemBase {
   public DifferentialDrive drive;
 
   public boolean brakeMode;
-
+  private GenericEntry stallWidget;
+  private GenericEntry freeWidget;
+  private int stallLimit;
+  private int freeLimit;
   /** */
   public Tank() {
     if (CanConstants.kBaseType == "tank") {
@@ -32,6 +38,7 @@ public class Tank extends SubsystemBase {
       leftFront.restoreFactoryDefaults();
       leftFront.setInverted(true);
       leftFront.setIdleMode(IdleMode.kCoast);
+      leftFront.setSmartCurrentLimit(40);
       leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       leftFront.burnFlash();
 
@@ -39,6 +46,7 @@ public class Tank extends SubsystemBase {
       leftRear.restoreFactoryDefaults();
       leftRear.setInverted(true);
       leftRear.setIdleMode(IdleMode.kCoast);
+      leftRear.setSmartCurrentLimit(40);
       leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       leftRear.burnFlash();
 
@@ -50,6 +58,7 @@ public class Tank extends SubsystemBase {
       rightFront.restoreFactoryDefaults();
       rightFront.setInverted(false);
       rightFront.setIdleMode(IdleMode.kCoast);
+      rightFront.setSmartCurrentLimit(40);
       rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightFront.burnFlash();
 
@@ -57,6 +66,7 @@ public class Tank extends SubsystemBase {
       rightRear.restoreFactoryDefaults();
       rightRear.setInverted(false);
       rightRear.setIdleMode(IdleMode.kCoast);
+      rightRear.setSmartCurrentLimit(40);
       rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
       rightRear.burnFlash();
 
@@ -80,6 +90,10 @@ public class Tank extends SubsystemBase {
       leftRear.setSmartCurrentLimit(40, 60);
       rightFront.setSmartCurrentLimit(40, 60);
       rightRear.setSmartCurrentLimit(40, 60);
+
+      // create a new slider widget for the current limits
+      stallWidget = Shuffleboard.getTab("Config").add("Stall Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
+      freeWidget = Shuffleboard.getTab("Config").add("Free Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
     }
   }
 
@@ -87,7 +101,17 @@ public class Tank extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("leftStickY", RobotContainer.getLeftStickY());
     SmartDashboard.putNumber("rightStickX", RobotContainer.getRightStickX());
+
+    // set all four motors to the stall and free limit widget values
+    stallLimit = (int) stallWidget.getDouble(10);
+    freeLimit = (int) freeWidget.getDouble(40);
+
+    leftFront.setSmartCurrentLimit(stallLimit, freeLimit);
+    leftRear.setSmartCurrentLimit(stallLimit, freeLimit);
+    rightFront.setSmartCurrentLimit(stallLimit, freeLimit);
+    rightRear.setSmartCurrentLimit(stallLimit, freeLimit);
   }
+
 
   /**
    * Drives the robot using arcade drive.
