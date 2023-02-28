@@ -25,6 +25,10 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v3
+    # submit dependencies to GitHub
+    - name: Gradle Dependency Submission
+      uses: mikepenz/gradle-dependency-submission@v0.8.5
+
 
     # Declares the repository safe and not under dubious ownership.
     - name: Add repository to git safe directories
