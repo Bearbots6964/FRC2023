@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import com.revrobotics.CANSparkMax.IdleMode;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -14,7 +13,7 @@ import frc.robot.subsystems.Tank;
 
 /** An example command that uses an example subsystem. */
 public class BalanceCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final PID pid;
 
   private final Tank driveBase;
@@ -28,7 +27,7 @@ public class BalanceCommand extends CommandBase {
   public BalanceCommand(PID m_pid, Tank m_driveBase) {
     pid = m_pid;
     driveBase = m_driveBase;
-//i feel so smart now boi
+    // i feel so smart now boi
     addRequirements(pid);
     addRequirements(driveBase);
   }
@@ -67,16 +66,17 @@ public class BalanceCommand extends CommandBase {
       if (Math.abs(pitchOffset) < 3.5) {
         driveBase.setAllMotors(0);
       } else {
-        driveBase.setAllMotors(0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
-        SmartDashboard.putNumber("motor speed", 0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
+        driveBase.setAllMotors(
+            0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
+        SmartDashboard.putNumber(
+            "motor speed", 0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
       }
     }
   }
 
   // makes the thing go brrrrr
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {
