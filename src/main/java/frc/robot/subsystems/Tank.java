@@ -3,16 +3,15 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanConstants;
 import frc.robot.RobotContainer;
-import edu.wpi.first.wpilibj.shuffleboard.*;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -86,15 +85,21 @@ public class Tank extends SubsystemBase {
       brakeMode = false;
       SmartDashboard.putBoolean("brakeMode", brakeMode);
 
-
       // create a new slider widget for the current limits
-      stallWidget = Shuffleboard.getTab("Config").add("Stall Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
-      freeWidget = Shuffleboard.getTab("Config").add("Free Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
+      stallWidget =
+          Shuffleboard.getTab("Config")
+              .add("Stall Limit", 40)
+              .withWidget(BuiltInWidgets.kNumberSlider)
+              .getEntry();
+      freeWidget =
+          Shuffleboard.getTab("Config")
+              .add("Free Limit", 40)
+              .withWidget(BuiltInWidgets.kNumberSlider)
+              .getEntry();
       leftFront.setSmartCurrentLimit(40, 60);
       leftRear.setSmartCurrentLimit(40, 60);
       rightFront.setSmartCurrentLimit(40, 60);
       rightRear.setSmartCurrentLimit(40, 60);
-
     }
   }
 
@@ -112,7 +117,6 @@ public class Tank extends SubsystemBase {
     rightFront.setSmartCurrentLimit(stallLimit, freeLimit);
     rightRear.setSmartCurrentLimit(stallLimit, freeLimit);
   }
-
 
   /**
    * Drives the robot using arcade drive.
