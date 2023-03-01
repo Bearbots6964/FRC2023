@@ -20,7 +20,7 @@ public final class Constants {
     public final XboxController m_driverController = new XboxController(1);
     public final Joystick m_driverJoystick = new Joystick(2);
 
-    //wheel diameter is 6in, 0.1524 in meters
+    // wheel diameter is 6in, 0.1524 in meters
     public static final double wheelDiameterMeters = 0.1524;
     public static final double tankDriveGearRatio = 8.45;
     public static final double encoderFactor = wheelDiameterMeters * Math.PI / tankDriveGearRatio;
@@ -41,7 +41,7 @@ public final class Constants {
 
   public static final class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-    public static final double ProportionalDivisor = 16;
+    public static final double ProportionalDivisor = 13;
   }
 
   public static final class VisionConstants {
