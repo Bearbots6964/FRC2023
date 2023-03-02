@@ -40,10 +40,10 @@ public class Claw extends SubsystemBase {
   }
 
   public void periodic() {
-    stallLimit = (double) stallWidget.getDouble(10);
-    freeLimit = (double) freeWidget.getDouble(11);
+    stallLimit = stallWidget.getDouble(10);
+    freeLimit = freeWidget.getDouble(11);
 
-    clawMotor.setSmartCurrentLimit(stallLimit, freeLimit);
+    clawMotor.setSmartCurrentLimit((int) stallLimit, (int) freeLimit);
   }
 
   public void closeClaw() {
