@@ -6,10 +6,15 @@ name: Build Robot Code
 # events but only for the main branch.
 on:
   push:
-    branches: [ main, master ]
   pull_request:
-    types: opened
+    types: [ opened, review_requested ]
   workflow_dispatch:
+  issue_comment:
+    types: [ created, deleted, edited ]
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+  pull_request_target:
+    types: [assigned, opened, synchronize, reopened]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:

@@ -3,17 +3,16 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanConstants;
 import frc.robot.RobotContainer;
-import edu.wpi.first.wpilibj.shuffleboard.*;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -111,29 +110,42 @@ public class Tank extends SubsystemBase {
       rightFront.setSmartCurrentLimit(40, 60);
       rightRear.setSmartCurrentLimit(40, 60);
 
-      tankLayout = Shuffleboard.getTab("Config").getLayout("Tank", BuiltInLayouts.kList).withSize(1, 4).withPosition(0, 0);
+      tankLayout =
+          Shuffleboard.getTab("Config")
+              .getLayout("Tank", BuiltInLayouts.kList)
+              .withSize(1, 4)
+              .withPosition(0, 0);
 
       // Initialize the idle mode chooser with an option for each idle mode
       idleModeChooser = new SendableChooser();
       idleModeChooser.setDefaultOption("Coast", IdleMode.kCoast);
       idleModeChooser.addOption("Brake", IdleMode.kBrake);
-      
 
       // create a new slider widget for the current limits
-      stallWidget = tankLayout.add("Stall Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
-      freeWidget = tankLayout.add("Free Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
+      stallWidget =
+          tankLayout.add("Stall Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
+      freeWidget =
+          tankLayout.add("Free Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
 
       // create a new split button widget for the idle mode (idleModeChooser)
-      idleModeWidget = tankLayout.add("Idle Mode", IdleMode.kCoast).withWidget(BuiltInWidgets.kSplitButtonChooser);
+      idleModeWidget =
+          tankLayout
+              .add("Idle Mode", IdleMode.kCoast)
+              .withWidget(BuiltInWidgets.kSplitButtonChooser);
       idleModeEntry = idleModeWidget.getEntry();
 
       // create a new slider widget for the ramp rate
-      rampRateWidget = tankLayout.add("Ramp Rate", Constants.CanConstants.kRampRate).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
+      rampRateWidget =
+          tankLayout
+              .add("Ramp Rate", Constants.CanConstants.kRampRate)
+              .withWidget(BuiltInWidgets.kNumberSlider)
+              .getEntry();
 
-      // create a new slider widget for the max speed (don't call getEntry() yet, it can be changed by button inputs)
-      maxSpeedWidget = tankLayout.add("Max Speed", maxSpeed).withWidget(BuiltInWidgets.kNumberSlider);
+      // create a new slider widget for the max speed (don't call getEntry() yet, it can be changed
+      // by button inputs)
+      maxSpeedWidget =
+          tankLayout.add("Max Speed", maxSpeed).withWidget(BuiltInWidgets.kNumberSlider);
       maxSpeedEntry = maxSpeedWidget.getEntry();
-
     }
   }
 
@@ -174,7 +186,6 @@ public class Tank extends SubsystemBase {
     }
     // set the widget value to the current max speed
     maxSpeedEntry.setDouble(maxSpeed);
-    
 
     // i hate my life
   }
@@ -206,7 +217,6 @@ public class Tank extends SubsystemBase {
       maxSpeed += Constants.CanConstants.maxSpeedIncrement;
       // set the max speed widget value to the newly increased max speed
       maxSpeedEntry.setDouble(maxSpeed);
-      
     }
   }
 
@@ -220,14 +230,12 @@ public class Tank extends SubsystemBase {
     }
   }
 
-  
   public void switchIdleMode() {
     if (brakeMode == true) {
       leftFront.setIdleMode(IdleMode.kCoast);
       leftRear.setIdleMode(IdleMode.kCoast);
       rightFront.setIdleMode(IdleMode.kCoast);
       rightRear.setIdleMode(IdleMode.kCoast);
-
     }
 
     if (brakeMode == false) {
@@ -241,7 +249,6 @@ public class Tank extends SubsystemBase {
 
     SmartDashboard.putBoolean("brakeMode", brakeMode);
   }
-  
 
   @Override
   public void simulationPeriodic() {}
