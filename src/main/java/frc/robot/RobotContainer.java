@@ -39,8 +39,14 @@ public class RobotContainer {
   public static final XboxController m_armController = new XboxController(0);
   public static final XboxController m_driverController = new XboxController(1);
 
-  public static final Joystick m_leftJoystick = (Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive")? new Joystick(2) : null;
-  public static final Joystick m_rightJoystick = (Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive")? new Joystick(3) : null;
+  public static final Joystick m_leftJoystick =
+      (Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive")
+          ? new Joystick(2)
+          : null;
+  public static final Joystick m_rightJoystick =
+      (Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive")
+          ? new Joystick(3)
+          : null;
 
   // INSTANTIATES ALL SUBSYSTEMS
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -52,24 +58,28 @@ public class RobotContainer {
   private final PID m_PID = new PID();
   private final Odometry m_Odometry = new Odometry(m_PID.gyro, m_Tank);
 
-
   // INSTANTIATES ALL COMMANDS
   // private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
   // private final BalanceCommand m_ChargeUpBalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  // private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand = new ArmToFirstLevelCommand(m_Turret, m_Arm);
-  // private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new ArmToSecondLevelCommand(m_Turret, m_Arm);
-  // private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new ArmToThirdLevelCommand(m_Turret, m_Arm);
+  // private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand = new
+  // ArmToFirstLevelCommand(m_Turret, m_Arm);
+  // private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new
+  // ArmToSecondLevelCommand(m_Turret, m_Arm);
+  // private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new
+  // ArmToThirdLevelCommand(m_Turret, m_Arm);
   private final MoveArmXCommand m_MoveArmXCommand = new MoveArmXCommand(m_Turret);
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank);
-  private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand = new IncreaseMaxSpeedCommand(m_Tank);
-  private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand = new DecreaseMaxSpeedCommand(m_Tank);
-  private final SwitchIdleModeCommmand m_SwitchIdleModeCommmand = new SwitchIdleModeCommmand(m_Tank);
-
+  private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
+      new IncreaseMaxSpeedCommand(m_Tank);
+  private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand =
+      new DecreaseMaxSpeedCommand(m_Tank);
+  private final SwitchIdleModeCommmand m_SwitchIdleModeCommmand =
+      new SwitchIdleModeCommmand(m_Tank);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -83,13 +93,19 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, XboxController.Button.kY.value).whileTrue(m_BalanceCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kStart.value).whileTrue(m_IncreaseMaxSpeedCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kBack.value).whileTrue(m_DecreaseMaxSpeedCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kX.value).whileTrue(m_SwitchIdleModeCommmand);
+    new JoystickButton(m_driverController, XboxController.Button.kY.value)
+        .whileTrue(m_BalanceCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kStart.value)
+        .whileTrue(m_IncreaseMaxSpeedCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kBack.value)
+        .whileTrue(m_DecreaseMaxSpeedCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+        .whileTrue(m_SwitchIdleModeCommmand);
 
-    new JoystickButton(m_armController, XboxController.Button.kA.value).whileTrue(m_CloseClawCommand);
-    new JoystickButton(m_armController, XboxController.Button.kB.value).whileTrue(m_OpenClawCommand);
+    new JoystickButton(m_armController, XboxController.Button.kA.value)
+        .whileTrue(m_CloseClawCommand);
+    new JoystickButton(m_armController, XboxController.Button.kB.value)
+        .whileTrue(m_OpenClawCommand);
   }
 
   public static double getLeftStickY() {
@@ -123,24 +139,29 @@ public class RobotContainer {
     }
     return axis;
   }
+
   public static double getLeftTankJoystick() {
-    if(Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive") {
+    if (Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive") {
       double axis = m_leftJoystick.getY();
       if (Math.abs(axis) < 0.03) {
         axis = 0;
       }
       return axis * -1;
-    } else {return 0;}
+    } else {
+      return 0;
+    }
   }
 
   public static double getRightTankJoystick() {
-    if(Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive") {
+    if (Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive") {
       double axis = m_rightJoystick.getY();
       if (Math.abs(axis) < 0.03) {
         axis = 0;
       }
       return axis * -1;
-    } else {return 0;}
+    } else {
+      return 0;
+    }
   }
 
   public static double getArmControllerLeftStickY() {
@@ -174,6 +195,4 @@ public class RobotContainer {
     m_Turret.setDefaultCommand(m_MoveArmXCommand);
     m_Arm.setDefaultCommand(m_MoveArmYCommand);
   }
-
-
 }

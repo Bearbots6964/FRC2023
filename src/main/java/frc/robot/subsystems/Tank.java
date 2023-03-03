@@ -194,7 +194,6 @@ public class Tank extends SubsystemBase {
     return maxSpeed;
   }
 
-
   /**
    * Drives the robot using arcade drive.
    *
@@ -294,6 +293,7 @@ public class Tank extends SubsystemBase {
   public void setLeft(double speed) {
     left.set(speed);
   }
+
   public void setRight(double speed) {
     right.set(speed);
   }

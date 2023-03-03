@@ -20,7 +20,6 @@ public final class Constants {
     public final XboxController m_driverController = new XboxController(1);
     public final Joystick m_driverJoystick = new Joystick(2);
 
-
     // wheel diameter is 6in, 0.1524 in meters
     public static final double wheelDiameterMeters = 0.1524;
     public static final double tankDriveGearRatio = 8.45;
