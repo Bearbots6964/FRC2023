@@ -4,12 +4,27 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
+import frc.robot.commands.AutoCommand;
+import frc.robot.commands.BalanceCommand;
+import frc.robot.commands.CloseClawCommand;
+import frc.robot.commands.DecreaseMaxSpeedCommand;
+import frc.robot.commands.DriveCommand;
+import frc.robot.commands.IncreaseMaxSpeedCommand;
+import frc.robot.commands.MoveArmXCommand;
+import frc.robot.commands.MoveArmYCommand;
+import frc.robot.commands.OpenClawCommand;
+import frc.robot.commands.SwitchIdleModeCommmand;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Odometry;
+import frc.robot.subsystems.PID;
+import frc.robot.subsystems.Tank;
+import frc.robot.subsystems.Turret;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,6 +38,9 @@ public class RobotContainer {
   // RR 1/11/2022
   public static final XboxController m_armController = new XboxController(0);
   public static final XboxController m_driverController = new XboxController(1);
+
+  public static final Joystick m_leftJoystick = (Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive")? new Joystick(2) : null;
+  public static final Joystick m_rightJoystick = (Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive")? new Joystick(3) : null;
 
   // INSTANTIATES ALL SUBSYSTEMS
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -105,6 +123,25 @@ public class RobotContainer {
     }
     return axis;
   }
+  public static double getLeftTankJoystick() {
+    if(Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive") {
+      double axis = m_leftJoystick.getY();
+      if (Math.abs(axis) < 0.03) {
+        axis = 0;
+      }
+      return axis * -1;
+    } else {return 0;}
+  }
+
+  public static double getRightTankJoystick() {
+    if(Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive") {
+      double axis = m_rightJoystick.getY();
+      if (Math.abs(axis) < 0.03) {
+        axis = 0;
+      }
+      return axis * -1;
+    } else {return 0;}
+  }
 
   public static double getArmControllerLeftStickY() {
     double axis = m_armController.getRawAxis(1);
@@ -137,4 +174,6 @@ public class RobotContainer {
     m_Turret.setDefaultCommand(m_MoveArmXCommand);
     m_Arm.setDefaultCommand(m_MoveArmYCommand);
   }
+
+
 }

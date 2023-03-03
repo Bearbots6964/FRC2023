@@ -179,6 +179,10 @@ public class Tank extends SubsystemBase {
     // i hate my life
   }
 
+  public double getMaxSpeed() {
+    return maxSpeed;
+  }
+
 
   /**
    * Drives the robot using arcade drive.
@@ -278,5 +282,12 @@ public class Tank extends SubsystemBase {
         (rightFront.getEncoder().getPosition() + rightRear.getEncoder().getPosition()) / 2;
     return -numRotations
         * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
+  }
+
+  public void setLeft(double speed) {
+    left.set(speed);
+  }
+  public void setRight(double speed) {
+    right.set(speed);
   }
 }
