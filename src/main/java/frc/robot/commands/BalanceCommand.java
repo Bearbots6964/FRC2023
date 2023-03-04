@@ -38,10 +38,12 @@ public class BalanceCommand extends CommandBase {
         Constants.AutoConstants.PitchPID.velocityToleranceDegPerSec
     );
 
-    pitchPIDController.setIntegratorRange(
-        Constants.AutoConstants.PitchPID.integratorMinDeg,
-        Constants.AutoConstants.PitchPID.integratorMaxDeg
-    );
+    // pitchPIDController.setIntegratorRange(
+    //     Constants.AutoConstants.PitchPID.integratorMinDeg,
+    //     Constants.AutoConstants.PitchPID.integratorMaxDeg
+    // );
+
+    //pitchPIDController.setSetpoint(goalPitch);
   }
 
   @Override
@@ -49,7 +51,7 @@ public class BalanceCommand extends CommandBase {
     driveBase.leftFront.setIdleMode(IdleMode.kBrake);
     driveBase.leftRear.setIdleMode(IdleMode.kBrake);
     driveBase.rightFront.setIdleMode(IdleMode.kBrake);
-    driveBase.rightRear.setIdleMode(IdleMode.kBrake);
+    driveBase.rightRear.setIdleMode(IdleMode.kBrake); 
     
     pitchPIDController.reset();
 
@@ -64,17 +66,21 @@ public class BalanceCommand extends CommandBase {
     double pitchOffset = initPitch - gyro.getPitch();
 
     SmartDashboard.putNumber("pitch offset", pitchOffset);
+    SmartDashboard.putBoolean("onRamp", onRamp);
 
-    if (pitchOffset < 19 && !onRamp) {
-      driveBase.setAllMotors(0.25);
+    if (pitchOffset < 16 && !onRamp) {
+      driveBase.setAllMotors(0.35);
     } else {
       onRamp = true;
 
-      if (pitchPIDController.atSetpoint()) {
+      if (pitchOffset < Math.abs(3.5)) {
         driveBase.setAllMotors(0);
       } else {
-        driveBase.setAllMotors(0.15 * pitchPIDController.calculate(pitchOffset, goalPitch));
+        double PIDvalue = pitchPIDController.calculate(pitchOffset);
+        SmartDashboard.putNumber("pid", PIDvalue);
+        driveBase.setAllMotors(-PIDvalue);
       }
+
     }
   }
 

@@ -38,15 +38,13 @@ public final class Constants {
     }
 
     public static final class PitchPID {
-      public static final double proportionConstant = 0.18;
-      public static final double integralConstant = 0.025;
-      public static final double derivativeConstant = 0.3;
+      public static final double proportionConstant = 0.01;
+      public static final double integralConstant = 0;
+      public static final double derivativeConstant = 0;
 
-      public static final double integratorMinDeg = 0.01;
-      public static final double integratorMaxDeg = 0.5;
-
-      public static final double positionToleranceDeg = 0.5;
-      public static final double velocityToleranceDegPerSec = 1;
+      public static final double positionToleranceDeg = 3.5;
+      
+      public static final double velocityToleranceDegPerSec = 20;
     }
   }
 

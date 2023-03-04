@@ -22,8 +22,10 @@ public class Odometry extends SubsystemBase {
 
   public void periodic() {
     odometry.update(gyro.getRotation2d(), tank.getLeftDistance(), tank.getRightDistance());
-    SmartDashboard.putNumber("encoders offset X", odometry.getPoseMeters().getTranslation().getX());
-    SmartDashboard.putNumber("encoders offset Y", odometry.getPoseMeters().getTranslation().getY());
+    // SmartDashboard.putNumber("encoders offset X", odometry.getPoseMeters().getTranslation().getX());
+    // SmartDashboard.putNumber("encoders offset Y", odometry.getPoseMeters().getTranslation().getY());
+
+    SmartDashboard.putNumber("pitch angle", gyro.getPitch());
 
   }
 }
