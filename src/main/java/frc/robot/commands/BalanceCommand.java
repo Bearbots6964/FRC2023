@@ -17,22 +17,16 @@ public class BalanceCommand extends CommandBase {
   private final PID pid;
 
   private final Tank driveBase;
-
-  boolean isFinished = false;
-  boolean inErrorZone = false;
-  int count;
   private double initPitch, max;
   private boolean onRamp;
 
   public BalanceCommand(PID m_pid, Tank m_driveBase) {
     pid = m_pid;
     driveBase = m_driveBase;
-    // i feel so smart now boi
     addRequirements(pid);
     addRequirements(driveBase);
   }
 
-  // makes me feel safe
   @Override
   public void initialize() {
     driveBase.leftFront.setIdleMode(IdleMode.kBrake);
@@ -59,11 +53,11 @@ public class BalanceCommand extends CommandBase {
     SmartDashboard.putNumber("max offset", max);
 
     if (pitchOffset < 15.7 && !onRamp) {
-      driveBase.setAllMotors(0.35);
+      driveBase.setAllMotors(1);
     } else {
       onRamp = true;
 
-      if (Math.abs(pitchOffset) < 3.5) {
+      if (Math.abs(pitchOffset) < 1.5) {
         driveBase.setAllMotors(0);
       } else {
         driveBase.setAllMotors(
