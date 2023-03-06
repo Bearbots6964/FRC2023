@@ -1,15 +1,13 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.cameraserver.CameraServer;
-
 
 public class Vision extends SubsystemBase {
-  
+
   private ColorSensorV3 colorSensor;
 
   // Constants such as camera and target height stored. Change per robot and goal!
@@ -27,10 +25,9 @@ public class Vision extends SubsystemBase {
 
   public Vision() {
     // Stuff goes here
-    
+
     // create new camera
     CameraServer.startAutomaticCapture();
-    
 
     // Set default pipeline
     if (!Preferences.containsKey(kLimelightPipelineKey)) {
@@ -41,7 +38,7 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+
   }
 
   @Override
@@ -53,10 +50,8 @@ public class Vision extends SubsystemBase {
    * Get the latest pipeline result.
    *
    * @return The latest pipeline result.
-   *
-  public PhotonPipelineResult getLatestResult() {
-    return limelight.getLatestResult();
-  }*/
+   *     <p>public PhotonPipelineResult getLatestResult() { return limelight.getLatestResult(); }
+   */
 
   /**
    * Change the Limelight pipeline.
@@ -64,7 +59,7 @@ public class Vision extends SubsystemBase {
    * @param pipeline The pipeline to change to.
    */
   public void changePipeline(int pipeline) {
-     // As of now, 1 is tape, 2 is tag
+    // As of now, 1 is tape, 2 is tag
     Preferences.setInt(
         kLimelightPipelineKey,
         pipeline); // Save the pipeline index to preferences so we know what we're doing
