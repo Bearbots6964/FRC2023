@@ -95,4 +95,4 @@ tasks.withType(JavaCompile) {
 }
 
 //Configure repositorie
-}
+
