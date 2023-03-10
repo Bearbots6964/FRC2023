@@ -7,7 +7,6 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.shuffleboard.*;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -121,10 +120,7 @@ public class Tank extends SubsystemBase {
           tankLayout.add("Free Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
 
       // create a new boolean box widget for the idle mode
-        idleModeWidget =
-          tankLayout
-              .add("Braking Mode", false)
-              .withWidget(BuiltInWidgets.kBooleanBox);
+      idleModeWidget = tankLayout.add("Braking Mode", false).withWidget(BuiltInWidgets.kBooleanBox);
 
       // create a new button widget for the idle mode switch
       idleModeSwitch =
@@ -132,7 +128,6 @@ public class Tank extends SubsystemBase {
               .add("Switch Idle Mode", false)
               .withWidget(BuiltInWidgets.kToggleButton)
               .getEntry();
-
 
       // create a new slider widget for the ramp rate
       rampRateWidget =
@@ -162,9 +157,6 @@ public class Tank extends SubsystemBase {
     leftRear.setSmartCurrentLimit(stallLimit, freeLimit);
     rightFront.setSmartCurrentLimit(stallLimit, freeLimit);
     rightRear.setSmartCurrentLimit(stallLimit, freeLimit);
-
-    
-
 
     // set the ramp rate to the ramp rate widget value
     rampRate = rampRateWidget.getDouble(Constants.CanConstants.kRampRate);
