@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 
 
 public class Vision extends SubsystemBase {
@@ -36,6 +37,9 @@ public class Vision extends SubsystemBase {
     if (!Preferences.containsKey(kLimelightPipelineKey)) {
       Preferences.setInt(kLimelightPipelineKey, 1); // Default to tape
     }
+
+    // display camera on shuffleboard
+    Shuffleboard.getTab("Camera").add("Camera", CameraServer.getVideo());
   }
 
   @Override
