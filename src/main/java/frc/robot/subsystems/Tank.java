@@ -33,9 +33,7 @@ public class Tank extends SubsystemBase {
   private int freeLimit;
 
   private SimpleWidget idleModeWidget;
-  private GenericEntry idleModeEntry;
-  private IdleMode idleMode;
-  private SendableChooser idleModeChooser;
+  private GenericEntry idleModeSwitch;
 
   private double rampRate;
   private GenericEntry rampRateWidget;
@@ -116,23 +114,25 @@ public class Tank extends SubsystemBase {
               .withSize(1, 4)
               .withPosition(0, 0);
 
-      // Initialize the idle mode chooser with an option for each idle mode
-      idleModeChooser = new SendableChooser();
-      idleModeChooser.setDefaultOption("Coast", IdleMode.kCoast);
-      idleModeChooser.addOption("Brake", IdleMode.kBrake);
-
       // create a new slider widget for the current limits
       stallWidget =
           tankLayout.add("Stall Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
       freeWidget =
           tankLayout.add("Free Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
 
-      // create a new split button widget for the idle mode (idleModeChooser)
-      idleModeWidget =
+      // create a new boolean box widget for the idle mode
+        idleModeWidget =
           tankLayout
-              .add("Idle Mode", IdleMode.kCoast)
-              .withWidget(BuiltInWidgets.kSplitButtonChooser);
-      idleModeEntry = idleModeWidget.getEntry();
+              .add("Braking Mode", false)
+              .withWidget(BuiltInWidgets.kBooleanBox);
+
+      // create a new button widget for the idle mode switch
+      idleModeSwitch =
+          tankLayout
+              .add("Switch Idle Mode", false)
+              .withWidget(BuiltInWidgets.kToggleButton)
+              .getEntry();
+
 
       // create a new slider widget for the ramp rate
       rampRateWidget =
@@ -163,13 +163,8 @@ public class Tank extends SubsystemBase {
     rightFront.setSmartCurrentLimit(stallLimit, freeLimit);
     rightRear.setSmartCurrentLimit(stallLimit, freeLimit);
 
-    // set the idle mode to the idle mode widget value
-    idleMode = (IdleMode) idleModeChooser.getSelected();
+    
 
-    leftFront.setIdleMode(idleMode);
-    leftRear.setIdleMode(idleMode);
-    rightFront.setIdleMode(idleMode);
-    rightRear.setIdleMode(idleMode);
 
     // set the ramp rate to the ramp rate widget value
     rampRate = rampRateWidget.getDouble(Constants.CanConstants.kRampRate);
