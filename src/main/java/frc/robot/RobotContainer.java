@@ -40,11 +40,11 @@ public class RobotContainer {
   public static final XboxController m_driverController = new XboxController(1);
 
   public static final Joystick m_leftJoystick =
-      (Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive")
+      ("accurateTankDrive".equals(Constants.OperatorConstants.m_driveControllerType))
           ? new Joystick(2)
           : null;
   public static final Joystick m_rightJoystick =
-      (Constants.OperatorConstants.m_driveControllerType == "accurateTankDrive")
+      (Constants.OperatorConstants.m_driveControllerType.equals( "accurateTankDrive"))
           ? new Joystick(3)
           : null;
 

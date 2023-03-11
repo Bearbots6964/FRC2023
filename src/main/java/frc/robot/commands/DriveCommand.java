@@ -29,7 +29,7 @@ public class DriveCommand extends CommandBase {
       m_drivebase.arcadeDrive(
           RobotContainer.getLeftStickY() * m_drivebase.getMaxSpeed(),
           RobotContainer.getRightStickX() * m_drivebase.getMaxSpeed());
-    } else if (Constants.OperatorConstants.m_driveControllerType.equals("accurateTankDrive")) {
+    } else if (Constants.OperatorConstants.m_driveControllerType.equals("accurateTank")) {
       m_drivebase.setLeft(RobotContainer.getLeftTankJoystick() * m_drivebase.getMaxSpeed());
       m_drivebase.setRight(RobotContainer.getRightTankJoystick() * m_drivebase.getMaxSpeed());
     }

@@ -44,7 +44,6 @@ public class Tank extends SubsystemBase {
   private ShuffleboardLayout tankLayout;
   /** */
   public Tank() {
-    if (CanConstants.kBaseType == "tank") {
       leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
       leftFront.restoreFactoryDefaults();
       leftFront.setInverted(true);
@@ -141,7 +140,7 @@ public class Tank extends SubsystemBase {
       maxSpeedWidget =
           tankLayout.add("Max Speed", maxSpeed).withWidget(BuiltInWidgets.kNumberSlider);
       maxSpeedEntry = maxSpeedWidget.getEntry();
-    }
+    
   }
 
   @Override
