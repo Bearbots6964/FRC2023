@@ -44,7 +44,7 @@ public class RobotContainer {
           ? new Joystick(2)
           : null;
   public static final Joystick m_rightJoystick =
-      (Constants.OperatorConstants.m_driveControllerType.equals( "accurateTankDrive"))
+      (Constants.OperatorConstants.m_driveControllerType.equals("accurateTankDrive"))
           ? new Joystick(3)
           : null;
 

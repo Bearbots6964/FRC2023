@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.CanConstants;
 import frc.robot.RobotContainer;
 
 public class Tank extends SubsystemBase {
@@ -44,103 +43,100 @@ public class Tank extends SubsystemBase {
   private ShuffleboardLayout tankLayout;
   /** */
   public Tank() {
-      leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
-      leftFront.restoreFactoryDefaults();
-      leftFront.setInverted(true);
-      leftFront.setIdleMode(IdleMode.kCoast);
-      leftFront.setSmartCurrentLimit(40);
-      leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-      leftFront.burnFlash();
+    leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
+    leftFront.restoreFactoryDefaults();
+    leftFront.setInverted(true);
+    leftFront.setIdleMode(IdleMode.kCoast);
+    leftFront.setSmartCurrentLimit(40);
+    leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    leftFront.burnFlash();
 
-      leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
-      leftRear.restoreFactoryDefaults();
-      leftRear.setInverted(true);
-      leftRear.setIdleMode(IdleMode.kCoast);
-      leftRear.setSmartCurrentLimit(40);
-      leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-      leftRear.burnFlash();
+    leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
+    leftRear.restoreFactoryDefaults();
+    leftRear.setInverted(true);
+    leftRear.setIdleMode(IdleMode.kCoast);
+    leftRear.setSmartCurrentLimit(40);
+    leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    leftRear.burnFlash();
 
-      left = new MotorControllerGroup(leftFront, leftRear);
-      addChild("left", left);
+    left = new MotorControllerGroup(leftFront, leftRear);
+    addChild("left", left);
 
-      rightFront =
-          new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
-      rightFront.restoreFactoryDefaults();
-      rightFront.setInverted(false);
+    rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
+    rightFront.restoreFactoryDefaults();
+    rightFront.setInverted(false);
 
-      rightFront.setIdleMode(IdleMode.kCoast);
-      rightFront.setSmartCurrentLimit(40);
-      rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-      rightFront.burnFlash();
+    rightFront.setIdleMode(IdleMode.kCoast);
+    rightFront.setSmartCurrentLimit(40);
+    rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    rightFront.burnFlash();
 
-      rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
-      rightRear.restoreFactoryDefaults();
-      rightRear.setInverted(false);
-      rightRear.setIdleMode(IdleMode.kCoast);
-      rightRear.setSmartCurrentLimit(40);
-      rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-      rightRear.burnFlash();
+    rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
+    rightRear.restoreFactoryDefaults();
+    rightRear.setInverted(false);
+    rightRear.setIdleMode(IdleMode.kCoast);
+    rightRear.setSmartCurrentLimit(40);
+    rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    rightRear.burnFlash();
 
-      right = new MotorControllerGroup(rightFront, rightRear);
-      addChild("right", right);
+    right = new MotorControllerGroup(rightFront, rightRear);
+    addChild("right", right);
 
-      all = new MotorControllerGroup(leftFront, leftRear, rightFront, rightRear);
-      addChild("All", all);
+    all = new MotorControllerGroup(leftFront, leftRear, rightFront, rightRear);
+    addChild("All", all);
 
-      drive = new DifferentialDrive(left, right);
-      addChild("Drive", drive);
-      drive.setSafetyEnabled(false);
-      drive.setExpiration(0.1);
+    drive = new DifferentialDrive(left, right);
+    addChild("Drive", drive);
+    drive.setSafetyEnabled(false);
+    drive.setExpiration(0.1);
 
-      drive.setMaxOutput(1.0);
+    drive.setMaxOutput(1.0);
 
-      brakeMode = false;
-      SmartDashboard.putBoolean("brakeMode", brakeMode);
+    brakeMode = false;
+    SmartDashboard.putBoolean("brakeMode", brakeMode);
 
-      // set the max speed to the default value
-      maxSpeed = Constants.CanConstants.maxSpeed;
+    // set the max speed to the default value
+    maxSpeed = Constants.CanConstants.maxSpeed;
 
-      // set the current limits for all four motors
-      leftFront.setSmartCurrentLimit(40, 60);
-      leftRear.setSmartCurrentLimit(40, 60);
-      rightFront.setSmartCurrentLimit(40, 60);
-      rightRear.setSmartCurrentLimit(40, 60);
+    // set the current limits for all four motors
+    leftFront.setSmartCurrentLimit(40, 60);
+    leftRear.setSmartCurrentLimit(40, 60);
+    rightFront.setSmartCurrentLimit(40, 60);
+    rightRear.setSmartCurrentLimit(40, 60);
 
-      tankLayout =
-          Shuffleboard.getTab("Config")
-              .getLayout("Tank", BuiltInLayouts.kList)
-              .withSize(1, 4)
-              .withPosition(0, 0);
+    tankLayout =
+        Shuffleboard.getTab("Config")
+            .getLayout("Tank", BuiltInLayouts.kList)
+            .withSize(1, 4)
+            .withPosition(0, 0);
 
-      // create a new slider widget for the current limits
-      stallWidget =
-          tankLayout.add("Stall Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
-      freeWidget =
-          tankLayout.add("Free Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
+    // create a new slider widget for the current limits
+    stallWidget =
+        tankLayout.add("Stall Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
+    freeWidget =
+        tankLayout.add("Free Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
 
-      // create a new boolean box widget for the idle mode
-      idleModeWidget = tankLayout.add("Braking Mode", false).withWidget(BuiltInWidgets.kBooleanBox);
+    // create a new boolean box widget for the idle mode
+    idleModeWidget = tankLayout.add("Braking Mode", false).withWidget(BuiltInWidgets.kBooleanBox);
 
-      // create a new button widget for the idle mode switch
-      idleModeSwitch =
-          tankLayout
-              .add("Switch Idle Mode", false)
-              .withWidget(BuiltInWidgets.kToggleButton)
-              .getEntry();
+    // create a new button widget for the idle mode switch
+    idleModeSwitch =
+        tankLayout
+            .add("Switch Idle Mode", false)
+            .withWidget(BuiltInWidgets.kToggleButton)
+            .getEntry();
 
-      // create a new slider widget for the ramp rate
-      rampRateWidget =
-          tankLayout
-              .add("Ramp Rate", Constants.CanConstants.kRampRate)
-              .withWidget(BuiltInWidgets.kNumberSlider)
-              .getEntry();
+    // create a new slider widget for the ramp rate
+    rampRateWidget =
+        tankLayout
+            .add("Ramp Rate", Constants.CanConstants.kRampRate)
+            .withWidget(BuiltInWidgets.kNumberSlider)
+            .getEntry();
 
-      // create a new slider widget for the max speed (don't call getEntry() yet, it can be changed
-      // by button inputs)
-      maxSpeedWidget =
-          tankLayout.add("Max Speed", maxSpeed).withWidget(BuiltInWidgets.kNumberSlider);
-      maxSpeedEntry = maxSpeedWidget.getEntry();
-    
+    // create a new slider widget for the max speed (don't call getEntry() yet, it can be changed
+    // by button inputs)
+    maxSpeedWidget = tankLayout.add("Max Speed", maxSpeed).withWidget(BuiltInWidgets.kNumberSlider);
+    maxSpeedEntry = maxSpeedWidget.getEntry();
   }
 
   @Override
