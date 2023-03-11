@@ -41,11 +41,11 @@ public class RobotContainer {
   public static final Joystick m_driverJoystick = new Joystick(2);
 
   public static final Joystick m_leftJoystick =
-      ("accurateTankDrive".equals(Constants.OperatorConstants.m_driveControllerType))
+      ("accurateTank".equals(Constants.OperatorConstants.m_driveControllerType))
           ? new Joystick(2)
           : null;
   public static final Joystick m_rightJoystick =
-      (Constants.OperatorConstants.m_driveControllerType.equals("accurateTankDrive"))
+      (Constants.OperatorConstants.m_driveControllerType.equals("accurateTank"))
           ? new Joystick(3)
           : null;
 
@@ -142,7 +142,7 @@ public class RobotContainer {
   }
 
   public static double getLeftTankJoystick() {
-    if (Constants.OperatorConstants.m_driveControllerType.equals("accurateTankDrive")) {
+    if (Constants.OperatorConstants.m_driveControllerType.equals("accurateTank")) {
       double axis = m_leftJoystick.getY();
       if (Math.abs(axis) < 0.03) {
         axis = 0;
@@ -154,7 +154,7 @@ public class RobotContainer {
   }
 
   public static double getRightTankJoystick() {
-    if (Constants.OperatorConstants.m_driveControllerType.equals("accurateTankDrive")) {
+    if (Constants.OperatorConstants.m_driveControllerType.equals("accurateTank")) {
       double axis = m_rightJoystick.getY();
       if (Math.abs(axis) < 0.03) {
         axis = 0;
