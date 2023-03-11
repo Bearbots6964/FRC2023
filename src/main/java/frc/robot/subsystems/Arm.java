@@ -25,6 +25,26 @@ public class Arm extends SubsystemBase {
 
   private ShuffleboardLayout layout;
 
+  // create variables for the different types of data we can get from the spark max
+  private double outputCurrent;
+  private double outputVoltage;
+  private double outputPower;
+  private double outputSpeed;
+  private double busVoltage;
+  private double motorTemperature;
+  private double appliedOutput;
+
+  // and create widgets for each of them
+  private SimpleWidget outputCurrentWidget;
+  private SimpleWidget outputVoltageWidget;
+  private SimpleWidget outputPowerWidget;
+  private SimpleWidget outputSpeedWidget;
+  private GenericEntry busVoltageWidget;
+  private GenericEntry motorTemperatureWidget;
+  private GenericEntry appliedOutputWidget;
+
+  // gear ratio is 87:1
+
   private int gearRatio = 87;
 
   public Arm() {
@@ -57,7 +77,17 @@ public class Arm extends SubsystemBase {
       .withProperties(Map.of("min", 0, "max", 1))
       .getEntry();
 
+    // Create a Shuffleboard widget for the output current
+    outputCurrentWidget = layout.add("Output Current", 0).withWidget(BuiltInWidgets.kDial);
 
+    // Create a Shuffleboard widget for the output voltage
+    outputVoltageWidget = layout.add("Output Voltage", 0).withWidget(BuiltInWidgets.kDial);
+
+    // Create a Shuffleboard widget for the output power
+    outputPowerWidget = layout.add("Output Power", 0).withWidget(BuiltInWidgets.kDial);
+
+    // Create a Shuffleboard widget for the output speed
+    outputSpeedWidget = layout.add("Output Speed", 0).withWidget(BuiltInWidgets.kDial);
   }
 
   @Override
@@ -70,6 +100,18 @@ public class Arm extends SubsystemBase {
     speed = speedWidget.getDouble(0.8);
 
     yMotor.setSmartCurrentLimit(freeCurrent, stallCurrent);
+
+    // get the data from the spark max
+    outputCurrent = yMotor.getOutputCurrent();
+    outputVoltage = yMotor.getBusVoltage();
+    outputPower = yMotor.getAppliedOutput();
+    outputSpeed = yMotor.getEncoder().getVelocity();
+
+    // update the widgets with the data
+    outputCurrentWidget.getEntry().setDouble(outputCurrent);
+    outputVoltageWidget.getEntry().setDouble(outputVoltage);
+    outputPowerWidget.getEntry().setDouble(outputPower);
+    outputSpeedWidget.getEntry().setDouble(outputSpeed);
   }
 
   public void moveArm(double leftStickYaxis) {
