@@ -180,4 +180,10 @@ public class Tank extends SubsystemBase {
     return -numRotations
         * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
   }
+
+  public double getAverageDistance() {
+    double numRotations =
+        (getRightDistance() + getLeftDistance()) / 2;
+    return numRotations;
+  }
 }

@@ -54,11 +54,11 @@ public class BalanceCommand extends CommandBase {
     SmartDashboard.putNumber("max offset", max);
 
     if (pitchOffset < 15.7 && !onRamp) {
-      driveBase.setAllMotors(1);
+      driveBase.setAllMotors(0.7);
     } else {
       onRamp = true;
 
-      if (Math.abs(pitchOffset) < 1.5) {
+      if (Math.abs(pitchOffset) < 2) {
         driveBase.setAllMotors(0);
       } else {
         driveBase.setAllMotors(
@@ -69,7 +69,6 @@ public class BalanceCommand extends CommandBase {
     }
   }
 
-  // makes the thing go brrrrr
   @Override
   public void end(boolean interrupted) {}
 
