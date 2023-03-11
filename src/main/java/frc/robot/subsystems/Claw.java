@@ -10,7 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Claw extends SubsystemBase {
-  private CANSparkMax clawMotor;
+  public CANSparkMax clawMotor;
 
   // gear ratio is 100:1
 

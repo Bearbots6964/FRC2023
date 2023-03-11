@@ -27,60 +27,58 @@ public class Tank extends SubsystemBase {
 
   /** */
   public Tank() {
-    if (CanConstants.kBaseType == "tank") {
-      leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
-      leftFront.restoreFactoryDefaults();
-      leftFront.setInverted(true);
-      leftFront.setIdleMode(IdleMode.kCoast);
-      leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-      leftFront.burnFlash();
+    leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
+    leftFront.restoreFactoryDefaults();
+    leftFront.setInverted(true);
+    leftFront.setIdleMode(IdleMode.kCoast);
+    leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    leftFront.burnFlash();
 
-      leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
-      leftRear.restoreFactoryDefaults();
-      leftRear.setInverted(true);
-      leftRear.setIdleMode(IdleMode.kCoast);
-      leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-      leftRear.burnFlash();
+    leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
+    leftRear.restoreFactoryDefaults();
+    leftRear.setInverted(true);
+    leftRear.setIdleMode(IdleMode.kCoast);
+    leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    leftRear.burnFlash();
 
-      left = new MotorControllerGroup(leftFront, leftRear);
-      addChild("left", left);
+    left = new MotorControllerGroup(leftFront, leftRear);
+    addChild("left", left);
 
-      rightFront =
-          new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
-      rightFront.restoreFactoryDefaults();
-      rightFront.setInverted(false);
-      rightFront.setIdleMode(IdleMode.kCoast);
-      rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-      rightFront.burnFlash();
+    rightFront =
+        new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
+    rightFront.restoreFactoryDefaults();
+    rightFront.setInverted(false);
+    rightFront.setIdleMode(IdleMode.kCoast);
+    rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    rightFront.burnFlash();
 
-      rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
-      rightRear.restoreFactoryDefaults();
-      rightRear.setInverted(false);
-      rightRear.setIdleMode(IdleMode.kCoast);
-      rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-      rightRear.burnFlash();
+    rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
+    rightRear.restoreFactoryDefaults();
+    rightRear.setInverted(false);
+    rightRear.setIdleMode(IdleMode.kCoast);
+    rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    rightRear.burnFlash();
 
-      right = new MotorControllerGroup(rightFront, rightRear);
-      addChild("right", right);
+    right = new MotorControllerGroup(rightFront, rightRear);
+    addChild("right", right);
 
-      all = new MotorControllerGroup(leftFront, leftRear, rightFront, rightRear);
-      addChild("All", all);
+    all = new MotorControllerGroup(leftFront, leftRear, rightFront, rightRear);
+    addChild("All", all);
 
-      drive = new DifferentialDrive(left, right);
-      addChild("Drive", drive);
-      drive.setSafetyEnabled(false);
-      drive.setExpiration(0.1);
+    drive = new DifferentialDrive(left, right);
+    addChild("Drive", drive);
+    drive.setSafetyEnabled(false);
+    drive.setExpiration(0.1);
 
-      drive.setMaxOutput(1.0);
+    drive.setMaxOutput(1.0);
 
-      brakeMode = false;
-      SmartDashboard.putBoolean("brakeMode", brakeMode);
+    brakeMode = false;
+    SmartDashboard.putBoolean("brakeMode", brakeMode);
 
-      leftFront.setSmartCurrentLimit(40, 60);
-      leftRear.setSmartCurrentLimit(40, 60);
-      rightFront.setSmartCurrentLimit(40, 60);
-      rightRear.setSmartCurrentLimit(40, 60);
-    }
+    leftFront.setSmartCurrentLimit(40, 60);
+    leftRear.setSmartCurrentLimit(40, 60);
+    rightFront.setSmartCurrentLimit(40, 60);
+    rightRear.setSmartCurrentLimit(40, 60);
   }
 
   @Override

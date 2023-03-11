@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 
 public class Arm extends SubsystemBase {
-  private CANSparkMax yMotor;
+  public CANSparkMax yMotor;
 
   private GenericEntry freeCurrentWidget;
   private GenericEntry stallCurrentWidget;
@@ -24,6 +24,8 @@ public class Arm extends SubsystemBase {
   private GenericEntry speedWidget;
 
   private ShuffleboardLayout layout;
+
+  private int gearRatio = 87;
 
   public Arm() {
     yMotor = new CANSparkMax(7, MotorType.kBrushless);
@@ -48,8 +50,8 @@ public class Arm extends SubsystemBase {
       .withProperties(Map.of("min", 0, "max", 40))
       .getEntry();
 
-      // Create a Shuffleboard widget for the speed
-      speedWidget = layout
+    // Create a Shuffleboard widget for the speed
+    speedWidget = layout
       .add("Speed Limit", 0.8)
       .withWidget(BuiltInWidgets.kNumberSlider)
       .withProperties(Map.of("min", 0, "max", 1))
