@@ -137,11 +137,11 @@ public class RobotContainer {
   }
 
   public static double getJoystickX() {
-    double axis = m_driverJoystick.getRawAxis(0);
+    double axis = m_driverJoystick.getRawAxis(2);
     if (Math.abs(axis) < 0.03) {
       axis = 0;
     }
-    return axis * -1;
+    return axis;
   }
 
   public Command getAutonomousCommand() {
