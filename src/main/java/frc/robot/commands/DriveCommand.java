@@ -25,15 +25,10 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     // double check getMaxSpeed(), might be wrong
-    if (Constants.OperatorConstants.m_driveControllerType.equals("arcadeDrive")) {
-      m_drivebase.arcadeDrive(
-          RobotContainer.getLeftStickY() * m_drivebase.getMaxSpeed(),
-          RobotContainer.getRightStickX() * m_drivebase.getMaxSpeed());
-    } else if (Constants.OperatorConstants.m_driveControllerType.equals("accurateTank")) {
-      m_drivebase.setLeft(RobotContainer.getLeftTankJoystick() * m_drivebase.getMaxSpeed());
-      m_drivebase.setRight(RobotContainer.getRightTankJoystick() * m_drivebase.getMaxSpeed());
-    }
-
+    m_drivebase.arcadeDrive(
+        RobotContainer.getJoystickY() * Constants.CanConstants.maxSpeed,
+        RobotContainer.getJoystickX() * 0.65);
+    
     SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
   }
 

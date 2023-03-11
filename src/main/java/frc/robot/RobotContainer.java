@@ -38,6 +38,7 @@ public class RobotContainer {
   // RR 1/11/2022
   public static final XboxController m_armController = new XboxController(0);
   public static final XboxController m_driverController = new XboxController(1);
+  public static final Joystick m_driverJoystick = new Joystick(2);
 
   public static final Joystick m_leftJoystick =
       ("accurateTankDrive".equals(Constants.OperatorConstants.m_driveControllerType))
@@ -179,6 +180,22 @@ public class RobotContainer {
     SmartDashboard.putNumber("arm right stick x", axis);
 
     if (Math.abs(axis) < 0.05) {
+      axis = 0;
+    }
+    return axis;
+  }
+
+  public static double getJoystickY() {
+    double axis = m_driverJoystick.getRawAxis(1);
+    if (Math.abs(axis) < 0.03) {
+      axis = 0;
+    }
+    return axis * -1;
+  }
+
+  public static double getJoystickX() {
+    double axis = m_driverJoystick.getRawAxis(2);
+    if (Math.abs(axis) < 0.03) {
       axis = 0;
     }
     return axis;
