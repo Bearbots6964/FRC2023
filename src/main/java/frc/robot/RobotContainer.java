@@ -36,18 +36,8 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   // RR 1/11/2022
-  public static final XboxController m_armController = new XboxController(0);
-  public static final XboxController m_driverController = new XboxController(1);
-  public static final Joystick m_driverJoystick = new Joystick(2);
-
-  public static final Joystick m_leftJoystick =
-      ("accurateTank".equals(Constants.OperatorConstants.m_driveControllerType))
-          ? new Joystick(2)
-          : null;
-  public static final Joystick m_rightJoystick =
-      (Constants.OperatorConstants.m_driveControllerType.equals("accurateTank"))
-          ? new Joystick(3)
-          : null;
+  public static final Joystick m_armController = new Joystick(0);
+  public static final XboxController m_driverController = new XboxController(2);
 
   // INSTANTIATES ALL SUBSYSTEMS
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -96,17 +86,17 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, XboxController.Button.kY.value)
         .whileTrue(m_BalanceCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kStart.value)
-        .whileTrue(m_IncreaseMaxSpeedCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kBack.value)
-        .whileTrue(m_DecreaseMaxSpeedCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kX.value)
-        .whileTrue(m_SwitchIdleModeCommmand);
+    // new JoystickButton(m_driverController, XboxController.Button.kStart.value)
+    //     .whileTrue(m_IncreaseMaxSpeedCommand);
+    // new JoystickButton(m_driverController, XboxController.Button.kBack.value)
+    //     .whileTrue(m_DecreaseMaxSpeedCommand);
+    // new JoystickButton(m_driverController, XboxController.Button.kX.value)
+    //     .whileTrue(m_SwitchIdleModeCommmand);
 
-    new JoystickButton(m_armController, XboxController.Button.kA.value)
-        .whileTrue(m_CloseClawCommand);
-    new JoystickButton(m_armController, XboxController.Button.kB.value)
+    new JoystickButton(m_armController, Joystick.ButtonType.kTrigger.value)
         .whileTrue(m_OpenClawCommand);
+    new JoystickButton(m_armController, Joystick.ButtonType.kTop.value)
+        .whileTrue(m_CloseClawCommand);
   }
 
   public static double getLeftStickY() {
@@ -117,13 +107,13 @@ public class RobotContainer {
     return axis * -1;
   }
 
-  public static double getLeftStickX() {
-    double axis = m_driverController.getRawAxis(0);
-    if (Math.abs(axis) < 0.03) {
-      axis = 0;
-    }
-    return axis;
-  }
+  // public static double getLeftStickX() {
+  //   double axis = m_driverController.getRawAxis(0);
+  //   if (Math.abs(axis) < 0.03) {
+  //     axis = 0;
+  //   }
+  //   return axis;
+  // }
 
   public static double getRightStickX() {
     double axis = m_driverController.getRawAxis(4);
@@ -133,37 +123,13 @@ public class RobotContainer {
     return axis;
   }
 
-  public static double getRightStickY() {
-    double axis = m_driverController.getRawAxis(5);
-    if (Math.abs(axis) < 0.03) {
-      axis = 0;
-    }
-    return axis;
-  }
-
-  public static double getLeftTankJoystick() {
-    if (Constants.OperatorConstants.m_driveControllerType.equals("accurateTank")) {
-      double axis = m_leftJoystick.getY();
-      if (Math.abs(axis) < 0.03) {
-        axis = 0;
-      }
-      return axis * -1;
-    } else {
-      return 0;
-    }
-  }
-
-  public static double getRightTankJoystick() {
-    if (Constants.OperatorConstants.m_driveControllerType.equals("accurateTank")) {
-      double axis = m_rightJoystick.getY();
-      if (Math.abs(axis) < 0.03) {
-        axis = 0;
-      }
-      return axis * -1;
-    } else {
-      return 0;
-    }
-  }
+  // public static double getRightStickY() {
+  //   double axis = m_driverController.getRawAxis(5);
+  //   if (Math.abs(axis) < 0.03) {
+  //     axis = 0;
+  //   }
+  //   return axis;
+  // }
 
   public static double getArmControllerLeftStickY() {
     double axis = m_armController.getRawAxis(1);
@@ -172,7 +138,7 @@ public class RobotContainer {
     if (Math.abs(axis) < 0.05) {
       axis = 0;
     }
-    return axis * -1;
+    return axis;
   }
 
   public static double getArmControllerRightStickX() {
@@ -186,16 +152,16 @@ public class RobotContainer {
   }
 
   public static double getJoystickY() {
-    double axis = m_driverJoystick.getRawAxis(1);
-    if (Math.abs(axis) < 0.03) {
+    double axis = m_armController.getRawAxis(1);
+    if (Math.abs(axis) < 0.1) {
       axis = 0;
     }
-    return axis * -1;
+    return axis;
   }
 
   public static double getJoystickX() {
-    double axis = m_driverJoystick.getRawAxis(2);
-    if (Math.abs(axis) < 0.03) {
+    double axis = m_armController.getRawAxis(2);
+    if (Math.abs(axis) < 0.4) {
       axis = 0;
     }
     return axis;

@@ -46,17 +46,17 @@ public class Tank extends SubsystemBase {
     leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
     leftFront.restoreFactoryDefaults();
     leftFront.setInverted(true);
-    leftFront.setIdleMode(IdleMode.kCoast);
+    leftFront.setIdleMode(IdleMode.kBrake);
     leftFront.setSmartCurrentLimit(40);
-    leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    // leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftFront.burnFlash();
 
     leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
     leftRear.restoreFactoryDefaults();
     leftRear.setInverted(true);
-    leftRear.setIdleMode(IdleMode.kCoast);
+    leftRear.setIdleMode(IdleMode.kBrake);
     leftRear.setSmartCurrentLimit(40);
-    leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    // leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftRear.burnFlash();
 
     left = new MotorControllerGroup(leftFront, leftRear);
@@ -66,17 +66,17 @@ public class Tank extends SubsystemBase {
     rightFront.restoreFactoryDefaults();
     rightFront.setInverted(false);
 
-    rightFront.setIdleMode(IdleMode.kCoast);
+    rightFront.setIdleMode(IdleMode.kBrake);
     rightFront.setSmartCurrentLimit(40);
-    rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    // rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightFront.burnFlash();
 
     rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
     rightRear.restoreFactoryDefaults();
     rightRear.setInverted(false);
-    rightRear.setIdleMode(IdleMode.kCoast);
+    rightRear.setIdleMode(IdleMode.kBrake);
     rightRear.setSmartCurrentLimit(40);
-    rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    // rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightRear.burnFlash();
 
     right = new MotorControllerGroup(rightFront, rightRear);
@@ -141,8 +141,8 @@ public class Tank extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("leftStickY", RobotContainer.getLeftStickY());
-    SmartDashboard.putNumber("rightStickX", RobotContainer.getRightStickX());
+    SmartDashboard.putNumber("leftStickY", RobotContainer.getJoystickY());
+    SmartDashboard.putNumber("rightStickX", RobotContainer.getJoystickX());
 
     // set all four motors to the stall and free limit widget values
     stallLimit = (int) stallWidget.getDouble(10);
