@@ -158,8 +158,6 @@ public class RobotContainer {
     return m_AutoCommand;
   }
 
-  
-
   public void initTeleop() {
     // Set the default tank command to DriveCommand
     m_Tank.setDefaultCommand(m_DriveCommand);
