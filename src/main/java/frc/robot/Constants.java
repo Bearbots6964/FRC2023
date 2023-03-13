@@ -31,9 +31,9 @@ public final class Constants {
     public static final int kLeftRearMotorPort = 2;
     public static final int kRightFrontMotorPort = 4;
     public static final int kRightRearMotorPort = 5;
-    public static final double kRampRate = 0.25;
+    public static final double kRampRate = 0.1;
 
-    public static double maxSpeed = 0.7;
+    public static double maxSpeed = 0.75;
     public static final double maxSpeedIncrement = 0.1;
 
     public static final String kBaseType = "tank";
@@ -42,6 +42,7 @@ public final class Constants {
   public static final class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final double ProportionalDivisor = 16.5;
+    public static final String m_driveControllerType = "accurateTank";
   }
 
   public static final class VisionConstants {
