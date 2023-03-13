@@ -37,6 +37,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // RR 1/11/2022
   public static final Joystick m_armController = new Joystick(0);
+  public static final XboxController m_armController2 = new XboxController(1);
   public static final XboxController m_driverController = new XboxController(2);
 
   // INSTANTIATES ALL SUBSYSTEMS
@@ -93,13 +94,13 @@ public class RobotContainer {
     // new JoystickButton(m_driverController, XboxController.Button.kX.value)
     //     .whileTrue(m_SwitchIdleModeCommmand);
 
-    new JoystickButton(m_armController, Joystick.ButtonType.kTrigger.value)
+    new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_OpenClawCommand);
-    new JoystickButton(m_armController, Joystick.ButtonType.kTop.value)
+    new JoystickButton(m_armController2, XboxController.Button.kRightBumper.value)
         .whileTrue(m_CloseClawCommand);
   }
 
-  public static double getLeftStickY() {
+  public static double getDriverControllerLeftStickY() {
     double axis = m_driverController.getRawAxis(1);
     if (Math.abs(axis) < 0.03) {
       axis = 0;
@@ -107,15 +108,7 @@ public class RobotContainer {
     return axis * -1;
   }
 
-  // public static double getLeftStickX() {
-  //   double axis = m_driverController.getRawAxis(0);
-  //   if (Math.abs(axis) < 0.03) {
-  //     axis = 0;
-  //   }
-  //   return axis;
-  // }
-
-  public static double getRightStickX() {
+  public static double getDriverControllerRightStickX() {
     double axis = m_driverController.getRawAxis(4);
     if (Math.abs(axis) < 0.03) {
       axis = 0;
@@ -123,15 +116,8 @@ public class RobotContainer {
     return axis;
   }
 
-  // public static double getRightStickY() {
-  //   double axis = m_driverController.getRawAxis(5);
-  //   if (Math.abs(axis) < 0.03) {
-  //     axis = 0;
-  //   }
-  //   return axis;
-  // }
 
-  public static double getArmControllerLeftStickY() {
+  public static double getJoystickArmControllerLeftStickY() {
     double axis = m_armController.getRawAxis(1);
     SmartDashboard.putNumber("arm left stick y", axis);
 
@@ -141,7 +127,7 @@ public class RobotContainer {
     return axis;
   }
 
-  public static double getArmControllerRightStickX() {
+  public static double getJoystickArmControllerRightStickX() {
     double axis = m_armController.getRawAxis(4);
     SmartDashboard.putNumber("arm right stick x", axis);
 
@@ -151,16 +137,16 @@ public class RobotContainer {
     return axis;
   }
 
-  public static double getJoystickY() {
-    double axis = m_armController.getRawAxis(1);
+  public static double getControllerLeftStickY() {
+    double axis = m_armController2.getRawAxis(1);
     if (Math.abs(axis) < 0.1) {
       axis = 0;
     }
     return axis;
   }
 
-  public static double getJoystickX() {
-    double axis = m_armController.getRawAxis(2);
+  public static double getControllerRightStickX() {
+    double axis = m_armController2.getRawAxis(4);
     if (Math.abs(axis) < 0.4) {
       axis = 0;
     }

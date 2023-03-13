@@ -141,8 +141,8 @@ public class Tank extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("leftStickY", RobotContainer.getJoystickY());
-    SmartDashboard.putNumber("rightStickX", RobotContainer.getJoystickX());
+    SmartDashboard.putNumber("leftStickY", RobotContainer.getDriverControllerLeftStickY());
+    SmartDashboard.putNumber("rightStickX", RobotContainer.getDriverControllerRightStickX());
 
     // set all four motors to the stall and free limit widget values
     stallLimit = (int) stallWidget.getDouble(10);
