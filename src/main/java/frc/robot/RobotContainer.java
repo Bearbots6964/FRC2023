@@ -41,7 +41,6 @@ public class RobotContainer {
   public static final XboxController m_driverController = new XboxController(2);
 
   // INSTANTIATES ALL SUBSYSTEMS
-  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Arm m_Arm = new Arm();
   private final Claw m_claw = new Claw();
   private final Tank m_Tank = new Tank();
@@ -51,16 +50,8 @@ public class RobotContainer {
   private final Odometry m_Odometry = new Odometry(m_PID.gyro, m_Tank);
 
   // INSTANTIATES ALL COMMANDS
-  // private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
-  // private final BalanceCommand m_ChargeUpBalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  // private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand = new
-  // ArmToFirstLevelCommand(m_Turret, m_Arm);
-  // private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new
-  // ArmToSecondLevelCommand(m_Turret, m_Arm);
-  // private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new
-  // ArmToThirdLevelCommand(m_Turret, m_Arm);
   private final MoveArmXCommand m_MoveArmXCommand = new MoveArmXCommand(m_Turret);
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
@@ -87,6 +78,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, XboxController.Button.kY.value)
         .whileTrue(m_BalanceCommand);
+
     // new JoystickButton(m_driverController, XboxController.Button.kStart.value)
     //     .whileTrue(m_IncreaseMaxSpeedCommand);
     // new JoystickButton(m_driverController, XboxController.Button.kBack.value)

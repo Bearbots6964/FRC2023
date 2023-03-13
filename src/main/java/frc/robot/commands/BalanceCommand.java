@@ -57,7 +57,7 @@ public class BalanceCommand extends CommandBase {
     } else {
       onRamp = true;
 
-      if (Math.abs(pitchOffset) < 1.5) {
+      if (Math.abs(pitchOffset) < 2) {
         driveBase.setAllMotors(0);
       } else {
         driveBase.setAllMotors(
@@ -68,7 +68,6 @@ public class BalanceCommand extends CommandBase {
     }
   }
 
-  // makes the thing go brrrrr
   @Override
   public void end(boolean interrupted) {}
 

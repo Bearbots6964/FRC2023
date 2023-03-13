@@ -25,7 +25,6 @@ public class MoveArmYCommand extends CommandBase {
     m_subsystem.moveArm(RobotContainer.getControllerLeftStickY());
   }
 
-  // eheheheheheheheheheheha
   @Override
   public void end(boolean interrupted) {}
 
