@@ -10,6 +10,7 @@ import frc.robot.subsystems.*;
 public class PlaceGamePieceCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank drive;
+
   private final Claw claw;
   private final Arm arm;
 
@@ -34,12 +35,11 @@ public class PlaceGamePieceCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(arm.allTheWayDownRear.get() == false){
-        arm.armMotor.set(-0.25);
-    } else{
-        claw.openClaw();
+    if (arm.allTheWayDownRear.get() == false) {
+      arm.armMotor.set(-0.25);
+    } else {
+      claw.openClaw();
     }
-
   }
 
   @Override

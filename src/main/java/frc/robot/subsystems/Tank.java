@@ -182,8 +182,7 @@ public class Tank extends SubsystemBase {
   }
 
   public double getAverageDistance() {
-    double numRotations =
-        (getRightDistance() + getLeftDistance()) / 2;
+    double numRotations = (getRightDistance() + getLeftDistance()) / 2;
     return numRotations;
   }
 }

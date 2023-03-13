@@ -20,7 +20,6 @@ public class BalanceCommand extends CommandBase {
   private double initPitch, max;
   private boolean onRamp;
 
-
   public BalanceCommand(PID m_pid, Tank m_driveBase) {
     pid = m_pid;
     driveBase = m_driveBase;
