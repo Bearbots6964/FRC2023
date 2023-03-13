@@ -8,7 +8,6 @@ import com.revrobotics.*;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -39,7 +38,6 @@ public class Arm extends SubsystemBase {
     armMotor.set(motorDrive);
   }
 
-
   public void moveArmToZeroDeg() {
     double speedY = 0.2;
     while (allTheWayDownFront.get() == true) {
@@ -49,7 +47,7 @@ public class Arm extends SubsystemBase {
     armMotor.getEncoder().setPosition(0);
     currentArmAngle = 0;
   }
-  
+
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation

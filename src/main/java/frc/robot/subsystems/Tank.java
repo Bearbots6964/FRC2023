@@ -283,6 +283,5 @@ public class Tank extends SubsystemBase {
 
   public void setRight(double speed) {
     right.set(speed);
-
   }
 }
