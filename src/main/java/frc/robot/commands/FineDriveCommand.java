@@ -10,11 +10,11 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
-public class DriveCommand extends CommandBase {
+public class FineDriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank m_drivebase;
 
-  public DriveCommand(Tank subsystem) {
+  public FineDriveCommand(Tank subsystem) {
     m_drivebase = subsystem;
     addRequirements(m_drivebase);
   }
@@ -26,10 +26,9 @@ public class DriveCommand extends CommandBase {
   public void execute() {
     // double check getMaxSpeed(), might be wrong
     m_drivebase.arcadeDrive(
-        RobotContainer.getDriverControllerLeftStickYAdjusted() * Constants.CanConstants.maxSpeed,
-        RobotContainer.getDriverControllerRightStickXAdjusted() * 0.65);
-    
-    SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
+        RobotContainer.getHatX() * 0.05,
+        RobotContainer.getHatY() * 0.05);
+    SmartDashboard.putNumber("help", RobotContainer.getHatX());
   }
 
   @Override

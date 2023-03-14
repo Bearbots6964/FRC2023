@@ -22,7 +22,7 @@ public class MoveArmYCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_subsystem.moveArm(RobotContainer.getControllerLeftStickY());
+    m_subsystem.moveArm(RobotContainer.getJoystickArmY());
   }
 
   // eheheheheheheheheheheha

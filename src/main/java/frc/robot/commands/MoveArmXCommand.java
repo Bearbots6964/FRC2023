@@ -22,7 +22,7 @@ public class MoveArmXCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_subsystem.rotateArm(RobotContainer.getControllerRightStickX());
+    m_subsystem.rotateArm(RobotContainer.getJoystickArmTwist());
   }
 
   @Override

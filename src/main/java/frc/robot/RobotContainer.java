@@ -9,22 +9,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AutoCommand;
-import frc.robot.commands.BalanceCommand;
-import frc.robot.commands.CloseClawCommand;
-import frc.robot.commands.DecreaseMaxSpeedCommand;
-import frc.robot.commands.DriveCommand;
-import frc.robot.commands.IncreaseMaxSpeedCommand;
-import frc.robot.commands.MoveArmXCommand;
-import frc.robot.commands.MoveArmYCommand;
-import frc.robot.commands.OpenClawCommand;
-import frc.robot.commands.SwitchIdleModeCommmand;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.Odometry;
-import frc.robot.subsystems.PID;
-import frc.robot.subsystems.Tank;
-import frc.robot.subsystems.Turret;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -72,6 +58,7 @@ public class RobotContainer {
       new DecreaseMaxSpeedCommand(m_Tank);
   private final SwitchIdleModeCommmand m_SwitchIdleModeCommmand =
       new SwitchIdleModeCommmand(m_Tank);
+  private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -94,26 +81,56 @@ public class RobotContainer {
     // new JoystickButton(m_driverController, XboxController.Button.kX.value)
     //     .whileTrue(m_SwitchIdleModeCommmand);
 
-    new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
+    new JoystickButton(m_armController, 1)
         .whileTrue(m_OpenClawCommand);
-    new JoystickButton(m_armController2, XboxController.Button.kRightBumper.value)
+    new JoystickButton(m_armController, 2)
         .whileTrue(m_CloseClawCommand);
+    new JoystickButton(m_armController, m_driverController.povLeft)
+        .whileTrue(m_FineDriveCommand);
+
+    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+        .whileTrue(m_FineDriveCommand);
   }
 
   public static double getDriverControllerLeftStickY() {
     double axis = m_driverController.getRawAxis(1);
-    if (Math.abs(axis) < 0.03) {
+    // 0.60 is the minimum amount of power we need
+    if (Math.abs(axis) < 0.01) {
       axis = 0;
+      
+
     }
     return axis * -1;
   }
 
+  public static double getDriverControllerLeftStickYAdjusted() {
+    double val = getDriverControllerLeftStickY();
+    if (val > 0) {
+      return (val * val + 0.6) / 1.6;
+    } else if (val < 0) {
+      return -(val * val + 0.6) / 1.6;
+    } else {
+      return 0;
+    }
+  }
+
   public static double getDriverControllerRightStickX() {
     double axis = m_driverController.getRawAxis(4);
-    if (Math.abs(axis) < 0.03) {
+    if (Math.abs(axis) < 0.01) {
       axis = 0;
     }
     return axis;
+  }
+
+  public static double getDriverControllerRightStickXAdjusted() {
+    double val = getDriverControllerRightStickX();
+    if (val > 0) {
+      return (val * val + 0.6) / 1.6;
+    } else if (val < 0) {
+      return -(val * val + 0.6) / 1.6;
+    } else {
+      return 0;
+    }
   }
 
 
@@ -151,6 +168,32 @@ public class RobotContainer {
       axis = 0;
     }
     return axis;
+  }
+
+  public static double getJoystickArmY() {
+    double axis = m_armController.getRawAxis(1);
+    if (Math.abs(axis) < 0.15) {
+      axis = 0;
+    }
+    return axis;
+  }
+
+  public static double getJoystickArmTwist() {
+    double axis = m_armController.getRawAxis(2);
+    if (Math.abs(axis) < 0.15) {
+      axis = 0;
+    }
+    return axis;
+  }
+
+  public static double getHatX() {
+    double axis = m_armController.getRawAxis(5);
+    return -axis;
+  }
+
+  public static double getHatY() {
+    double axis = m_armController.getRawAxis(6);
+    return -axis;
   }
 
   public Command getAutonomousCommand() {
