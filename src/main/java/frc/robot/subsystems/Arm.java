@@ -9,13 +9,13 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
 
   public CANSparkMax armMotor;
   public DigitalInput allTheWayDownRear = new DigitalInput(1);
-  public DigitalInput allTheWayDownFront = new DigitalInput(2);
   public double desiredArmAngle, currentArmAngle;
 
   public double gearRatio = 87;
@@ -29,7 +29,7 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // moveArm(RobotContainer.getArmControllerLeftStickY());
+    SmartDashboard.putBoolean("zeroDeg", allTheWayDownRear.get());
   }
 
   public void moveArm(double leftStickYaxis) {
@@ -40,7 +40,7 @@ public class Arm extends SubsystemBase {
 
   public void moveArmToZeroDeg() {
     double speedY = 0.2;
-    while (allTheWayDownFront.get() == true) {
+    while (allTheWayDownRear.get() == true) {
       armMotor.set(-1 * speedY);
     }
     armMotor.set(0);

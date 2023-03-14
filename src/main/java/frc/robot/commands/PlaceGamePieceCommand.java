@@ -35,10 +35,10 @@ public class PlaceGamePieceCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (arm.allTheWayDownRear.get() == false) {
-      arm.armMotor.set(-0.25);
+    if (arm.allTheWayDownRear.get() == true) {
+      arm.armMotor.set(0.4);
     } else {
-      claw.openClaw();
+      //claw.openClaw();
     }
   }
 
