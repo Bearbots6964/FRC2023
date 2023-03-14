@@ -4,17 +4,15 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
+import frc.robot.RebindHat;
 import frc.robot.subsystems.Tank;
 
-public class DriveCommand extends CommandBase {
+public class FineDriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank m_drivebase;
 
-  public DriveCommand(Tank subsystem) {
+  public FineDriveCommand(Tank subsystem) {
     m_drivebase = subsystem;
     addRequirements(m_drivebase);
   }
@@ -26,10 +24,7 @@ public class DriveCommand extends CommandBase {
   public void execute() {
     // double check getMaxSpeed(), might be wrong
     m_drivebase.arcadeDrive(
-        RobotContainer.getDriverControllerLeftStickYAdjusted() * Constants.CanConstants.maxSpeed,
-        RobotContainer.getDriverControllerRightStickXAdjusted() * 0.65);
-
-    SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
+        RebindHat.ControllerToYAxis() * 0.43, RebindHat.ControllerToXAxis() * 0.43);
   }
 
   @Override
