@@ -27,8 +27,8 @@ public class FineDriveCommand extends CommandBase {
   public void execute() {
     // double check getMaxSpeed(), might be wrong
     m_drivebase.arcadeDrive(
-        RebindHat.toYAxis() * 0.05,
-        RebindHat.toXAxis() * 0.05);
+        RebindHat.ControllerToYAxis() * 0.43,
+        RebindHat.ControllerToXAxis() * 0.43);
   }
 
   @Override

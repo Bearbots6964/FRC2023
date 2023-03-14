@@ -40,13 +40,6 @@ public class RobotContainer {
   // private final ExampleCommand m_exampleCommand = new ExampleCommand(m_exampleSubsystem);
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
-  // private final BalanceCommand m_ChargeUpBalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  // private final ArmToFirstLevelCommand m_ArmToFirstLevelCommand = new
-  // ArmToFirstLevelCommand(m_Turret, m_Arm);
-  // private final ArmToSecondLevelCommand m_ArmToSecondLevelCommand = new
-  // ArmToSecondLevelCommand(m_Turret, m_Arm);
-  // private final ArmToThirdLevelCommand m_ArmToThirdLevelCommand = new
-  // ArmToThirdLevelCommand(m_Turret, m_Arm);
   private final MoveArmXCommand m_MoveArmXCommand = new MoveArmXCommand(m_Turret);
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
@@ -59,6 +52,8 @@ public class RobotContainer {
   private final SwitchIdleModeCommmand m_SwitchIdleModeCommmand =
       new SwitchIdleModeCommmand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
+  // private final FineAdjustForwardCommand m_FineAdjustForwardCommand = new FineAdjustForwardCommand(m_Tank);
+  // private final FineAdjustBackCommand m_FineAdjustBackCommand = new FineAdjustBackCommand(m_Tank);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -81,14 +76,12 @@ public class RobotContainer {
     // new JoystickButton(m_driverController, XboxController.Button.kX.value)
     //     .whileTrue(m_SwitchIdleModeCommmand);
 
-    new JoystickButton(m_armController, 1)
-        .whileTrue(m_OpenClawCommand);
-    new JoystickButton(m_armController, 2)
+    new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_CloseClawCommand);
-    new JoystickButton(m_armController, 11)
-        .whileTrue(m_FineDriveCommand);
+    new JoystickButton(m_armController2, XboxController.Button.kRightBumper.value)
+        .whileTrue(m_OpenClawCommand);
 
-    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+    new JoystickButton(m_armController2, XboxController.Button.kA.value)
         .whileTrue(m_FineDriveCommand);
   }
 
