@@ -62,7 +62,7 @@ public class BalanceCommand extends CommandBase {
       } else {
         driveBase.setAllMotors(
             0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
-            
+
         SmartDashboard.putNumber(
             "motor speed", 0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
       }

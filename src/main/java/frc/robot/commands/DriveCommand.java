@@ -28,7 +28,7 @@ public class DriveCommand extends CommandBase {
     m_drivebase.arcadeDrive(
         RobotContainer.getDriverControllerLeftStickYAdjusted() * Constants.CanConstants.maxSpeed,
         RobotContainer.getDriverControllerRightStickXAdjusted() * 0.65);
-    
+
     SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
   }
 

@@ -84,8 +84,6 @@ public class RobotContainer {
     // 0.60 is the minimum amount of power we need
     if (Math.abs(axis) < 0.01) {
       axis = 0;
-      
-
     }
     return axis * -1;
   }
@@ -119,7 +117,6 @@ public class RobotContainer {
       return 0;
     }
   }
-
 
   public static double getJoystickArmControllerLeftStickY() {
     double axis = m_armController.getRawAxis(1);
@@ -172,8 +169,6 @@ public class RobotContainer {
     }
     return axis;
   }
-
-
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
