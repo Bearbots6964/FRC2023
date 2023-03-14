@@ -85,7 +85,7 @@ public class RobotContainer {
         .whileTrue(m_OpenClawCommand);
     new JoystickButton(m_armController, 2)
         .whileTrue(m_CloseClawCommand);
-    new JoystickButton(m_armController, m_driverController.povLeft)
+    new JoystickButton(m_armController, 11)
         .whileTrue(m_FineDriveCommand);
 
     new JoystickButton(m_driverController, XboxController.Button.kX.value)
@@ -186,15 +186,7 @@ public class RobotContainer {
     return axis;
   }
 
-  public static double getHatX() {
-    double axis = m_armController.getRawAxis(5);
-    return -axis;
-  }
 
-  public static double getHatY() {
-    double axis = m_armController.getRawAxis(6);
-    return -axis;
-  }
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous

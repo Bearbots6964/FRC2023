@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.RebindHat;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
@@ -26,9 +27,8 @@ public class FineDriveCommand extends CommandBase {
   public void execute() {
     // double check getMaxSpeed(), might be wrong
     m_drivebase.arcadeDrive(
-        RobotContainer.getHatX() * 0.05,
-        RobotContainer.getHatY() * 0.05);
-    SmartDashboard.putNumber("help", RobotContainer.getHatX());
+        RebindHat.toYAxis() * 0.05,
+        RebindHat.toXAxis() * 0.05);
   }
 
   @Override
