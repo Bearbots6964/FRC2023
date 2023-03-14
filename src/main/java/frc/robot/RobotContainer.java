@@ -116,7 +116,7 @@ public class RobotContainer {
       return 0;
     }
   }
-  
+
   public static double getJoystickArmControllerLeftStickY() {
     double axis = m_armController.getRawAxis(1);
     SmartDashboard.putNumber("arm left stick y", axis);
