@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.cameraserver.CameraServer;
-
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,10 +16,8 @@ public class Vision extends SubsystemBase {
   public Vision() {
     // Stuff goes here
 
-
     // create new camera
     CameraServer.startAutomaticCapture();
-
 
     // Set default pipeline
     if (!Preferences.containsKey(kLimelightPipelineKey)) {
@@ -49,7 +45,6 @@ public class Vision extends SubsystemBase {
    * @param property The property to fetch.
    * @return The fetched property.
    */
-
   public double[]
       getProperties() { // we don't know what type we return until we process it in the if statement
     //
