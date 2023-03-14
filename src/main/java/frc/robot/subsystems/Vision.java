@@ -2,14 +2,12 @@ package frc.robot.subsystems;
 
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
+
   private ColorSensorV3 colorSensor;
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   // Pipeline mode.
@@ -17,7 +15,10 @@ public class Vision extends SubsystemBase {
 
   public Vision() {
     // Stuff goes here
-    colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+
+    // create new camera
+    CameraServer.startAutomaticCapture();
+
     // Set default pipeline
     if (!Preferences.containsKey(kLimelightPipelineKey)) {
       Preferences.setInt(kLimelightPipelineKey, 1); // Default to tape
@@ -30,6 +31,7 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
   }
 
   @Override
