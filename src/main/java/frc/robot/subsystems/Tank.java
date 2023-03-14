@@ -92,7 +92,7 @@ public class Tank extends SubsystemBase {
 
     drive.setMaxOutput(1.0);
 
-    brakeMode = false;
+    brakeMode = true;
     SmartDashboard.putBoolean("brakeMode", brakeMode);
 
     // set the max speed to the default value
@@ -192,20 +192,21 @@ public class Tank extends SubsystemBase {
   }
 
   public void increaseMaxSpeed() {
-    if (maxSpeed >= 1) {
-      maxSpeed = 1;
+    if (Constants.CanConstants.maxSpeed >= 1) {
+      Constants.CanConstants.maxSpeed = 1;
     } else {
-      maxSpeed += Constants.CanConstants.maxSpeedIncrement;
+      Constants.CanConstants.maxSpeed += Constants.CanConstants.maxSpeedIncrement;
+
       // set the max speed widget value to the newly increased max speed
       maxSpeedEntry.setDouble(maxSpeed);
     }
   }
 
   public void decreaseMaxSpeed() {
-    if (maxSpeed <= 0) {
-      maxSpeed = 0;
+    if (Constants.CanConstants.maxSpeed <= 0) {
+      Constants.CanConstants.maxSpeed = 0;
     } else {
-      maxSpeed -= Constants.CanConstants.maxSpeedIncrement;
+      Constants.CanConstants.maxSpeed -= Constants.CanConstants.maxSpeedIncrement;
       // set the max speed widget value to the newly decreased max speed
       maxSpeedEntry.setDouble(maxSpeed);
     }

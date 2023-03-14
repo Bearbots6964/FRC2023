@@ -4,8 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -38,6 +41,7 @@ public class RobotContainer {
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
+  private final PlaceGamePieceCommand m_PlaceGamePieceCommand = new PlaceGamePieceCommand(m_Tank, m_claw, m_Arm);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
       new IncreaseMaxSpeedCommand(m_Tank);
@@ -46,11 +50,18 @@ public class RobotContainer {
   private final SwitchIdleModeCommmand m_SwitchIdleModeCommmand =
       new SwitchIdleModeCommmand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+
+    // create camera stream for the arm and main cameras on shuffleboard
+    // Shuffleboard.getTab("Dashboard").add(CameraServer.getVideo("Arm").getSource());
+    // Shuffleboard.getTab("Dashboard").add(CameraServer.addServer("http://wpilibpi.local", 1181).getVideo("Main").getSource());
+
   }
 
   /**
@@ -61,13 +72,17 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, XboxController.Button.kY.value)
         .whileTrue(m_BalanceCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kA.value)
+        .whileTrue(m_PlaceGamePieceCommand);
+    
 
-    // new JoystickButton(m_driverController, XboxController.Button.kStart.value)
-    //     .whileTrue(m_IncreaseMaxSpeedCommand);
-    // new JoystickButton(m_driverController, XboxController.Button.kBack.value)
-    //     .whileTrue(m_DecreaseMaxSpeedCommand);
-    // new JoystickButton(m_driverController, XboxController.Button.kX.value)
-    //     .whileTrue(m_SwitchIdleModeCommmand);
+    new JoystickButton(m_driverController, XboxController.Button.kStart.value)
+        .whileTrue(m_IncreaseMaxSpeedCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kBack.value)
+        .whileTrue(m_DecreaseMaxSpeedCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+        .whileTrue(m_SwitchIdleModeCommmand);
+        
 
     new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_CloseClawCommand);

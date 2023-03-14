@@ -11,16 +11,16 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
 public class DriveCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Tank m_drivebase;
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    private final Tank m_drivebase;
 
-  public DriveCommand(Tank subsystem) {
-    m_drivebase = subsystem;
-    addRequirements(m_drivebase);
-  }
+    public DriveCommand(Tank subsystem) {
+        m_drivebase = subsystem;
+        addRequirements(m_drivebase);
+    }
 
-  @Override
-  public void initialize() {}
+    @Override
+    public void initialize() {}
 
   @Override
   public void execute() {
@@ -29,21 +29,21 @@ public class DriveCommand extends CommandBase {
         RobotContainer.getDriverControllerLeftStickYAdjusted() * Constants.CanConstants.maxSpeed,
         RobotContainer.getDriverControllerRightStickXAdjusted() * 0.65);
 
-    SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
-  }
+        SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
+    }
 
-  @Override
-  public void end(boolean interrupted) {
-    m_drivebase.arcadeDrive(0, 0);
-  }
+    @Override
+    public void end(boolean interrupted) {
+        m_drivebase.arcadeDrive(0, 0);
+    }
 
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 
-  @Override
-  public boolean runsWhenDisabled() {
-    return false;
-  }
+    @Override
+    public boolean runsWhenDisabled() {
+        return false;
+    }
 }
