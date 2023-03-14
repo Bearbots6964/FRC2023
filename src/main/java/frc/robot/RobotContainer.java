@@ -19,9 +19,6 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-
-  // The robot's subsystems and commands are defined here...
-  // RR 1/11/2022
   public static final Joystick m_armController = new Joystick(0);
   public static final XboxController m_armController2 = new XboxController(1);
   public static final XboxController m_driverController = new XboxController(2);
@@ -32,7 +29,6 @@ public class RobotContainer {
   private final Claw m_claw = new Claw();
   private final Tank m_Tank = new Tank();
   private final Turret m_Turret = new Turret();
-  // private final Vision m_vision = new Vision();
   private final PID m_PID = new PID();
   private final Odometry m_Odometry = new Odometry(m_PID.gyro, m_Tank);
 
@@ -52,8 +48,6 @@ public class RobotContainer {
   private final SwitchIdleModeCommmand m_SwitchIdleModeCommmand =
       new SwitchIdleModeCommmand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
-  // private final FineAdjustForwardCommand m_FineAdjustForwardCommand = new FineAdjustForwardCommand(m_Tank);
-  // private final FineAdjustBackCommand m_FineAdjustBackCommand = new FineAdjustBackCommand(m_Tank);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
