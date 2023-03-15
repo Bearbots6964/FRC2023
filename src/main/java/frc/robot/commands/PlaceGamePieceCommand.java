@@ -37,8 +37,8 @@ public class PlaceGamePieceCommand extends CommandBase {
   public void execute() {
     if (arm.allTheWayDownRear
         .get()) { // the '== true' is implied, because the if statement is looking for the
-                  // expression to be true. If it is false, it will not run the code inside the if
-                  // statement, so we don't need to write it.
+      // expression to be true. If it is false, it will not run the code inside the if
+      // statement, so we don't need to write it.
       arm.armMotor.set(0.4); // move the arm up
     } else {
       // claw.openClaw();
