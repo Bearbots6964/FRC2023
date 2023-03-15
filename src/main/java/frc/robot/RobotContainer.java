@@ -33,6 +33,7 @@ public class RobotContainer {
   private final Tank m_Tank = new Tank();
   private final Turret m_Turret = new Turret();
   private final PID m_PID = new PID();
+  private final PDP m_PDP = new PDP();
   
 
   // INSTANTIATES ALL COMMANDS
