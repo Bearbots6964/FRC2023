@@ -17,10 +17,17 @@ public class FullTestCommand extends InstantCommand {
 
     @Override
     public void execute() {
-        m_arm.execute();
-        m_claw.execute();
-        m_drive.execute();
-        m_turret.execute();
+        m_arm
+            .andThen(
+                m_claw
+                    .andThen(
+                        m_drive
+                            .andThen(
+                                m_turret
+                            )
+                    )
+            )
+            .schedule();
     }
     
     @Override

@@ -1,10 +1,16 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 // TODO@totbas1 - Have PID require either mecanum OR tank -- update in the initializer for each
 // command to the base to correspond to the selected one
 // In the meantime, I'll try not to touch this file :-)
@@ -18,15 +24,27 @@ public class PID extends SubsystemBase {
   public double toleranceDeg;
   public int count;
   public Tank tank;
+  public ShuffleboardTab tab;
+  public ShuffleboardTab dash;
 
   private float initPitch;
+
+  public PIDController pidController;
+
+
 
   public PID() {
     toleranceDeg = 0.5;
     iLimit = 2.0;
     gyro = new AHRS(SPI.Port.kMXP);
 
+    tab.add("Gyro", gyro).withWidget(BuiltInWidgets.kGyro);
+    tab.add("Accelerometer", gyro).withWidget(BuiltInWidgets.k3AxisAccelerometer);
+
     initPitch = gyro.getPitch();
+    tab = Shuffleboard.getTab("PID");
+    dash = Shuffleboard.getTab("Dashboard");
+    pidController = new PIDController(P, I, D);
   }
 
   @Override
@@ -62,7 +80,14 @@ public class PID extends SubsystemBase {
     I = kI * errorSum;
     D = kD * errorRate;
 
+    pidController.setP(P);
+    pidController.setI(I);
+    pidController.setD(D);
+
     double outputSpeed = P + I + D;
+
+    // compose all this info into a PID widget on shuffleboard
+    tab.add("a", 3).withWidget(BuiltInWidgets.kPIDController);
 
     return outputSpeed;
   }

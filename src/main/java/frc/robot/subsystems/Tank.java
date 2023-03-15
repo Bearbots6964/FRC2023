@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.GenericEntry;
@@ -11,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.Interfaces.*;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -41,8 +41,13 @@ public class Tank extends SubsystemBase {
   private GenericEntry maxSpeedEntry;
 
   private ShuffleboardLayout tankLayout;
+
+  private ShuffleboardTab motorsTab;
   /** */
   public Tank() {
+    motorsTab = Shuffleboard.getTab("Motors");
+
+
     leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
     leftFront.restoreFactoryDefaults();
     leftFront.setInverted(true);
@@ -50,6 +55,7 @@ public class Tank extends SubsystemBase {
     leftFront.setSmartCurrentLimit(40);
     // leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftFront.burnFlash();
+    motorsTab.add("Left Front", leftFront);
 
     leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
     leftRear.restoreFactoryDefaults();
@@ -58,9 +64,11 @@ public class Tank extends SubsystemBase {
     leftRear.setSmartCurrentLimit(40);
     // leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftRear.burnFlash();
+    motorsTab.add("Left Rear", leftRear);
 
     left = new MotorControllerGroup(leftFront, leftRear);
-    addChild("left", left);
+    addChild("Left Side", left);
+    motorsTab.add("Left", left);
 
     rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
     rightFront.restoreFactoryDefaults();
@@ -70,6 +78,7 @@ public class Tank extends SubsystemBase {
     rightFront.setSmartCurrentLimit(40);
     // rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightFront.burnFlash();
+    motorsTab.add("Right Front", rightFront);
 
     rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
     rightRear.restoreFactoryDefaults();
@@ -78,15 +87,21 @@ public class Tank extends SubsystemBase {
     rightRear.setSmartCurrentLimit(40);
     // rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightRear.burnFlash();
+    motorsTab.add("Right Rear", rightRear);
 
     right = new MotorControllerGroup(rightFront, rightRear);
-    addChild("right", right);
+    addChild("Right Side", right);
+    motorsTab.add("Right", right);
 
     all = new MotorControllerGroup(leftFront, leftRear, rightFront, rightRear);
     addChild("All", all);
+    motorsTab.add("All", all);
 
     drive = new DifferentialDrive(left, right);
     addChild("Drive", drive);
+    motorsTab.add("Drive", drive).withWidget(BuiltInWidgets.kDifferentialDrive);
+    // create a differential drive widget
+
     drive.setSafetyEnabled(false);
     drive.setExpiration(0.1);
 
@@ -233,7 +248,10 @@ public class Tank extends SubsystemBase {
   }
 
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+    // This method will be called once per scheduler run during simulation
+    // ... do nothing
+  }
 
   /** Change the ramp rate of the motor controllers. */
   public void setRampRate(double rampRate) {

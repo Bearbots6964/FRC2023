@@ -11,7 +11,7 @@ public class PlaceGamePieceCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank drive;
 
-  private final Claw claw;
+  private final Claw claw; // NOPMD
   private final Arm arm;
 
   public PlaceGamePieceCommand(Tank drive, Claw claw, Arm arm) {
@@ -35,15 +35,17 @@ public class PlaceGamePieceCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (arm.allTheWayDownRear.get() == true) {
-      arm.armMotor.set(0.4);
+    if (arm.allTheWayDownRear.get()) { // the '== true' is implied, because the if statement is looking for the expression to be true. If it is false, it will not run the code inside the if statement, so we don't need to write it.
+      arm.armMotor.set(0.4); // move the arm up
     } else {
       //claw.openClaw();
     }
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    arm.armMotor.set(0); // stop the arm motor
+  }
 
   @Override
   public boolean isFinished() {

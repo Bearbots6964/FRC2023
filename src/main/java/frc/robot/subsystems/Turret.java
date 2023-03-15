@@ -4,11 +4,14 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.*;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import frc.robot.Interfaces.CANSparkMax;
 
 public class Turret extends SubsystemBase {
   private CANSparkMax xMotor;
@@ -20,10 +23,12 @@ public class Turret extends SubsystemBase {
     xMotor.setIdleMode(IdleMode.kBrake);
     xMotor.setSmartCurrentLimit(5, 10);
     xMotor.burnFlash();
+    Shuffleboard.getTab("Motors").add("Turret", xMotor);
   }
 
   @Override
   public void periodic() {
+    // nothing to do here
   }
 
   public void rotateTurret(double leftStickXaxis) {

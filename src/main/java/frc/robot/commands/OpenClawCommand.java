@@ -17,7 +17,9 @@ public class OpenClawCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    // no initialization needed
+  }
 
   @Override
   public void execute() {

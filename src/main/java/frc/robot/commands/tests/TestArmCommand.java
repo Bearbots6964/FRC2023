@@ -3,7 +3,6 @@ package frc.robot.commands.tests;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Tank;
 
 public class TestArmCommand extends InstantCommand {
     private final Arm m_arm;
