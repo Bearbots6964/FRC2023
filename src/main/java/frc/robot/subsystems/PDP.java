@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,6 +16,8 @@ public class PDP extends SubsystemBase {
     pdp = new PowerDistribution(0, ModuleType.kCTRE);
     tab = Shuffleboard.getTab("PDP");
     pdp.clearStickyFaults();
+    tab = Shuffleboard.getTab("PDP");
+    tab.add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution);
   }
 
   @Override

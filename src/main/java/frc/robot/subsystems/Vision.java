@@ -1,31 +1,19 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
-  private ColorSensorV3 colorSensor;
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   // Pipeline mode.
-  public static final String kLimelightPipelineKey = "limelight-pipeline";
 
   public Vision() {
     // Stuff goes here
-    colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
-    // Set default pipeline
-    if (!Preferences.containsKey(kLimelightPipelineKey)) {
-      Preferences.setInt(kLimelightPipelineKey, 1); // Default to tape
     }
 
     // display camera on shuffleboard
-    Shuffleboard.getTab("Camera").add("Camera", CameraServer.getVideo());
-  }
+  
 
   @Override
   public void periodic() {

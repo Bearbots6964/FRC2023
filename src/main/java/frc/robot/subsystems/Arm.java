@@ -4,19 +4,22 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.*;
-import com.revrobotics.CANSparkMax;
+
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Interfaces.CANSparkMax;
 
 public class Arm extends SubsystemBase {
 
   public CANSparkMax armMotor;
   public DigitalInput allTheWayDownRear = new DigitalInput(1);
-  public double desiredArmAngle, currentArmAngle;
+  public double desiredArmAngle;
+  public double currentArmAngle;
 
   public double gearRatio = 87;
 
@@ -25,6 +28,8 @@ public class Arm extends SubsystemBase {
     armMotor.setIdleMode(IdleMode.kBrake);
     armMotor.setSmartCurrentLimit(20, 30);
     armMotor.burnFlash();
+
+    Shuffleboard.getTab("Motors").add("Arm", armMotor);
   }
 
   @Override
@@ -40,7 +45,9 @@ public class Arm extends SubsystemBase {
 
   public void moveArmToZeroDeg() {
     double speedY = 0.2;
-    while (allTheWayDownRear.get() == true) {
+    while (allTheWayDownRear.get()) { // the '== true' is implied, because the if statement is looking for the
+                                      // expression to be true. If it is false, it will not run the code inside the if
+                                      // statement, so we don't need to write it.
       armMotor.set(-1 * speedY);
     }
     armMotor.set(0);
@@ -52,4 +59,5 @@ public class Arm extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
+  
 }

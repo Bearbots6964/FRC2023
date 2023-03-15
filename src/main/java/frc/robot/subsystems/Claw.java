@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
+import frc.robot.Interfaces.*;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.GenericEntry;
@@ -17,8 +17,8 @@ import java.util.Map;
 
 public class Claw extends SubsystemBase {
   private CANSparkMax clawMotor;
-  private double stallLimit;
-  private double freeLimit;
+  
+  
   private GenericEntry stallWidget;
   private GenericEntry freeWidget;
   private ShuffleboardLayout layout;
@@ -30,6 +30,8 @@ public class Claw extends SubsystemBase {
     clawMotor.setIdleMode(IdleMode.kBrake);
     clawMotor.setSmartCurrentLimit(14, 11);
     clawMotor.burnFlash();
+
+    Shuffleboard.getTab("Motors").add("Claw", clawMotor);
 
     layout = Shuffleboard.getTab("Config").getLayout("Claw", BuiltInLayouts.kList);
 
@@ -47,7 +49,10 @@ public class Claw extends SubsystemBase {
             .getEntry();
   }
 
+  @Override
   public void periodic() {
+    double freeLimit;
+    double stallLimit;
     stallLimit = stallWidget.getDouble(10);
     freeLimit = freeWidget.getDouble(11);
 
@@ -66,5 +71,9 @@ public class Claw extends SubsystemBase {
     clawMotor.set(0);
   }
 
-  public void simulationPeriodic() {}
+  @Override
+  public void simulationPeriodic() {
+    // This method will be called once per scheduler run during simulation
+    // ...but we don't have time to code it :-/
+  }
 }

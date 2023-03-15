@@ -4,11 +4,8 @@
 
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -32,7 +29,7 @@ public class RobotContainer {
   private final Tank m_Tank = new Tank();
   private final Turret m_Turret = new Turret();
   private final PID m_PID = new PID();
-  private final Odometry m_Odometry = new Odometry(m_PID.gyro, m_Tank);
+  
 
   // INSTANTIATES ALL COMMANDS
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
@@ -58,10 +55,7 @@ public class RobotContainer {
     configureButtonBindings();
 
 
-    // create camera stream for the arm and main cameras on shuffleboard
-    // Shuffleboard.getTab("Dashboard").add(CameraServer.getVideo("Arm").getSource());
-    // Shuffleboard.getTab("Dashboard").add(CameraServer.addServer("http://wpilibpi.local", 1181).getVideo("Main").getSource());
-
+    
   }
 
   /**
