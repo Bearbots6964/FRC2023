@@ -31,6 +31,9 @@ public class PID extends SubsystemBase {
 
   public PIDController pidController;
 
+  
+  
+
 
 
   public PID() {
@@ -38,12 +41,9 @@ public class PID extends SubsystemBase {
     iLimit = 2.0;
     gyro = new AHRS(SPI.Port.kMXP);
 
-    tab.add("Gyro", gyro).withWidget(BuiltInWidgets.kGyro);
-    tab.add("Accelerometer", gyro).withWidget(BuiltInWidgets.k3AxisAccelerometer);
+
 
     initPitch = gyro.getPitch();
-    tab = Shuffleboard.getTab("PID");
-    dash = Shuffleboard.getTab("Dashboard");
     pidController = new PIDController(P, I, D);
   }
 
@@ -86,8 +86,6 @@ public class PID extends SubsystemBase {
 
     double outputSpeed = P + I + D;
 
-    // compose all this info into a PID widget on shuffleboard
-    tab.add("a", 3).withWidget(BuiltInWidgets.kPIDController);
 
     return outputSpeed;
   }
