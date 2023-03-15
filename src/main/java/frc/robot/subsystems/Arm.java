@@ -4,10 +4,8 @@
 
 package frc.robot.subsystems;
 
-
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -45,9 +43,10 @@ public class Arm extends SubsystemBase {
 
   public void moveArmToZeroDeg() {
     double speedY = 0.2;
-    while (allTheWayDownRear.get()) { // the '== true' is implied, because the if statement is looking for the
-                                      // expression to be true. If it is false, it will not run the code inside the if
-                                      // statement, so we don't need to write it.
+    while (allTheWayDownRear
+        .get()) { // the '== true' is implied, because the if statement is looking for the
+      // expression to be true. If it is false, it will not run the code inside the if
+      // statement, so we don't need to write it.
       armMotor.set(-1 * speedY);
     }
     armMotor.set(0);
@@ -59,5 +58,4 @@ public class Arm extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
-  
 }

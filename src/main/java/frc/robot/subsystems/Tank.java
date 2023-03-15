@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.MotorFeedbackSensor;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.GenericEntry;
@@ -10,8 +9,8 @@ import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.Interfaces.*;
+import frc.robot.RobotContainer;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -58,7 +57,6 @@ public class Tank extends SubsystemBase {
   /** */
   public Tank() {
     motorsTab = Shuffleboard.getTab("Motors");
-
 
     leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
     leftFront.restoreFactoryDefaults();

@@ -5,12 +5,10 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Interfaces.CANSparkMax;
 
 public class Turret extends SubsystemBase {

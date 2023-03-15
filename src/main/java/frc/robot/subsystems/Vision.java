@@ -10,10 +10,9 @@ public class Vision extends SubsystemBase {
 
   public Vision() {
     // Stuff goes here
-    }
+  }
 
-    // display camera on shuffleboard
-  
+  // display camera on shuffleboard
 
   @Override
   public void periodic() {

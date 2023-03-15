@@ -24,9 +24,6 @@ public class RobotContainer {
   public static final XboxController m_armController2 = new XboxController(1);
   public static final XboxController m_driverController = new XboxController(2);
 
-
-
-
   // INSTANTIATES ALL SUBSYSTEMS
   private final Arm m_Arm = new Arm();
   private final Claw m_claw = new Claw();
@@ -34,7 +31,6 @@ public class RobotContainer {
   private final Turret m_Turret = new Turret();
   private final PID m_PID = new PID();
   private final PDP m_PDP = new PDP();
-  
 
   // INSTANTIATES ALL COMMANDS
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
@@ -43,7 +39,8 @@ public class RobotContainer {
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final PlaceGamePieceCommand m_PlaceGamePieceCommand = new PlaceGamePieceCommand(m_Tank, m_claw, m_Arm);
+  private final PlaceGamePieceCommand m_PlaceGamePieceCommand =
+      new PlaceGamePieceCommand(m_Tank, m_claw, m_Arm);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
       new IncreaseMaxSpeedCommand(m_Tank);
@@ -52,7 +49,6 @@ public class RobotContainer {
   private final SwitchIdleModeCommmand m_SwitchIdleModeCommmand =
       new SwitchIdleModeCommmand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
-  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -63,9 +59,10 @@ public class RobotContainer {
     // joysticks
     Shuffleboard.getTab("Driver").add("Left Stick Y", m_driverController.getRawAxis(1));
     Shuffleboard.getTab("Driver").add("Right Stick X", m_driverController.getRawAxis(4));
-    Shuffleboard.getTab("Driver").add("Left Stick Y Adjusted", getDriverControllerLeftStickYAdjusted());
-    Shuffleboard.getTab("Driver").add("Right Stick X Adjusted", getDriverControllerRightStickXAdjusted());
-    
+    Shuffleboard.getTab("Driver")
+        .add("Left Stick Y Adjusted", getDriverControllerLeftStickYAdjusted());
+    Shuffleboard.getTab("Driver")
+        .add("Right Stick X Adjusted", getDriverControllerRightStickXAdjusted());
   }
 
   /**
@@ -78,7 +75,6 @@ public class RobotContainer {
         .whileTrue(m_BalanceCommand);
     new JoystickButton(m_driverController, XboxController.Button.kA.value)
         .whileTrue(m_PlaceGamePieceCommand);
-    
 
     new JoystickButton(m_driverController, XboxController.Button.kStart.value)
         .whileTrue(m_IncreaseMaxSpeedCommand);
@@ -86,7 +82,6 @@ public class RobotContainer {
         .whileTrue(m_DecreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kX.value)
         .whileTrue(m_SwitchIdleModeCommmand);
-        
 
     new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_CloseClawCommand);
