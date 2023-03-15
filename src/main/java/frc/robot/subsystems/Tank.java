@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.MotorFeedbackSensor;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.GenericEntry;
@@ -43,6 +44,17 @@ public class Tank extends SubsystemBase {
   private ShuffleboardLayout tankLayout;
 
   private ShuffleboardTab motorsTab;
+
+  private GenericEntry leftFrontWidget;
+  private GenericEntry leftRearWidget;
+  private GenericEntry rightFrontWidget;
+  private GenericEntry rightRearWidget;
+
+  private GenericEntry leftWidget;
+  private GenericEntry rightWidget;
+  private GenericEntry allWidget;
+
+  private GenericEntry driveWidget;
   /** */
   public Tank() {
     motorsTab = Shuffleboard.getTab("Motors");
@@ -56,6 +68,7 @@ public class Tank extends SubsystemBase {
     // leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftFront.burnFlash();
     motorsTab.add("Left Front", leftFront);
+    addChild("Left Front", leftFront);
 
     leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
     leftRear.restoreFactoryDefaults();
@@ -65,6 +78,7 @@ public class Tank extends SubsystemBase {
     // leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftRear.burnFlash();
     motorsTab.add("Left Rear", leftRear);
+    addChild("Left Rear", leftRear);
 
     left = new MotorControllerGroup(leftFront, leftRear);
     addChild("Left Side", left);
@@ -79,6 +93,7 @@ public class Tank extends SubsystemBase {
     // rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightFront.burnFlash();
     motorsTab.add("Right Front", rightFront);
+    addChild("Right Front", rightFront);
 
     rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
     rightRear.restoreFactoryDefaults();
@@ -88,6 +103,8 @@ public class Tank extends SubsystemBase {
     // rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightRear.burnFlash();
     motorsTab.add("Right Rear", rightRear);
+
+    addChild("Right Rear", rightRear);
 
     right = new MotorControllerGroup(rightFront, rightRear);
     addChild("Right Side", right);

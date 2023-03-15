@@ -1,7 +1,7 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [6]": {
+      "SPARK MAX [3]": {
         "header": {
           "open": true
         }
@@ -34,6 +34,11 @@
       "/SmartDashboard/Scheduler": "Scheduler"
     },
     "windows": {
+      "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Scheduler": {
         "window": {
           "visible": true

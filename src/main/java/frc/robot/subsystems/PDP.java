@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,19 +12,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class PDP extends SubsystemBase {
   public PowerDistribution pdp;
   ShuffleboardTab tab;
+  ComplexWidget widget;
 
   public PDP() {
     pdp = new PowerDistribution(0, ModuleType.kCTRE);
     tab = Shuffleboard.getTab("PDP");
     pdp.clearStickyFaults();
     tab = Shuffleboard.getTab("PDP");
-    tab.add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution);
+    addChild("PDP", pdp);
+    widget = tab.add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("PDP Voltage", pdp.getVoltage());
+
   }
   /**
    * @return the voltage of the PDP in Volts
