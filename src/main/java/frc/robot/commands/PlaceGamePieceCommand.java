@@ -10,9 +10,10 @@ import frc.robot.subsystems.*;
 public class PlaceGamePieceCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank drive;
-
   private final Claw claw;
   private final Arm arm;
+
+  private boolean readyToLiftArm = false;
 
   public PlaceGamePieceCommand(Tank drive, Claw claw, Arm arm) {
     this.drive = drive;
@@ -31,6 +32,8 @@ public class PlaceGamePieceCommand extends CommandBase {
     drive.rightRear.getEncoder().setPosition(0);
 
     arm.armMotor.getEncoder().setPosition(0);
+
+    claw.clawMotor.getEncoder().setPosition(0);
   }
 
   @Override
@@ -38,7 +41,16 @@ public class PlaceGamePieceCommand extends CommandBase {
     if (arm.allTheWayDownRear.get() == true) {
       arm.armMotor.set(0.4);
     } else {
-      //claw.openClaw();
+      if(claw.clawMotor.getEncoder().getPosition() < 20){
+        claw.openClaw();
+        readyToLiftArm = true;
+
+        arm.armMotor.getEncoder().setPosition(0);
+      }
+
+      if(readyToLiftArm == true && arm.armMotor.getEncoder().getPosition() < 20){
+        arm.armMotor.set(-0.4);
+      }
     }
   }
 

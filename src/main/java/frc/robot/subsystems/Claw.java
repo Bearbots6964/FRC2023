@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.Map;
 
 public class Claw extends SubsystemBase {
-  private CANSparkMax clawMotor;
+  public CANSparkMax clawMotor;
   private double stallLimit;
   private double freeLimit;
   private GenericEntry stallWidget;
