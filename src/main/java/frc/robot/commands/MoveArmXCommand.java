@@ -9,7 +9,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Turret;
 
 public class MoveArmXCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Turret m_subsystem;
 
   public MoveArmXCommand(Turret subsystem) {
@@ -18,15 +18,17 @@ public class MoveArmXCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
-
-  @Override
-  public void execute() {
-    m_subsystem.rotateArm(RobotContainer.getControllerRightStickX());
+  public void initialize() {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void execute() {
+    m_subsystem.rotateTurret(RobotContainer.getControllerRightStickX());
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {

@@ -26,7 +26,7 @@ public class Turret extends SubsystemBase {
   public void periodic() {
   }
 
-  public void rotateArm(double leftStickXaxis) {
+  public void rotateTurret(double leftStickXaxis) {
     double speed = -1;
     double motorDrive = leftStickXaxis * speed;
     xMotor.set(motorDrive);
