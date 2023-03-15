@@ -25,6 +25,12 @@
       "/LiveWindow/Tank/Drive": "DifferentialDrive",
       "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
       "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+      "/Shuffleboard/Motors/All": "Motor Controller",
+      "/Shuffleboard/Motors/Drive": "DifferentialDrive",
+      "/Shuffleboard/Motors/Left": "Motor Controller",
+      "/Shuffleboard/Motors/Right": "Motor Controller",
+      "/Shuffleboard/PID/Accelerometer": "Gyro",
+      "/Shuffleboard/PID/Gyro": "Gyro",
       "/SmartDashboard/Scheduler": "Scheduler"
     },
     "windows": {
