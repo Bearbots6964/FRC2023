@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.Interfaces.*;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.GenericEntry;
@@ -13,12 +12,12 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Interfaces.*;
 import java.util.Map;
 
 public class Claw extends SubsystemBase {
   private CANSparkMax clawMotor;
-  
-  
+
   private GenericEntry stallWidget;
   private GenericEntry freeWidget;
   private ShuffleboardLayout layout;

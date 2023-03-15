@@ -1,12 +1,9 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -31,17 +28,10 @@ public class PID extends SubsystemBase {
 
   public PIDController pidController;
 
-  
-  
-
-
-
   public PID() {
     toleranceDeg = 0.5;
     iLimit = 2.0;
     gyro = new AHRS(SPI.Port.kMXP);
-
-
 
     initPitch = gyro.getPitch();
     pidController = new PIDController(P, I, D);
@@ -53,7 +43,6 @@ public class PID extends SubsystemBase {
     SmartDashboard.putBoolean("gyro cal", gyro.isCalibrating());
     SmartDashboard.putNumber("yaw angle", gyro.getYaw());
     SmartDashboard.putNumber("pitch offset", getPitchOffset());
-
   }
 
   public void startPID() {
@@ -85,7 +74,6 @@ public class PID extends SubsystemBase {
     pidController.setD(D);
 
     double outputSpeed = P + I + D;
-
 
     return outputSpeed;
   }
