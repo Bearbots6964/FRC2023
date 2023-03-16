@@ -1,0 +1,563 @@
+{
+  "tabPane": [
+    {
+      "title": "SmartDashboard",
+      "autoPopulate": true,
+      "autoPopulatePrefix": "SmartDashboard/",
+      "widgetPane": {
+        "gridSize": 8.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              6,
+              6
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/brakeMode",
+              "_title": "brakeMode",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,0": {
+            "size": [
+              6,
+              6
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/zeroDeg",
+              "_title": "zeroDeg",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "12,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/leftStickY",
+              "_title": "leftStickY",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "16,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/rightStickX",
+              "_title": "rightStickX",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "20,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/pitch angle",
+              "_title": "pitch angle",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "24,0": {
+            "size": [
+              6,
+              6
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/gyro cal",
+              "_title": "gyro cal",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "30,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/yaw angle",
+              "_title": "yaw angle",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "34,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/pitch offset",
+              "_title": "pitch offset",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "38,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/PDP Voltage",
+              "_title": "PDP Voltage",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "42,0": {
+            "size": [
+              12,
+              22
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///SmartDashboard/Scheduler/Ids",
+              "_title": "Scheduler/Ids",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
+          },
+          "54,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/maxSpeed",
+              "_title": "maxSpeed",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "58,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/init pitch",
+              "_title": "init pitch",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "62,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/max offset",
+              "_title": "max offset",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "12,2": {
+            "size": [
+              6,
+              6
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/onRamp",
+              "_title": "onRamp",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "28,16": {
+            "size": [
+              9,
+              9
+            ],
+            "content": {
+              "_type": "Gyro",
+              "_source0": "network_table:///Shuffleboard/Driver/Gyro",
+              "_title": "/Shuffleboard/Driver/Gyro",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Visuals/Major tick spacing": 45.0,
+              "Visuals/Starting angle": 180.0,
+              "Visuals/Show tick mark ring": true,
+              "Visuals/Counter clockwise": false
+            }
+          },
+          "66,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/limelight_PipelineName",
+              "_title": "limelight_PipelineName",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "70,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/limelight_Interface",
+              "_title": "limelight_Interface",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "74,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/limelight_Stream",
+              "_title": "limelight_Stream",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "78,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/averageD",
+              "_title": "averageD",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "82,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/motor speed",
+              "_title": "motor speed",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Main",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "LiveWindow/",
+      "widgetPane": {
+        "gridSize": 8.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 1,
+        "tiles": {
+          "0,0": {
+            "size": [
+              16,
+              5
+            ],
+            "content": {
+              "_type": "Basic FMS Info",
+              "_source0": "network_table:///FMSInfo",
+              "_title": "/FMSInfo",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "45,17": {
+            "size": [
+              18,
+              12
+            ],
+            "content": {
+              "_type": "Differential Drivebase",
+              "_source0": "network_table:///Shuffleboard/Motors/Drive",
+              "_title": "/Shuffleboard/Motors/Drive",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Wheels/Number of wheels": 4,
+              "Wheels/Wheel diameter": 80.0,
+              "Visuals/Show velocity vectors": true
+            }
+          },
+          "53,0": {
+            "size": [
+              10,
+              17
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_title": "Arm System",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Number Bar",
+                  "_source0": "network_table:///Shuffleboard/Motors/Claw/Applied Output",
+                  "_title": "Claw",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": -1.0,
+                  "Range/Max": 1.0,
+                  "Range/Center": 0.0,
+                  "Visuals/Num tick marks": 5,
+                  "Visuals/Show text": true,
+                  "Visuals/Orientation": "HORIZONTAL"
+                },
+                {
+                  "_type": "Number Bar",
+                  "_source0": "network_table:///Shuffleboard/Motors/Turret/Applied Output",
+                  "_title": "Turret",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": -1.0,
+                  "Range/Max": 1.0,
+                  "Range/Center": 0.0,
+                  "Visuals/Num tick marks": 5,
+                  "Visuals/Show text": true,
+                  "Visuals/Orientation": "HORIZONTAL"
+                },
+                {
+                  "_type": "Number Bar",
+                  "_source0": "network_table:///Shuffleboard/Motors/Arm/Applied Output",
+                  "_title": "Arm",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": -1.0,
+                  "Range/Max": 1.0,
+                  "Range/Center": 0.0,
+                  "Visuals/Num tick marks": 5,
+                  "Visuals/Show text": true,
+                  "Visuals/Orientation": "HORIZONTAL"
+                }
+              ]
+            }
+          },
+          "0,5": {
+            "size": [
+              16,
+              17
+            ],
+            "content": {
+              "_type": "PDP",
+              "_source0": "network_table:///Shuffleboard/PDP/PDP",
+              "_title": "/Shuffleboard/PDP/PDP",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Visuals/Show voltage and current values": true
+            }
+          },
+          "45,0": {
+            "size": [
+              8,
+              17
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Misc",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/zeroDeg",
+                  "_title": "/SmartDashboard/zeroDeg",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/brakeMode",
+                  "_title": "/SmartDashboard/brakeMode",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Number Bar",
+                  "_source0": "network_table:///Shuffleboard/Config/Tank/Max Speed",
+                  "_title": "Max Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": 0.0,
+                  "Range/Max": 1.0,
+                  "Range/Center": 0.0,
+                  "Visuals/Num tick marks": 5,
+                  "Visuals/Show text": true,
+                  "Visuals/Orientation": "HORIZONTAL"
+                },
+                {
+                  "_type": "Number Bar",
+                  "_source0": "network_table:///SmartDashboard/rightStickX",
+                  "_title": "Right Stick X",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": -1.0,
+                  "Range/Max": 1.0,
+                  "Range/Center": 0.0,
+                  "Visuals/Num tick marks": 5,
+                  "Visuals/Show text": true,
+                  "Visuals/Orientation": "HORIZONTAL"
+                }
+              ]
+            }
+          },
+          "63,0": {
+            "size": [
+              6,
+              6
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/pitch angle",
+              "_title": "Pitch Angle",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": -180.0,
+              "Range/Max": 180.0,
+              "Visuals/Show value": true
+            }
+          },
+          "69,0": {
+            "size": [
+              6,
+              6
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/pitch offset",
+              "_title": "Yaw Offset",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": -180.0,
+              "Range/Max": 180.0,
+              "Visuals/Show value": true
+            }
+          },
+          "75,0": {
+            "size": [
+              6,
+              6
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/yaw angle",
+              "_title": "Yaw Angle",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": -180.0,
+              "Range/Max": 180.0,
+              "Visuals/Show value": true
+            }
+          },
+          "1,22": {
+            "size": [
+              16,
+              5
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Grid Layout",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Number of columns": 3,
+              "Layout/Number of rows": 2,
+              "Layout/Label position": "BOTTOM",
+              "_children": {
+                "0,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/yaw angle",
+                  "_title": "Yaw Angle",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": -180.0,
+                  "Range/Max": 180.0,
+                  "Visuals/Show value": true
+                },
+                "1,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/pitch offset",
+                  "_title": "Pitch Offset",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": -180.0,
+                  "Range/Max": 180.0,
+                  "Visuals/Show value": true
+                },
+                "2,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/pitch angle",
+                  "_title": "Pitch Angle",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": -180.0,
+                  "Range/Max": 180.0,
+                  "Visuals/Show value": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "windowGeometry": {
+    "x": 0.0,
+    "y": 0.0,
+    "width": 1536.0,
+    "height": 824.0
+  }
+}
