@@ -5,13 +5,12 @@
 package frc.robot.commands;
 
 import com.revrobotics.CANSparkMax.IdleMode;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.PID;
 import frc.robot.subsystems.Tank;
-import edu.wpi.first.wpilibj.Timer;
-
 
 /** An example command that uses an example subsystem. */
 public class BalanceCommand extends CommandBase {
@@ -40,15 +39,13 @@ public class BalanceCommand extends CommandBase {
     pid.resetPitch();
     initPitch = pid.gyro.getPitch();
     SmartDashboard.putNumber("init pitch", initPitch);
-    
 
-    //timer.start();
+    // timer.start();
     lastTimeStamp = Timer.getFPGATimestamp();
 
     max = 0;
     onRamp = false;
   }
-
 
   // avoid while loops inside execute
   @Override
@@ -75,7 +72,8 @@ public class BalanceCommand extends CommandBase {
         driveBase.setAllMotors(0);
       } else {
         driveBase.setAllMotors(
-            (0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor))  +  (-0.05 * errorRate));
+            (0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor))
+                + (-0.05 * errorRate));
 
         SmartDashboard.putNumber(
             "motor speed", 0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));

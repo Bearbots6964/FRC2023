@@ -39,7 +39,6 @@ public class PID extends SubsystemBase {
     initPitch = gyro.getPitch();
     pidController = new PIDController(P, I, D);
 
-
     addChild("PID Controller", pidController);
   }
 
