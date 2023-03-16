@@ -7,14 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
-public class PlaceGamePieceCommand extends CommandBase {
+public class PlaceCubeFirstLevelCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank drive;
-
-  private final Claw claw; // NOPMD
+  private final Claw claw; 
   private final Arm arm;
 
-  public PlaceGamePieceCommand(Tank drive, Claw claw, Arm arm) {
+  private boolean readyToMoveArmBack = false;
+  private boolean end = false;
+
+  public PlaceCubeFirstLevelCommand(Tank drive, Claw claw, Arm arm) {
     this.drive = drive;
     this.claw = claw;
     this.arm = arm;
@@ -31,17 +33,31 @@ public class PlaceGamePieceCommand extends CommandBase {
     drive.rightRear.getEncoder().setPosition(0);
 
     arm.armMotor.getEncoder().setPosition(0);
+
+    claw.clawMotor.getEncoder().setPosition(0);
   }
 
+
+  //double check constants
   @Override
   public void execute() {
-    if (arm.allTheWayDownRear
-        .get()) { // the '== true' is implied, because the if statement is looking for the
-      // expression to be true. If it is false, it will not run the code inside the if
-      // statement, so we don't need to write it.
-      arm.armMotor.set(0.4); // move the arm up
+    if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 100) {
+          arm.armMotor.set(0.4); //move the arm back until it can reach botton
     } else {
-      // claw.openClaw();
+      if(Math.abs(claw.clawMotor.getEncoder().getPosition()) < 20){
+        claw.openClaw(); //open claw a little and drops cube
+      } else{
+        claw.stopClaw(); //stop claw
+        readyToMoveArmBack = true; //ready to move the arm back and continue balance
+        arm.armMotor.getEncoder().setPosition(0);
+      }
+    }
+
+    if(readyToMoveArmBack){
+      if(Math.abs(arm.armMotor.getEncoder().getPosition()) < 100){
+        arm.armMotor.set(-0.4); //moves the arm back to starting position
+        end = true;
+      }
     }
   }
 
@@ -52,6 +68,6 @@ public class PlaceGamePieceCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return end;
   }
 }

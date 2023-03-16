@@ -39,9 +39,9 @@ public class RobotContainer {
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final PlaceGamePieceCommand m_PlaceGamePieceCommand =
-      new PlaceGamePieceCommand(m_Tank, m_claw, m_Arm);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank);
+  private final PlaceCubeFirstLevelCommand m_PlaceGamePieceCommand =
+      new PlaceCubeFirstLevelCommand(m_Tank, m_claw, m_Arm);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_claw, m_Arm);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
       new IncreaseMaxSpeedCommand(m_Tank);
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand =

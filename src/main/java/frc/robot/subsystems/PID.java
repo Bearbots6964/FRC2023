@@ -9,10 +9,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-// TODO@totbas1 - Have PID require either mecanum OR tank -- update in the initializer for each
-// command to the base to correspond to the selected one
-// In the meantime, I'll try not to touch this file :-)
-
 public class PID extends SubsystemBase {
   public AHRS gyro;
   private final double kP = 0.18;
