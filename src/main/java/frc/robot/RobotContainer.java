@@ -41,8 +41,6 @@ public class RobotContainer {
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final PlaceCubeFirstLevelCommand m_PlaceCubeFirstLevelCommand =
-      new PlaceCubeFirstLevelCommand(m_Tank, m_claw, m_Arm);
   private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand = new PlaceConeSecondLevelCommand(m_Tank, m_Arm);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_claw, m_Arm);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
@@ -74,7 +72,6 @@ public class RobotContainer {
 
     tab.add(m_PID);
     tab.add(m_PlaceConeSecondLevelCommand);
-    tab.add(m_PlaceCubeFirstLevelCommand);
     tab.add(m_SwitchIdleModeCommmand);
     tab.add(m_Tank);
     tab.add(m_Turret);
@@ -102,7 +99,7 @@ public class RobotContainer {
         .whileTrue(m_OpenClawCommand);
     new JoystickButton(m_armController2, XboxController.Button.kA.value)
         .whileTrue(m_FineDriveCommand);
-    new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceCubeFirstLevelCommand);
+    //new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceCubeFirstLevelCommand);
     new JoystickButton(m_armController2, XboxController.Button.kX.value).whileTrue(m_PlaceConeSecondLevelCommand);
   }
 

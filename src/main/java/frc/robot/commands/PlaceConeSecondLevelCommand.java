@@ -4,17 +4,19 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
 public class PlaceConeSecondLevelCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Tank drive;
-
   private final Arm arm;
 
   private boolean readyToMoveArmBack = false;
   private boolean end = false;
+  private boolean readyToRotate = false;
+  private boolean firstStep = true;
 
   public PlaceConeSecondLevelCommand(Tank drive, Arm arm) {
     this.drive = drive;
@@ -36,22 +38,24 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
   // double check constants
   @Override
   public void execute() {
-    if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 80) {
-      arm.armMotor.set(0.4); // move the arm until cone gets in
-    } else {
-      if (Math.abs(drive.getAverageDistance()) < 10) {
-        drive.arcadeDrive(-2, 0); // move back so that cone falls in
-      } else {
-        drive.arcadeDrive(0, 0);
-        ; // stop moving
-        readyToMoveArmBack = true; // ready to move the arm back and continue balance
-        arm.armMotor.getEncoder().setPosition(0);
-      }
-    }
+    // System.out.println(Math.abs(arm.armMotor.getEncoder().getPosition()));
+    if(firstStep){
+      if (Math.abs(arm.armMotor.getEncoder().getPosition()) <= 103) {
+        arm.armMotor.set(0.4);
+    } 
 
-    if (readyToMoveArmBack) {
-      if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 80) {
-        arm.armMotor.set(-0.4); // moves the arm back to starting position
+      if (Math.abs(arm.armMotor.getEncoder().getPosition()) == 103) {
+        firstStep = false;
+        arm.armMotor.set(0);
+      }
+
+      if (Math.abs(drive.getAverageDistance()) < 7 && firstStep == false) {
+        drive.setAllMotors(0.4); // move back so that cone falls in
+        arm.armMotor.set(-0.5);
+      } 
+
+      if(Math.abs(drive.getAverageDistance()) == 7){
+        drive.setAllMotors(0);
         end = true;
       }
     }
@@ -59,11 +63,18 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    drive.leftFront.getEncoder().setPosition(0);
+    drive.leftRear.getEncoder().setPosition(0);
+    drive.rightFront.getEncoder().setPosition(0);
+    drive.rightRear.getEncoder().setPosition(0);
+    arm.armMotor.getEncoder().setPosition(0);
+
+    drive.setAllMotors(0);
     arm.armMotor.set(0); // stop the arm motor
   }
 
   @Override
   public boolean isFinished() {
-    return end;
+    return end /* Math.abs(drive.getAverageDistance()) < 8 */;
   }
 }
