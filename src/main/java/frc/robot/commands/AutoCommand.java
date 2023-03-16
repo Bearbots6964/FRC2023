@@ -16,4 +16,3 @@ public class AutoCommand extends SequentialCommandGroup {
     // new BalanceCommand(m_pid, m_driveBase)
   }
 }
-

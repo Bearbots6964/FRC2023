@@ -4,13 +4,13 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
 public class PlaceConeSecondLevelCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank drive;
+
   private final Arm arm;
 
   private boolean readyToMoveArmBack = false;
@@ -39,10 +39,10 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
   @Override
   public void execute() {
     // System.out.println(Math.abs(arm.armMotor.getEncoder().getPosition()));
-    if(firstStep){
+    if (firstStep) {
       if (Math.abs(arm.armMotor.getEncoder().getPosition()) <= 103) {
         arm.armMotor.set(0.4);
-    } 
+      }
 
       if (Math.abs(arm.armMotor.getEncoder().getPosition()) == 103) {
         firstStep = false;
@@ -52,9 +52,9 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
       if (Math.abs(drive.getAverageDistance()) < 7 && firstStep == false) {
         drive.setAllMotors(0.4); // move back so that cone falls in
         arm.armMotor.set(-0.5);
-      } 
+      }
 
-      if(Math.abs(drive.getAverageDistance()) == 7){
+      if (Math.abs(drive.getAverageDistance()) == 7) {
         drive.setAllMotors(0);
         end = true;
       }
