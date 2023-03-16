@@ -40,6 +40,7 @@ public class BalanceCommand extends CommandBase {
     pid.resetPitch();
     initPitch = pid.gyro.getPitch();
     SmartDashboard.putNumber("init pitch", initPitch);
+    
 
     //timer.start();
     lastTimeStamp = Timer.getFPGATimestamp();

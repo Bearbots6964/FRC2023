@@ -57,12 +57,24 @@ public class RobotContainer {
 
     // add a few things to the shuffleboard
     // joysticks
-    Shuffleboard.getTab("Driver").add("Left Stick Y", m_driverController.getRawAxis(1));
-    Shuffleboard.getTab("Driver").add("Right Stick X", m_driverController.getRawAxis(4));
-    Shuffleboard.getTab("Driver")
-        .add("Left Stick Y Adjusted", getDriverControllerLeftStickYAdjusted());
-    Shuffleboard.getTab("Driver")
-        .add("Right Stick X Adjusted", getDriverControllerRightStickXAdjusted());
+    var tab = Shuffleboard.getTab("Subsystems");
+    tab.add(m_Arm);
+    tab.add(m_AutoCommand);
+    tab.add(m_BalanceCommand);
+    tab.add(m_CloseClawCommand);
+    tab.add(m_DecreaseMaxSpeedCommand);
+    tab.add(m_DriveCommand);
+    tab.add(m_FineDriveCommand);
+    tab.add(m_IncreaseMaxSpeedCommand);
+    tab.add(m_MoveArmYCommand);
+    tab.add(m_PDP);
+
+    tab.add(m_PID);
+    tab.add(m_PlaceGamePieceCommand);
+    tab.add(m_SwitchIdleModeCommmand);
+    tab.add(m_Tank);
+    tab.add(m_Turret);
+    tab.add(m_claw);
   }
 
   /**

@@ -1,15 +1,13 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [3]": {
-        "header": {
-          "open": true
-        }
-      },
       "navX-Sensor[0]": {
         "header": {
           "open": true
         }
+      },
+      "window": {
+        "visible": false
       }
     },
     "RoboRIO": {
@@ -25,12 +23,29 @@
       "/LiveWindow/Tank/Drive": "DifferentialDrive",
       "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
       "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+      "/Shuffleboard/Driver/Gyro": "Gyro",
       "/Shuffleboard/Motors/All": "Motor Controller",
       "/Shuffleboard/Motors/Drive": "DifferentialDrive",
       "/Shuffleboard/Motors/Left": "Motor Controller",
       "/Shuffleboard/Motors/Right": "Motor Controller",
       "/Shuffleboard/PID/Accelerometer": "Gyro",
       "/Shuffleboard/PID/Gyro": "Gyro",
+      "/Shuffleboard/Subsystems/Arm": "Subsystem",
+      "/Shuffleboard/Subsystems/AutoCommand": "Command",
+      "/Shuffleboard/Subsystems/BalanceCommand": "Command",
+      "/Shuffleboard/Subsystems/Claw": "Subsystem",
+      "/Shuffleboard/Subsystems/CloseClawCommand": "Command",
+      "/Shuffleboard/Subsystems/DecreaseMaxSpeedCommand": "Command",
+      "/Shuffleboard/Subsystems/DriveCommand": "Command",
+      "/Shuffleboard/Subsystems/FineDriveCommand": "Command",
+      "/Shuffleboard/Subsystems/IncreaseMaxSpeedCommand": "Command",
+      "/Shuffleboard/Subsystems/MoveArmYCommand": "Command",
+      "/Shuffleboard/Subsystems/PDP": "Subsystem",
+      "/Shuffleboard/Subsystems/PID": "Subsystem",
+      "/Shuffleboard/Subsystems/PlaceGamePieceCommand": "Command",
+      "/Shuffleboard/Subsystems/SwitchIdleModeCommmand": "Command",
+      "/Shuffleboard/Subsystems/Tank": "Subsystem",
+      "/Shuffleboard/Subsystems/Turret": "Subsystem",
       "/SmartDashboard/Scheduler": "Scheduler"
     },
     "windows": {
@@ -48,7 +63,16 @@
   },
   "NetworkTables": {
     "transitory": {
+      "FMSInfo": {
+        "open": true
+      },
+      "LiveWindow": {
+        "open": true
+      },
       "Shuffleboard": {
+        ".metadata": {
+          "open": true
+        },
         "open": true
       }
     }
