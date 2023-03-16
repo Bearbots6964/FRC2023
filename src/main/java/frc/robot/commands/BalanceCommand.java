@@ -52,7 +52,7 @@ public class BalanceCommand extends CommandBase {
     }
     SmartDashboard.putNumber("max offset", max);
 
-    if (pitchOffset < 15.7 && !onRamp) {
+    if (pitchOffset < 17 && !onRamp) {
       driveBase.setAllMotors(0.5);
       SmartDashboard.putBoolean("onRamp", onRamp);
 
@@ -64,10 +64,10 @@ public class BalanceCommand extends CommandBase {
         driveBase.setAllMotors(0);
       } else {
         driveBase.setAllMotors(
-            0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
+            Constants.OperatorConstants.Pconstant * (pitchOffset));
 
         SmartDashboard.putNumber(
-            "motor speed", 0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
+            "motor speed", Constants.OperatorConstants.Pconstant * (pitchOffset));
       }
     }
   }

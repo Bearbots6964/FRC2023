@@ -41,7 +41,7 @@ public final class Constants {
 
   public static final class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-    public static final double ProportionalDivisor = 17;
+    public static final double Pconstant = 0.00882;
     public static final String m_driveControllerType = "accurateTank";
   }
 
@@ -51,4 +51,6 @@ public final class Constants {
     public static final double kTargetHeightMeters = 1.524;
     public static final double kCameraPitchRadians = 0;
   }
+
+  public static final String OperatorConstast = null;
 }
