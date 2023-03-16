@@ -39,8 +39,9 @@ public class RobotContainer {
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final PlaceCubeFirstLevelCommand m_PlaceGamePieceCommand =
+  private final PlaceCubeFirstLevelCommand m_PlaceCubeFirstLevelCommand =
       new PlaceCubeFirstLevelCommand(m_Tank, m_claw, m_Arm);
+  private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand = new PlaceConeSecondLevelCommand(m_Tank, m_Arm);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_claw, m_Arm);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
       new IncreaseMaxSpeedCommand(m_Tank);
@@ -85,9 +86,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, XboxController.Button.kY.value)
         .whileTrue(m_BalanceCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kA.value)
-        .whileTrue(m_PlaceGamePieceCommand);
-
     new JoystickButton(m_driverController, XboxController.Button.kStart.value)
         .whileTrue(m_IncreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kBack.value)
@@ -99,9 +97,10 @@ public class RobotContainer {
         .whileTrue(m_CloseClawCommand);
     new JoystickButton(m_armController2, XboxController.Button.kRightBumper.value)
         .whileTrue(m_OpenClawCommand);
-
     new JoystickButton(m_armController2, XboxController.Button.kA.value)
         .whileTrue(m_FineDriveCommand);
+    new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceCubeFirstLevelCommand);
+    new JoystickButton(m_armController2, XboxController.Button.kX.value).whileTrue(m_PlaceConeSecondLevelCommand);
   }
 
   public static double getDriverControllerLeftStickY() {
