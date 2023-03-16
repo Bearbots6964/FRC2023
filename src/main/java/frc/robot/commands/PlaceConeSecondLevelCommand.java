@@ -9,7 +9,8 @@ import frc.robot.subsystems.*;
 
 public class PlaceConeSecondLevelCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Tank drive; 
+  private final Tank drive;
+
   private final Arm arm;
 
   private boolean readyToMoveArmBack = false;
@@ -32,25 +33,25 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
     arm.armMotor.getEncoder().setPosition(0);
   }
 
-
-  //double check constants
+  // double check constants
   @Override
   public void execute() {
     if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 80) {
-          arm.armMotor.set(0.4); //move the arm until cone gets in 
+      arm.armMotor.set(0.4); // move the arm until cone gets in
     } else {
-      if(Math.abs(drive.getAverageDistance()) < 10){
-        drive.arcadeDrive(-2, 0); //move back so that cone falls in
-      } else{
-        drive.arcadeDrive(0, 0);; //stop moving 
-        readyToMoveArmBack = true; //ready to move the arm back and continue balance
+      if (Math.abs(drive.getAverageDistance()) < 10) {
+        drive.arcadeDrive(-2, 0); // move back so that cone falls in
+      } else {
+        drive.arcadeDrive(0, 0);
+        ; // stop moving
+        readyToMoveArmBack = true; // ready to move the arm back and continue balance
         arm.armMotor.getEncoder().setPosition(0);
       }
     }
 
-    if(readyToMoveArmBack){
-      if(Math.abs(arm.armMotor.getEncoder().getPosition()) < 80){
-        arm.armMotor.set(-0.4); //moves the arm back to starting position
+    if (readyToMoveArmBack) {
+      if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 80) {
+        arm.armMotor.set(-0.4); // moves the arm back to starting position
         end = true;
       }
     }

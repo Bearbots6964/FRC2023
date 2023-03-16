@@ -10,7 +10,8 @@ import frc.robot.subsystems.*;
 public class PlaceCubeFirstLevelCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank drive;
-  private final Claw claw; 
+
+  private final Claw claw;
   private final Arm arm;
 
   private boolean readyToMoveArmBack = false;
@@ -37,25 +38,24 @@ public class PlaceCubeFirstLevelCommand extends CommandBase {
     claw.clawMotor.getEncoder().setPosition(0);
   }
 
-
-  //double check constants
+  // double check constants
   @Override
   public void execute() {
     if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 100) {
-          arm.armMotor.set(0.4); //move the arm back until it can reach botton
+      arm.armMotor.set(0.4); // move the arm back until it can reach botton
     } else {
-      if(Math.abs(claw.clawMotor.getEncoder().getPosition()) < 20){
-        claw.openClaw(); //open claw a little and drops cube
-      } else{
-        claw.stopClaw(); //stop claw
-        readyToMoveArmBack = true; //ready to move the arm back and continue balance
+      if (Math.abs(claw.clawMotor.getEncoder().getPosition()) < 20) {
+        claw.openClaw(); // open claw a little and drops cube
+      } else {
+        claw.stopClaw(); // stop claw
+        readyToMoveArmBack = true; // ready to move the arm back and continue balance
         arm.armMotor.getEncoder().setPosition(0);
       }
     }
 
-    if(readyToMoveArmBack){
-      if(Math.abs(arm.armMotor.getEncoder().getPosition()) < 100){
-        arm.armMotor.set(-0.4); //moves the arm back to starting position
+    if (readyToMoveArmBack) {
+      if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 100) {
+        arm.armMotor.set(-0.4); // moves the arm back to starting position
         end = true;
       }
     }
