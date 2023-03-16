@@ -20,6 +20,8 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private static double lastAxis;
+
   public static final Joystick m_armController = new Joystick(0);
   public static final XboxController m_armController2 = new XboxController(1);
   public static final XboxController m_driverController = new XboxController(2);
@@ -71,7 +73,8 @@ public class RobotContainer {
     tab.add(m_PDP);
 
     tab.add(m_PID);
-    tab.add(m_PlaceGamePieceCommand);
+    tab.add(m_PlaceConeSecondLevelCommand);
+    tab.add(m_PlaceCubeFirstLevelCommand);
     tab.add(m_SwitchIdleModeCommmand);
     tab.add(m_Tank);
     tab.add(m_Turret);
