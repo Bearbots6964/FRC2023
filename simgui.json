@@ -5,12 +5,15 @@
         "header": {
           "open": true
         }
-      },
-      "window": {
-        "visible": false
       }
     },
     "RoboRIO": {
+      "6V Rail": {
+        "open": true
+      },
+      "RoboRIO Input": {
+        "open": true
+      },
       "window": {
         "visible": true
       }
@@ -42,6 +45,7 @@
       "/Shuffleboard/Subsystems/MoveArmYCommand": "Command",
       "/Shuffleboard/Subsystems/PDP": "Subsystem",
       "/Shuffleboard/Subsystems/PID": "Subsystem",
+      "/Shuffleboard/Subsystems/PlaceConeSecondLevelCommand": "Command",
       "/Shuffleboard/Subsystems/PlaceGamePieceCommand": "Command",
       "/Shuffleboard/Subsystems/SwitchIdleModeCommmand": "Command",
       "/Shuffleboard/Subsystems/Tank": "Subsystem",
@@ -63,9 +67,6 @@
   },
   "NetworkTables": {
     "transitory": {
-      "FMSInfo": {
-        "open": true
-      },
       "LiveWindow": {
         "open": true
       },
@@ -73,6 +74,9 @@
         ".metadata": {
           "open": true
         },
+        "open": true
+      },
+      "SmartDashboard": {
         "open": true
       }
     }

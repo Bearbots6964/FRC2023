@@ -5,7 +5,7 @@
       "autoPopulate": true,
       "autoPopulatePrefix": "SmartDashboard/",
       "widgetPane": {
-        "gridSize": 8.0,
+        "gridSize": 32.0,
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
@@ -26,7 +26,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "6,0": {
+          "2,0": {
             "size": [
               6,
               6
@@ -41,7 +41,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "12,0": {
+          "4,0": {
             "size": [
               4,
               2
@@ -54,7 +54,7 @@
               "_showGlyph": false
             }
           },
-          "16,0": {
+          "6,0": {
             "size": [
               4,
               2
@@ -67,7 +67,7 @@
               "_showGlyph": false
             }
           },
-          "20,0": {
+          "8,0": {
             "size": [
               4,
               2
@@ -80,7 +80,7 @@
               "_showGlyph": false
             }
           },
-          "24,0": {
+          "1,0": {
             "size": [
               6,
               6
@@ -95,7 +95,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "30,0": {
+          "3,0": {
             "size": [
               4,
               2
@@ -108,7 +108,7 @@
               "_showGlyph": false
             }
           },
-          "34,0": {
+          "5,0": {
             "size": [
               4,
               2
@@ -121,7 +121,7 @@
               "_showGlyph": false
             }
           },
-          "38,0": {
+          "7,0": {
             "size": [
               4,
               2
@@ -134,7 +134,7 @@
               "_showGlyph": false
             }
           },
-          "42,0": {
+          "9,0": {
             "size": [
               12,
               22
@@ -149,7 +149,7 @@
               "_children": []
             }
           },
-          "54,0": {
+          "10,0": {
             "size": [
               4,
               2
@@ -162,7 +162,7 @@
               "_showGlyph": false
             }
           },
-          "58,0": {
+          "11,0": {
             "size": [
               4,
               2
@@ -175,7 +175,7 @@
               "_showGlyph": false
             }
           },
-          "62,0": {
+          "12,0": {
             "size": [
               4,
               2
@@ -293,7 +293,7 @@
       "autoPopulate": false,
       "autoPopulatePrefix": "LiveWindow/",
       "widgetPane": {
-        "gridSize": 8.0,
+        "gridSize": 32.0,
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
@@ -301,26 +301,99 @@
         "tiles": {
           "0,0": {
             "size": [
-              16,
-              5
+              8,
+              3
             ],
             "content": {
               "_type": "Basic FMS Info",
               "_source0": "network_table:///FMSInfo",
-              "_title": "/FMSInfo",
+              "_title": "Info",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "45,17": {
+          "0,3": {
             "size": [
-              18,
-              12
+              8,
+              11
+            ],
+            "content": {
+              "_type": "PDP",
+              "_source0": "network_table:///Shuffleboard/PDP/PDP",
+              "_title": "PDP",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Visuals/Show voltage and current values": true
+            }
+          },
+          "22,0": {
+            "size": [
+              4,
+              8
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Misc",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/zeroDeg",
+                  "_title": "0 Degres?",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/brakeMode",
+                  "_title": "Brake Mode",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Number Bar",
+                  "_source0": "network_table:///Shuffleboard/Config/Tank/Max Speed",
+                  "_title": "Max Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": 0.0,
+                  "Range/Max": 1.0,
+                  "Range/Center": 0.0,
+                  "Visuals/Num tick marks": 5,
+                  "Visuals/Show text": true,
+                  "Visuals/Orientation": "HORIZONTAL"
+                },
+                {
+                  "_type": "Number Bar",
+                  "_source0": "network_table:///SmartDashboard/rightStickX",
+                  "_title": "Right Stick X",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": -1.0,
+                  "Range/Max": 1.0,
+                  "Range/Center": 0.0,
+                  "Visuals/Num tick marks": 5,
+                  "Visuals/Show text": true,
+                  "Visuals/Orientation": "HORIZONTAL"
+                }
+              ]
+            }
+          },
+          "22,8": {
+            "size": [
+              9,
+              6
             ],
             "content": {
               "_type": "Differential Drivebase",
               "_source0": "network_table:///Shuffleboard/Motors/Drive",
-              "_title": "/Shuffleboard/Motors/Drive",
+              "_title": "Drivebase",
               "_glyph": 148,
               "_showGlyph": false,
               "Wheels/Number of wheels": 4,
@@ -328,10 +401,10 @@
               "Visuals/Show velocity vectors": true
             }
           },
-          "53,0": {
+          "27,0": {
             "size": [
-              10,
-              17
+              4,
+              8
             ],
             "content": {
               "_type": "Subsystem Layout",
@@ -382,175 +455,72 @@
               ]
             }
           },
-          "0,5": {
+          "8,0": {
             "size": [
-              16,
-              17
+              9,
+              7
             ],
             "content": {
-              "_type": "PDP",
-              "_source0": "network_table:///Shuffleboard/PDP/PDP",
-              "_title": "/Shuffleboard/PDP/PDP",
+              "_type": "Camera Stream",
+              "_title": "Camera Stream",
               "_glyph": 148,
               "_showGlyph": false,
-              "Visuals/Show voltage and current values": true
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": -1,
+              "imageHeight": -1
             }
           },
-          "45,0": {
+          "8,7": {
             "size": [
-              8,
-              17
+              9,
+              7
             ],
             "content": {
-              "_type": "List Layout",
-              "_title": "Misc",
-              "_glyph": 149,
-              "_showGlyph": false,
-              "Layout/Label position": "BOTTOM",
-              "_children": [
-                {
-                  "_type": "Boolean Box",
-                  "_source0": "network_table:///SmartDashboard/zeroDeg",
-                  "_title": "/SmartDashboard/zeroDeg",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Colors/Color when true": "#7CFC00FF",
-                  "Colors/Color when false": "#8B0000FF"
-                },
-                {
-                  "_type": "Boolean Box",
-                  "_source0": "network_table:///SmartDashboard/brakeMode",
-                  "_title": "/SmartDashboard/brakeMode",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Colors/Color when true": "#7CFC00FF",
-                  "Colors/Color when false": "#8B0000FF"
-                },
-                {
-                  "_type": "Number Bar",
-                  "_source0": "network_table:///Shuffleboard/Config/Tank/Max Speed",
-                  "_title": "Max Speed",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Range/Min": 0.0,
-                  "Range/Max": 1.0,
-                  "Range/Center": 0.0,
-                  "Visuals/Num tick marks": 5,
-                  "Visuals/Show text": true,
-                  "Visuals/Orientation": "HORIZONTAL"
-                },
-                {
-                  "_type": "Number Bar",
-                  "_source0": "network_table:///SmartDashboard/rightStickX",
-                  "_title": "Right Stick X",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Range/Min": -1.0,
-                  "Range/Max": 1.0,
-                  "Range/Center": 0.0,
-                  "Visuals/Num tick marks": 5,
-                  "Visuals/Show text": true,
-                  "Visuals/Orientation": "HORIZONTAL"
-                }
-              ]
-            }
-          },
-          "63,0": {
-            "size": [
-              6,
-              6
-            ],
-            "content": {
-              "_type": "Simple Dial",
-              "_source0": "network_table:///SmartDashboard/pitch angle",
-              "_title": "Pitch Angle",
+              "_type": "Camera Stream",
+              "_title": "Camera Stream",
               "_glyph": 148,
               "_showGlyph": false,
-              "Range/Min": -180.0,
-              "Range/Max": 180.0,
-              "Visuals/Show value": true
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": -1,
+              "imageHeight": -1
             }
           },
-          "69,0": {
+          "17,0": {
             "size": [
-              6,
-              6
+              5,
+              14
             ],
             "content": {
-              "_type": "Simple Dial",
-              "_source0": "network_table:///SmartDashboard/pitch offset",
-              "_title": "Yaw Offset",
+              "_type": "Text View",
+              "_title": "Text View",
               "_glyph": 148,
-              "_showGlyph": false,
-              "Range/Min": -180.0,
-              "Range/Max": 180.0,
-              "Visuals/Show value": true
-            }
-          },
-          "75,0": {
-            "size": [
-              6,
-              6
-            ],
-            "content": {
-              "_type": "Simple Dial",
-              "_source0": "network_table:///SmartDashboard/yaw angle",
-              "_title": "Yaw Angle",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Range/Min": -180.0,
-              "Range/Max": 180.0,
-              "Visuals/Show value": true
-            }
-          },
-          "1,22": {
-            "size": [
-              16,
-              5
-            ],
-            "content": {
-              "_type": "Grid Layout",
-              "_title": "Grid Layout",
-              "_glyph": 149,
-              "_showGlyph": false,
-              "Layout/Number of columns": 3,
-              "Layout/Number of rows": 2,
-              "Layout/Label position": "BOTTOM",
-              "_children": {
-                "0,0": {
-                  "_type": "Simple Dial",
-                  "_source0": "network_table:///SmartDashboard/yaw angle",
-                  "_title": "Yaw Angle",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Range/Min": -180.0,
-                  "Range/Max": 180.0,
-                  "Visuals/Show value": true
-                },
-                "1,0": {
-                  "_type": "Simple Dial",
-                  "_source0": "network_table:///SmartDashboard/pitch offset",
-                  "_title": "Pitch Offset",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Range/Min": -180.0,
-                  "Range/Max": 180.0,
-                  "Visuals/Show value": true
-                },
-                "2,0": {
-                  "_type": "Simple Dial",
-                  "_source0": "network_table:///SmartDashboard/pitch angle",
-                  "_title": "Pitch Angle",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Range/Min": -180.0,
-                  "Range/Max": 180.0,
-                  "Visuals/Show value": true
-                }
-              }
+              "_showGlyph": false
             }
           }
         }
+      }
+    },
+    {
+      "title": "Tab 3",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {}
       }
     }
   ],
