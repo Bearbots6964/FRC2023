@@ -5,14 +5,15 @@
         "header": {
           "open": true
         }
-      },
-      "navX-Sensor[0]": {
-        "header": {
-          "open": true
-        }
       }
     },
     "RoboRIO": {
+      "6V Rail": {
+        "open": true
+      },
+      "RoboRIO Input": {
+        "open": true
+      },
       "window": {
         "visible": true
       }
@@ -31,6 +32,23 @@
       "/Shuffleboard/Motors/Right": "Motor Controller",
       "/Shuffleboard/PID/Accelerometer": "Gyro",
       "/Shuffleboard/PID/Gyro": "Gyro",
+      "/Shuffleboard/Subsystems/Arm": "Subsystem",
+      "/Shuffleboard/Subsystems/AutoCommand": "Command",
+      "/Shuffleboard/Subsystems/BalanceCommand": "Command",
+      "/Shuffleboard/Subsystems/Claw": "Subsystem",
+      "/Shuffleboard/Subsystems/CloseClawCommand": "Command",
+      "/Shuffleboard/Subsystems/DecreaseMaxSpeedCommand": "Command",
+      "/Shuffleboard/Subsystems/DriveCommand": "Command",
+      "/Shuffleboard/Subsystems/FineDriveCommand": "Command",
+      "/Shuffleboard/Subsystems/IncreaseMaxSpeedCommand": "Command",
+      "/Shuffleboard/Subsystems/MoveArmYCommand": "Command",
+      "/Shuffleboard/Subsystems/PDP": "Subsystem",
+      "/Shuffleboard/Subsystems/PID": "Subsystem",
+      "/Shuffleboard/Subsystems/PlaceConeSecondLevelCommand": "Command",
+      "/Shuffleboard/Subsystems/PlaceGamePieceCommand": "Command",
+      "/Shuffleboard/Subsystems/SwitchIdleModeCommmand": "Command",
+      "/Shuffleboard/Subsystems/Tank": "Subsystem",
+      "/Shuffleboard/Subsystems/Turret": "Subsystem",
       "/SmartDashboard/Scheduler": "Scheduler"
     },
     "windows": {
@@ -48,7 +66,13 @@
   },
   "NetworkTables": {
     "transitory": {
+      "LiveWindow": {
+        "open": true
+      },
       "Shuffleboard": {
+        "open": true
+      },
+      "SmartDashboard": {
         "open": true
       }
     }
