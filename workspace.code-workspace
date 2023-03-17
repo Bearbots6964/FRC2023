@@ -8,9 +8,10 @@
 		"java.configuration.updateBuildConfiguration": "automatic",
 		"java.server.launchMode": "Standard",
 		"java.configuration.runtimes": [
+
 			{
-			  "name": "FRC",
-			  "path": "/Users/parker/wpilib/2023/jdk",
+			  "name": "JavaSE-17",
+			  "path": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.6.10-hotspot\\",
 			  "default": true
 			}
 		  ]
