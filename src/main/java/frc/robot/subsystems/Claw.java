@@ -29,6 +29,7 @@ public class Claw extends SubsystemBase {
     clawMotor.setIdleMode(IdleMode.kBrake);
     clawMotor.setSmartCurrentLimit(18, 11);
     clawMotor.burnFlash();
+    addChild("Claw Motor", clawMotor);
 
     Shuffleboard.getTab("Motors").add("Claw", clawMotor);
 

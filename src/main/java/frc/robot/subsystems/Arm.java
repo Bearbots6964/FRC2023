@@ -26,6 +26,7 @@ public class Arm extends SubsystemBase {
     armMotor.setIdleMode(IdleMode.kBrake);
     armMotor.setSmartCurrentLimit(20, 30);
     armMotor.burnFlash();
+    addChild("Arm Motor", armMotor);
 
     Shuffleboard.getTab("Motors").add("Arm", armMotor);
   }

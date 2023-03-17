@@ -41,7 +41,7 @@ public final class Constants {
 
   public static final class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-    public static final double Pconstant = 0.00882;
+    public static final double Pconstant = 0.00635;
     public static final String m_driveControllerType = "accurateTank";
   }
 
