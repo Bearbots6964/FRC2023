@@ -50,7 +50,7 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
         arm.armMotor.getEncoder().setPosition(0);
       }
 
-      //go over charge station
+      // go over charge station
       if (Math.abs(drive.getAverageDistance()) < 7 && firstStep == false) {
         drive.setAllMotors(0.4); // move back so that cone falls in
         arm.armMotor.set(-0.3);
