@@ -15,7 +15,7 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
 
   private boolean readyToMoveArmBack = false;
   private boolean end = false;
-  private boolean readyToRotate = false;
+  private boolean readyToEnd = false;
   private boolean firstStep = true;
 
   public PlaceConeSecondLevelCommand(Tank drive, Arm arm) {
@@ -40,23 +40,24 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
   public void execute() {
     // System.out.println(Math.abs(arm.armMotor.getEncoder().getPosition()));
     if (firstStep) {
-      if (Math.abs(arm.armMotor.getEncoder().getPosition()) <= 103) {
+      if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 105) {
         arm.armMotor.set(0.4);
       }
 
-      if (Math.abs(arm.armMotor.getEncoder().getPosition()) == 103) {
+      if (Math.abs(arm.armMotor.getEncoder().getPosition()) >= 105) {
         firstStep = false;
         arm.armMotor.set(0);
+        arm.armMotor.getEncoder().setPosition(0);
       }
 
+      // go over charge station
       if (Math.abs(drive.getAverageDistance()) < 7 && firstStep == false) {
         drive.setAllMotors(0.4); // move back so that cone falls in
-        arm.armMotor.set(-0.5);
+        arm.armMotor.set(-0.3);
       }
 
-      if (Math.abs(drive.getAverageDistance()) == 7) {
+      if (Math.abs(drive.getAverageDistance()) >= 7) {
         drive.setAllMotors(0);
-        end = true;
       }
     }
   }
@@ -75,6 +76,6 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return end /* Math.abs(drive.getAverageDistance()) < 8 */;
+    return Math.abs(drive.getAverageDistance()) >= 7;
   }
 }
