@@ -457,8 +457,8 @@
           },
           "8,0": {
             "size": [
-              9,
-              7
+              14,
+              14
             ],
             "content": {
               "_type": "Camera Stream",
@@ -470,46 +470,10 @@
               "Crosshair/Crosshair color": "#FFFFFFFF",
               "Controls/Show controls": true,
               "Controls/Rotation": "HALF",
-              "compression": 1.0,
-              "fps": 15,
+              "compression": 24.0,
+              "fps": 30,
               "imageWidth": 640,
               "imageHeight": 480
-            }
-          },
-          "8,7": {
-            "size": [
-              9,
-              7
-            ],
-            "content": {
-              "_type": "Camera Stream",
-              "_source0": "camera_server://limelight",
-              "_title": "limelight",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Crosshair/Show crosshair": true,
-              "Crosshair/Crosshair color": "#FFFFFFFF",
-              "Controls/Show controls": true,
-              "Controls/Rotation": "HALF",
-              "compression": -1.0,
-              "fps": 22,
-              "imageWidth": 320,
-              "imageHeight": 240
-            }
-          },
-          "17,0": {
-            "size": [
-              5,
-              14
-            ],
-            "content": {
-              "_type": "Subsystem Layout",
-              "_source0": "network_table:///SmartDashboard/Scheduler/Ids",
-              "_title": "Scheduler",
-              "_glyph": 149,
-              "_showGlyph": false,
-              "Layout/Label position": "BOTTOM",
-              "_children": []
             }
           }
         }
@@ -526,19 +490,25 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "1,0": {
+          "0,0": {
             "size": [
-              1,
-              12
+              16,
+              14
             ],
             "content": {
-              "_type": "Subsystem Layout",
-              "_source0": "network_table:///SmartDashboard/Scheduler/Ids",
-              "_title": "SmartDashboard/Scheduler/Ids",
-              "_glyph": 149,
+              "_type": "Camera Stream",
+              "_source0": "camera_server://Arm",
+              "_title": "Arm",
+              "_glyph": 148,
               "_showGlyph": false,
-              "Layout/Label position": "BOTTOM",
-              "_children": []
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "HALF",
+              "compression": 24.0,
+              "fps": 30,
+              "imageWidth": 640,
+              "imageHeight": 480
             }
           }
         }
