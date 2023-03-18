@@ -44,7 +44,7 @@ public class BalanceCommand extends CommandBase {
   // avoid while loops inside execute
   @Override
   public void execute() {
-    double pitchOffset = pid.gyro.getPitch() - initPitch;
+    double pitchOffset = initPitch - pid.gyro.getPitch();
     SmartDashboard.putNumber("pitch offset", pitchOffset);
 
     if (pitchOffset > max) {
