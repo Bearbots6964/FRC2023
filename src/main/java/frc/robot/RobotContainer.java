@@ -87,13 +87,13 @@ public class RobotContainer {
     new JoystickButton(m_driverController, XboxController.Button.kBack.value)
         .whileTrue(m_DecreaseMaxSpeedCommand);
 
-    new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
+    new JoystickButton(m_armController2, XboxController.Button.kY.value)
         .whileTrue(m_CloseClawCommand);
-    new JoystickButton(m_armController2, XboxController.Button.kRightBumper.value)
+    new JoystickButton(m_armController2, XboxController.Button.kX.value)
         .whileTrue(m_OpenClawCommand);
     new JoystickButton(m_armController2, XboxController.Button.kA.value)
         .whileTrue(m_FineDriveCommand);
-    new JoystickButton(m_armController2,XboxController.Button.kX.value)
+    new JoystickButton(m_armController2,XboxController.Button.kB.value)
         .whileTrue(m_PlaceConeSecondLevelCommand);    
     
   }

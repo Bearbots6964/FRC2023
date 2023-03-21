@@ -326,10 +326,10 @@
               "Visuals/Show voltage and current values": true
             }
           },
-          "22,0": {
+          "8,9": {
             "size": [
               4,
-              8
+              5
             ],
             "content": {
               "_type": "List Layout",
@@ -385,7 +385,7 @@
               ]
             }
           },
-          "22,8": {
+          "23,9": {
             "size": [
               9,
               6
@@ -404,7 +404,7 @@
           "26,0": {
             "size": [
               5,
-              8
+              9
             ],
             "content": {
               "_type": "Subsystem Layout",
@@ -457,8 +457,8 @@
           },
           "8,0": {
             "size": [
-              14,
-              14
+              9,
+              9
             ],
             "content": {
               "_type": "Camera Stream",
@@ -474,6 +474,27 @@
               "fps": 30,
               "imageWidth": 640,
               "imageHeight": 480
+            }
+          },
+          "17,0": {
+            "size": [
+              9,
+              9
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://limelight",
+              "_title": "limelight",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "HALF",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": -1,
+              "imageHeight": -1
             }
           }
         }

@@ -54,6 +54,8 @@ public class Tank extends SubsystemBase {
   private GenericEntry allWidget;
 
   private GenericEntry driveWidget;
+
+  private int initialCurrentLimit = 50;
   /** */
   public Tank() {
     motorsTab = Shuffleboard.getTab("Motors");
@@ -62,7 +64,7 @@ public class Tank extends SubsystemBase {
     leftFront.restoreFactoryDefaults();
     leftFront.setInverted(true);
     leftFront.setIdleMode(IdleMode.kBrake);
-    leftFront.setSmartCurrentLimit(40);
+    leftFront.setSmartCurrentLimit(initialCurrentLimit);
     // leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftFront.burnFlash();
     motorsTab.add("Left Front", leftFront);
@@ -72,7 +74,7 @@ public class Tank extends SubsystemBase {
     leftRear.restoreFactoryDefaults();
     leftRear.setInverted(true);
     leftRear.setIdleMode(IdleMode.kBrake);
-    leftRear.setSmartCurrentLimit(40);
+    leftRear.setSmartCurrentLimit(initialCurrentLimit);
     // leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftRear.burnFlash();
     motorsTab.add("Left Rear", leftRear);
@@ -87,7 +89,7 @@ public class Tank extends SubsystemBase {
     rightFront.setInverted(false);
 
     rightFront.setIdleMode(IdleMode.kBrake);
-    rightFront.setSmartCurrentLimit(40);
+    rightFront.setSmartCurrentLimit(initialCurrentLimit);
     // rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightFront.burnFlash();
     motorsTab.add("Right Front", rightFront);
@@ -97,7 +99,7 @@ public class Tank extends SubsystemBase {
     rightRear.restoreFactoryDefaults();
     rightRear.setInverted(false);
     rightRear.setIdleMode(IdleMode.kBrake);
-    rightRear.setSmartCurrentLimit(40);
+    rightRear.setSmartCurrentLimit(initialCurrentLimit);
     // rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightRear.burnFlash();
     motorsTab.add("Right Rear", rightRear);
