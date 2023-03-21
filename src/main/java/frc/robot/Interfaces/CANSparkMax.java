@@ -1,7 +1,13 @@
 package frc.robot.Interfaces;
 
+import java.util.function.IntConsumer;
+import java.util.function.IntSupplier;
+
+import com.revrobotics.REVLibError;
+
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 // This code has bugs.
 
@@ -253,6 +259,10 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     // and I don't think it'll work. If I put outside, I'll be able to call it in other places too.
     builder.addBooleanProperty("Brake Mode", this::isBraking, this::setBrakeMode);
     builder.addBooleanProperty("Coast Mode", this::isCoasting, this::setCoastMode);
+
+
+    // current limits
+    builder.addIntegerProperty("Current Limit", null, this::setSmartCurrentLimit);
   }
 
   /**
@@ -311,4 +321,12 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
       setIdleMode(IdleMode.kBrake);
     }
   }
+
+
+  public REVLibError setSmartCurrentLimit(Long limit) {
+    throwIfClosed();
+    return setSmartCurrentLimit(limit.intValue(), 0, 20000);
+  }
+
+
 }
