@@ -44,7 +44,7 @@ public class BalanceCommand extends CommandBase {
   // avoid while loops inside execute
   @Override
   public void execute() {
-    double pitchOffset = pid.gyro.getPitch() - initPitch;
+    double pitchOffset = initPitch - pid.gyro.getPitch();
     SmartDashboard.putNumber("pitch offset", pitchOffset);
 
     if (pitchOffset > max) {
@@ -52,7 +52,7 @@ public class BalanceCommand extends CommandBase {
     }
     SmartDashboard.putNumber("max offset", max);
 
-    if (pitchOffset < 17 && !onRamp) {
+    if (pitchOffset < 16 && !onRamp) {
       driveBase.setAllMotors(0.5);
       SmartDashboard.putBoolean("onRamp", onRamp);
 
@@ -63,8 +63,7 @@ public class BalanceCommand extends CommandBase {
       if (Math.abs(pitchOffset) < 2) {
         driveBase.setAllMotors(0);
       } else {
-        driveBase.setAllMotors(
-            Constants.OperatorConstants.Pconstant * (pitchOffset));
+        driveBase.setAllMotors(Constants.OperatorConstants.Pconstant * (pitchOffset));
 
         SmartDashboard.putNumber(
             "motor speed", Constants.OperatorConstants.Pconstant * (pitchOffset));

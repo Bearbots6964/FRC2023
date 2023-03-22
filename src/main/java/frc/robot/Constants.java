@@ -31,9 +31,9 @@ public final class Constants {
     public static final int kLeftRearMotorPort = 2;
     public static final int kRightFrontMotorPort = 4;
     public static final int kRightRearMotorPort = 5;
-    public static final double kRampRate = 0.1;
+    public static final double kRampRate = 0;
 
-    public static double maxSpeed = 0.8;
+    public static double maxSpeed = 1;
     public static final double maxSpeedIncrement = 0.05;
 
     public static final String kBaseType = "tank";
