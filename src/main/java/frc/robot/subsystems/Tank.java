@@ -65,7 +65,7 @@ public class Tank extends SubsystemBase {
     leftFront.setInverted(true);
     leftFront.setIdleMode(IdleMode.kBrake);
     leftFront.setSmartCurrentLimit(initialCurrentLimit);
-    // leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftFront.burnFlash();
     motorsTab.add("Left Front", leftFront);
     addChild("Left Front", leftFront);
@@ -75,7 +75,7 @@ public class Tank extends SubsystemBase {
     leftRear.setInverted(true);
     leftRear.setIdleMode(IdleMode.kBrake);
     leftRear.setSmartCurrentLimit(initialCurrentLimit);
-    // leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftRear.burnFlash();
     motorsTab.add("Left Rear", leftRear);
     addChild("Left Rear", leftRear);
@@ -90,7 +90,7 @@ public class Tank extends SubsystemBase {
 
     rightFront.setIdleMode(IdleMode.kBrake);
     rightFront.setSmartCurrentLimit(initialCurrentLimit);
-    // rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightFront.burnFlash();
     motorsTab.add("Right Front", rightFront);
     addChild("Right Front", rightFront);
@@ -100,7 +100,7 @@ public class Tank extends SubsystemBase {
     rightRear.setInverted(false);
     rightRear.setIdleMode(IdleMode.kBrake);
     rightRear.setSmartCurrentLimit(initialCurrentLimit);
-    // rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightRear.burnFlash();
     motorsTab.add("Right Rear", rightRear);
 
