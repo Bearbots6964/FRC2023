@@ -13,9 +13,6 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
 
   private final Arm arm;
 
-  private boolean readyToMoveArmBack = false;
-  private boolean end = false;
-  private boolean readyToEnd = false;
   private boolean firstStep = true;
 
   public PlaceConeSecondLevelCommand(Tank drive, Arm arm) {
