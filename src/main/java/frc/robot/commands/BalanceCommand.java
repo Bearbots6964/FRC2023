@@ -63,8 +63,7 @@ public class BalanceCommand extends CommandBase {
       if (Math.abs(pitchOffset) < 2) {
         driveBase.setAllMotors(0);
       } else {
-        driveBase.setAllMotors(
-            Constants.OperatorConstants.Pconstant * (pitchOffset));
+        driveBase.setAllMotors(Constants.OperatorConstants.Pconstant * (pitchOffset));
 
         SmartDashboard.putNumber(
             "motor speed", Constants.OperatorConstants.Pconstant * (pitchOffset));
