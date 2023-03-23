@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PID extends SubsystemBase {
-  public AHRS gyro;
+  
   private final double kP = 0.18;
   private final double kI = 0.025;
   private final double kD = 0.3;
@@ -21,6 +21,8 @@ public class PID extends SubsystemBase {
   public ShuffleboardTab tab;
   public ShuffleboardTab dash;
 
+  public AHRS gyro = Tank.gyro;
+
   private float initPitch;
 
   public PIDController pidController;
@@ -28,9 +30,7 @@ public class PID extends SubsystemBase {
   public PID() {
     toleranceDeg = 0.5;
     iLimit = 2.0;
-    gyro = new AHRS(SPI.Port.kMXP);
-    addChild("Gyro", gyro);
-    Shuffleboard.getTab("Driver").add("Gyro", gyro);
+
 
     initPitch = gyro.getPitch();
     pidController = new PIDController(P, I, D);

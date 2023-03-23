@@ -31,6 +31,7 @@ public class RobotContainer {
   private final Turret m_Turret = new Turret();
   private final PID m_PID = new PID();
   private final PDP m_PDP = new PDP();
+  private final LineupPID m_LineupPID = new LineupPID();
 
   // INSTANTIATES ALL COMMANDS
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
@@ -47,6 +48,7 @@ public class RobotContainer {
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand =
       new DecreaseMaxSpeedCommand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
+  private final LineupCommand m_LineupCommand = new LineupCommand(m_LineupPID);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -66,6 +68,10 @@ public class RobotContainer {
     tab.add(m_IncreaseMaxSpeedCommand);
     tab.add(m_MoveArmYCommand);
     tab.add(m_PDP);
+    tab.add(m_OpenClawCommand);
+    tab.add(m_LineupPID);
+    tab.add(m_LineupCommand);
+
 
     tab.add(m_PID);
     tab.add(m_PlaceConeSecondLevelCommand);
@@ -86,6 +92,8 @@ public class RobotContainer {
         .whileTrue(m_IncreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kBack.value)
         .whileTrue(m_DecreaseMaxSpeedCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kA.value)
+        .whileTrue(m_LineupCommand);
 
     new JoystickButton(m_armController2, XboxController.Button.kX.value)
         .whileTrue(m_CloseClawCommand);

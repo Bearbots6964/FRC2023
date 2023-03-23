@@ -1,10 +1,18 @@
 {
   "HALProvider": {
     "Other Devices": {
+      "SPARK MAX [2]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK MAX [3]": {
         "header": {
           "open": true
         }
+      },
+      "window": {
+        "visible": false
       }
     },
     "RoboRIO": {
@@ -13,9 +21,6 @@
       },
       "RoboRIO Input": {
         "open": true
-      },
-      "window": {
-        "visible": true
       }
     }
   },
@@ -26,6 +31,7 @@
       "/LiveWindow/Tank/Drive": "DifferentialDrive",
       "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
       "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+      "/Shuffleboard/Driver/Gyro": "Gyro",
       "/Shuffleboard/Motors/All": "Motor Controller",
       "/Shuffleboard/Motors/Drive": "DifferentialDrive",
       "/Shuffleboard/Motors/Left": "Motor Controller",
@@ -41,7 +47,11 @@
       "/Shuffleboard/Subsystems/DriveCommand": "Command",
       "/Shuffleboard/Subsystems/FineDriveCommand": "Command",
       "/Shuffleboard/Subsystems/IncreaseMaxSpeedCommand": "Command",
+      "/Shuffleboard/Subsystems/Lineup Controller": "PIDController",
+      "/Shuffleboard/Subsystems/LineupCommand": "Command",
+      "/Shuffleboard/Subsystems/LineupPID": "Subsystem",
       "/Shuffleboard/Subsystems/MoveArmYCommand": "Command",
+      "/Shuffleboard/Subsystems/OpenClawCommand": "Command",
       "/Shuffleboard/Subsystems/PDP": "Subsystem",
       "/Shuffleboard/Subsystems/PID": "Subsystem",
       "/Shuffleboard/Subsystems/PlaceConeSecondLevelCommand": "Command",
@@ -49,10 +59,19 @@
       "/Shuffleboard/Subsystems/SwitchIdleModeCommmand": "Command",
       "/Shuffleboard/Subsystems/Tank": "Subsystem",
       "/Shuffleboard/Subsystems/Turret": "Subsystem",
+      "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Scheduler": "Scheduler"
     },
     "windows": {
       "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
+        "Robot": {
+          "style": "Track"
+        },
         "window": {
           "visible": true
         }
@@ -70,11 +89,34 @@
         "open": true
       },
       "Shuffleboard": {
+        "Subsystems": {
+          "Lineup Controller": {
+            "open": true
+          },
+          "open": true
+        },
         "open": true
       },
       "SmartDashboard": {
         "open": true
       }
+    }
+  },
+  "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Connections": {
+      "open": true
+    },
+    "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
     }
   }
 }

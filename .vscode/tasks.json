@@ -1,0 +1,62 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "gradle",
+			"id": "c:\\Users\\uahs\\FRC\\FRC2023buildFRC2023",
+			"script": "build",
+			"description": "Assembles and tests this project.",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"project": "FRC2023",
+			"buildFile": "C:\\Users\\uahs\\FRC\\FRC2023\\build.gradle",
+			"rootProject": "FRC2023",
+			"projectFolder": "c:\\Users\\uahs\\FRC\\FRC2023",
+			"workspaceFolder": "c:\\Users\\uahs\\FRC\\FRC2023",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: build"
+		},
+		{
+			"type": "gradle",
+			"id": "c:\\Users\\uahs\\FRC\\FRC2023deployFRC2023",
+			"script": "deploy",
+			"description": "Deploy all artifacts on all targets",
+			"group": "deployutils",
+			"project": "FRC2023",
+			"buildFile": "C:\\Users\\uahs\\FRC\\FRC2023\\build.gradle",
+			"rootProject": "FRC2023",
+			"projectFolder": "c:\\Users\\uahs\\FRC\\FRC2023",
+			"workspaceFolder": "c:\\Users\\uahs\\FRC\\FRC2023",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: deploy"
+		},
+		{
+			"type": "gradle",
+			"id": "c:\\Users\\uahs\\FRC\\FRC2023simulateJavaFRC2023",
+			"script": "simulateJava",
+			"description": "",
+			"group": "other",
+			"project": "FRC2023",
+			"buildFile": "C:\\Users\\uahs\\FRC\\FRC2023\\build.gradle",
+			"rootProject": "FRC2023",
+			"projectFolder": "c:\\Users\\uahs\\FRC\\FRC2023",
+			"workspaceFolder": "c:\\Users\\uahs\\FRC\\FRC2023",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: simulateJava"
+		}
+	]
+}
