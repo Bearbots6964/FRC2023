@@ -32,6 +32,7 @@ public class RobotContainer {
   private final PID m_PID = new PID();
   private final PDP m_PDP = new PDP();
   private final LineupPID m_LineupPID = new LineupPID();
+  private final Vision m_Vision = new Vision();
 
   // INSTANTIATES ALL COMMANDS
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);

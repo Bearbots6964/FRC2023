@@ -22,6 +22,14 @@ public class LineupPID extends PIDSubsystem {
         // add that sendable to the shuffleboard
         Shuffleboard.getTab("Subsystems").add(getController());
         m_controller = getController();
+
+        // create a new NetworkTable table for all the PID stuff
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("lineupPID");
+
+        // add the PID values to the table
+        table.getEntry("kP").setDouble(kP);
+        table.getEntry("kI").setDouble(kI);
+        table.getEntry("kD").setDouble(kD);
         
     }
 
@@ -37,12 +45,18 @@ public class LineupPID extends PIDSubsystem {
         // Return the distance from the best retroreflective tape pole (determined by the Limelight itself, configured in the Limelight's web interface) to the center of the robot
         return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
 
+
         
     }
 
     // Set the PID controller's setpoint to the distance from the best retroreflective tape pole (determined by the Limelight itself, configured in the Limelight's web interface) to the center of the robot
     public void setSetpoint() {
         m_controller.setSetpoint(getMeasurement());
+    }
+
+    // check if the PID controller is at the setpoint; if it is, return true
+    public boolean atSetpoint() {
+        return m_controller.atSetpoint();
     }
 
 }

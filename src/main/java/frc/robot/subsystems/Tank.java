@@ -68,7 +68,7 @@ public class Tank extends SubsystemBase {
 
   private Field2d field2d;
 
-  private int initialCurrentLimit = 50;
+  private int initialCurrentLimit = 30; // TODO tune this
 
   /** */
   public Tank() {

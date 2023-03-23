@@ -27,10 +27,14 @@ public class LineupCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_lineupPID.disable();
+        Tank.arcadeDrive(0, 0);
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        // Return true when the command should end.
+
+        // if the PID controller is at the setpoint, return true
+        return m_lineupPID.atSetpoint();
     }
 }

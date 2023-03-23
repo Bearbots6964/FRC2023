@@ -11,13 +11,26 @@ import java.util.Optional;
 
 public class Limelight {
     private NetworkTable table;
-    private NetworkTableEntry tv, tx, ty, ta, ts, tl, ledMode, pipeline, stream;
+    private NetworkTableEntry tv;
+    private NetworkTableEntry tx;
+    private NetworkTableEntry ty;
+    private NetworkTableEntry ta;
+    private NetworkTableEntry ts;
+    private NetworkTableEntry tl;
+    private NetworkTableEntry ledMode;
+    private NetworkTableEntry pipeline;
+    private NetworkTableEntry stream;
     private List<Pipeline> knownPipelines;
     private Target lastTarget = null;
 
 
+
+    // set the variables here...
+
     public Limelight(Pipeline... knownPipelines) {
         this("limelight", knownPipelines);
+
+
     }
 
     public Limelight(String tableName, Pipeline... knownPipelines) {

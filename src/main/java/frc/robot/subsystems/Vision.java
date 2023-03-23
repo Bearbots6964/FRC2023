@@ -1,15 +1,31 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  NetworkTableEntry ty = table.getEntry("ty");
+
+  double targetOffsetAngle_Vertical = ty.getDouble(0);
   // Pipeline mode.
 
+  private double limelightMountAngleDegrees = 0;
+  private double limelightLensHeightInches = 6.25;
+  private double goalHeightInches = 24.125;
+  private double angleToGoalRadians = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+  private double angleToGoalDegrees = Units.radiansToDegrees(angleToGoalRadians);
+  private double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/Math.tan(angleToGoalRadians);
+  public GenericEntry widget;
   public Vision() {
     // Stuff goes here
+    widget = Shuffleboard.getTab("stuff").add("distance", -(goalHeightInches - limelightLensHeightInches)/Math.tan(limelightMountAngleDegrees + ty.getDouble(0))).withWidget(BuiltInWidgets.kGraph).getEntry();
   }
 
   // display camera on shuffleboard
@@ -17,6 +33,8 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    widget.setDouble(-(goalHeightInches - limelightLensHeightInches)/Math.tan(limelightMountAngleDegrees + ty.getDouble(0)));
+  
   }
 
   @Override
