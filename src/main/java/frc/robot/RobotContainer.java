@@ -20,6 +20,8 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  public static boolean inverted = false;
+
   public static final Joystick m_armController = new Joystick(0);
   public static final XboxController m_armController2 = new XboxController(1);
   public static final XboxController m_driverController = new XboxController(2);
@@ -38,6 +40,7 @@ public class RobotContainer {
   private final MoveArmXCommand m_MoveArmXCommand = new MoveArmXCommand(m_Turret);
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
+  private final InvertDriveCommand m_InvertDriveCommand = new InvertDriveCommand(m_Tank, this);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_claw, m_Arm);
   private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand =
@@ -86,6 +89,8 @@ public class RobotContainer {
         .whileTrue(m_IncreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kBack.value)
         .whileTrue(m_DecreaseMaxSpeedCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+        .onTrue(m_InvertDriveCommand);
 
     new JoystickButton(m_armController2, XboxController.Button.kX.value)
         .whileTrue(m_CloseClawCommand);
@@ -194,8 +199,11 @@ public class RobotContainer {
   }
 
   public void initTeleop() {
-    // Set the default tank command to DriveCommand
-    m_Tank.setDefaultCommand(m_DriveCommand);
+    if(inverted){
+      m_Tank.setDefaultCommand(m_InvertDriveCommand);
+    } else{
+      m_Tank.setDefaultCommand(m_DriveCommand);
+    }
     m_Turret.setDefaultCommand(m_MoveArmXCommand);
     m_Arm.setDefaultCommand(m_MoveArmYCommand);
   }
