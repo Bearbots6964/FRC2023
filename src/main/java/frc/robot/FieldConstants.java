@@ -42,7 +42,8 @@ public final class FieldConstants {
         // Region dimensions
         public static final double innerX = 0.0;
         public static final double midX = Units.inchesToMeters(132.375); // Tape to the left of charging station
-        public static final double outerX = Units.inchesToMeters(193.25); // Tape to the right of charging station
+        public static final double outerX = Units.inchesToMeters(193.25); // Tape to the right of charging
+                                                                          // station
         public static final double leftY = Units.feetToMeters(18.0);
         public static final double midY = leftY - Units.inchesToMeters(59.39) + tapeWidth;
         public static final double rightY = 0.0;
@@ -84,7 +85,8 @@ public final class FieldConstants {
     public static final class Grids {
         // X layout
         public static final double outerX = Units.inchesToMeters(54.25);
-        public static final double lowX = outerX - (Units.inchesToMeters(14.25) / 2.0); // Centered when under cube
+        public static final double lowX = outerX - (Units.inchesToMeters(14.25) / 2.0); // Centered when under
+                                                                                        // cube
                                                                                         // nodes
         public static final double midX = outerX - Units.inchesToMeters(22.75);
         public static final double highX = outerX - Units.inchesToMeters(39.75);
@@ -138,13 +140,15 @@ public final class FieldConstants {
                 midTranslations[i] = new Translation2d(midX, nodeY[i]);
                 mid3dTranslations[i] = new Translation3d(midX, nodeY[i], isCube ? midCubeZ : midConeZ);
                 highTranslations[i] = new Translation2d(highX, nodeY[i]);
-                high3dTranslations[i] = new Translation3d(highX, nodeY[i], isCube ? highCubeZ : highConeZ);
+                high3dTranslations[i] = new Translation3d(highX, nodeY[i],
+                        isCube ? highCubeZ : highConeZ);
             }
         }
 
         // Complex low layout (shifted to account for cube vs cone rows and wide edge
         // nodes)
-        public static final double complexLowXCones = outerX - Units.inchesToMeters(16.0) / 2.0; // Centered X under
+        public static final double complexLowXCones = outerX - Units.inchesToMeters(16.0) / 2.0; // Centered X
+                                                                                                 // under
                                                                                                  // cone nodes
         public static final double complexLowXCubes = lowX; // Centered X under cube nodes
         public static final double complexLowOuterYOffset = nodeY[0]
@@ -187,7 +191,8 @@ public final class FieldConstants {
         public static final double rightY = leftY - width;
         public static final Translation2d[] regionCorners = new Translation2d[] {
                 new Translation2d(
-                        midX, rightY), // Start at lower left next to border with opponent community
+                        midX, rightY), // Start at lower left next to border with opponent
+                                       // community
                 new Translation2d(midX, midY),
                 new Translation2d(outerX, midY),
                 new Translation2d(outerX, leftY),
@@ -205,14 +210,17 @@ public final class FieldConstants {
         public static final double singleSubstationWidth = Units.inchesToMeters(22.75);
         public static final double singleSubstationLeftX = FieldConstants.fieldLength - doubleSubstationLength
                 - Units.inchesToMeters(88.77);
-        public static final double singleSubstationCenterX = singleSubstationLeftX + (singleSubstationWidth / 2.0);
+        public static final double singleSubstationCenterX = singleSubstationLeftX
+                + (singleSubstationWidth / 2.0);
         public static final double singleSubstationRightX = singleSubstationLeftX + singleSubstationWidth;
-        public static final Translation2d singleSubstationTranslation = new Translation2d(singleSubstationCenterX,
+        public static final Translation2d singleSubstationTranslation = new Translation2d(
+                singleSubstationCenterX,
                 leftY);
 
         public static final double singleSubstationHeight = Units.inchesToMeters(18.0);
         public static final double singleSubstationLowZ = Units.inchesToMeters(27.125);
-        public static final double singleSubstationCenterZ = singleSubstationLowZ + (singleSubstationHeight / 2.0);
+        public static final double singleSubstationCenterZ = singleSubstationLowZ
+                + (singleSubstationHeight / 2.0);
         public static final double singleSubstationHighZ = singleSubstationLowZ + singleSubstationHeight;
     }
 
@@ -242,28 +250,32 @@ public final class FieldConstants {
                                             Units.inchesToMeters(610.125),
                                             Units.inchesToMeters(43.5),
                                             Units.inchesToMeters(19.25),
-                                            new Rotation3d(0.0, 0.0, Math.PI))),
+                                            new Rotation3d(0.0, 0.0,
+                                                    Math.PI))),
                             new AprilTag(
                                     2,
                                     new Pose3d(
                                             Units.inchesToMeters(610.375),
                                             Units.inchesToMeters(109.5),
                                             Units.inchesToMeters(19.25),
-                                            new Rotation3d(0.0, 0.0, Math.PI))),
+                                            new Rotation3d(0.0, 0.0,
+                                                    Math.PI))),
                             new AprilTag(
                                     3,
                                     new Pose3d(
                                             Units.inchesToMeters(610.0),
                                             Units.inchesToMeters(176.0),
                                             Units.inchesToMeters(19.25),
-                                            new Rotation3d(0.0, 0.0, Math.PI))),
+                                            new Rotation3d(0.0, 0.0,
+                                                    Math.PI))),
                             new AprilTag(
                                     4,
                                     new Pose3d(
                                             Units.inchesToMeters(635.375),
                                             Units.inchesToMeters(272.0),
                                             Units.inchesToMeters(27.25),
-                                            new Rotation3d(0.0, 0.0, Math.PI))),
+                                            new Rotation3d(0.0, 0.0,
+                                                    Math.PI))),
                             new AprilTag(
                                     5,
                                     new Pose3d(
@@ -302,28 +314,32 @@ public final class FieldConstants {
                                             Units.inchesToMeters(610.77),
                                             Grids.nodeY[1],
                                             Units.inchesToMeters(18.22),
-                                            new Rotation3d(0.0, 0.0, Math.PI))),
+                                            new Rotation3d(0.0, 0.0,
+                                                    Math.PI))),
                             new AprilTag(
                                     2,
                                     new Pose3d(
                                             Units.inchesToMeters(610.77),
                                             Grids.nodeY[4],
                                             Units.inchesToMeters(18.22),
-                                            new Rotation3d(0.0, 0.0, Math.PI))),
+                                            new Rotation3d(0.0, 0.0,
+                                                    Math.PI))),
                             new AprilTag(
                                     3,
                                     new Pose3d(
                                             Units.inchesToMeters(610.77),
                                             Grids.nodeY[7],
                                             Units.inchesToMeters(18.22),
-                                            new Rotation3d(0.0, 0.0, Math.PI))),
+                                            new Rotation3d(0.0, 0.0,
+                                                    Math.PI))),
                             new AprilTag(
                                     4,
                                     new Pose3d(
                                             Units.inchesToMeters(636.96),
                                             LoadingZone.doubleSubstationCenterY,
                                             Units.inchesToMeters(27.38),
-                                            new Rotation3d(0.0, 0.0, Math.PI))),
+                                            new Rotation3d(0.0, 0.0,
+                                                    Math.PI))),
                             new AprilTag(
                                     5,
                                     new Pose3d(

@@ -188,9 +188,11 @@ public class Tank extends SubsystemBase {
     // implement odometry
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(gyro.getAngle()),
         Units.inchesToMeters(
-            (leftFront.getEncoder().getPosition() / 10) * (leftFront.getEncoder().getPosition() / 10) * Math.PI),
+            (leftFront.getEncoder().getPosition() / 10) * (leftFront.getEncoder().getPosition() / 10)
+                * Math.PI),
         Units.inchesToMeters(
-            (rightFront.getEncoder().getPosition() / 10) * (rightFront.getEncoder().getPosition() / 10) * Math.PI));
+            (rightFront.getEncoder().getPosition() / 10) * (rightFront.getEncoder().getPosition() / 10)
+                * Math.PI));
 
     field2d = new Field2d();
     SmartDashboard.putData(field2d);
@@ -231,9 +233,11 @@ public class Tank extends SubsystemBase {
 
     odometry.update(Rotation2d.fromDegrees(gyro.getAngle()),
         Units.inchesToMeters(
-            (leftFront.getEncoder().getPosition() / 10) * (leftFront.getEncoder().getPosition() / 10) * Math.PI),
+            (leftFront.getEncoder().getPosition() / 10) * (leftFront.getEncoder().getPosition() / 10)
+                * Math.PI),
         Units.inchesToMeters(
-            (rightFront.getEncoder().getPosition() / 10) * (rightFront.getEncoder().getPosition() / 10) * Math.PI));
+            (rightFront.getEncoder().getPosition() / 10) * (rightFront.getEncoder().getPosition() / 10)
+                * Math.PI));
 
     field2d.setRobotPose(odometry.getPoseMeters());
   }
@@ -306,14 +310,11 @@ public class Tank extends SubsystemBase {
 
   /** Change the ramp rate of the motor controllers. */
   public void setRampRate(double rampRate) {
-    try {
-      leftFront.setOpenLoopRampRate(rampRate);
-      leftRear.setOpenLoopRampRate(rampRate);
-      rightFront.setOpenLoopRampRate(rampRate);
-      rightRear.setOpenLoopRampRate(rampRate);
-    } catch (Exception e) {
-      throw e;
-    }
+    leftFront.setOpenLoopRampRate(rampRate);
+    leftRear.setOpenLoopRampRate(rampRate);
+    rightFront.setOpenLoopRampRate(rampRate);
+    rightRear.setOpenLoopRampRate(rampRate);
+
   }
 
   // for some reason -speed is forward. dont ask me why

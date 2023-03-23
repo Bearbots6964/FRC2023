@@ -20,12 +20,14 @@ public class DriveCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    // nothing to do here
+  }
 
   @Override
   public void execute() {
     // double check getMaxSpeed(), might be wrong
-    m_drivebase.arcadeDrive(
+    Tank.arcadeDrive(
         RobotContainer.getDriverControllerLeftStickYAdjusted() * Constants.CanConstants.maxSpeed,
         RobotContainer.getDriverControllerRightStickXAdjusted() * Constants.CanConstants.maxSpeed);
 
@@ -34,7 +36,7 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_drivebase.arcadeDrive(0, 0);
+    Tank.arcadeDrive(0, 0);
   }
 
   @Override

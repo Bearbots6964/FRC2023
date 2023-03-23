@@ -50,6 +50,7 @@ public class RobotContainer {
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
   private final LineupCommand m_LineupCommand = new LineupCommand(m_LineupPID);
 
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -206,5 +207,10 @@ public class RobotContainer {
     m_Tank.setDefaultCommand(m_DriveCommand);
     m_Turret.setDefaultCommand(m_MoveArmXCommand);
     m_Arm.setDefaultCommand(m_MoveArmYCommand);
+  }
+
+  public void initTest() {
+    // Set the default tank command to DriveCommand
+    
   }
 }

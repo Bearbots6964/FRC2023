@@ -14,27 +14,27 @@ public class TestDrivebaseCommand extends InstantCommand {
 
   @Override
   public void execute() {
-    m_drivebase.arcadeDrive(1, 0);
+    Tank.arcadeDrive(1, 0);
     Timer.delay(1);
-    m_drivebase.arcadeDrive(0, 0);
+    Tank.arcadeDrive(0, 0);
     Timer.delay(1);
-    m_drivebase.arcadeDrive(-1, 0);
+    Tank.arcadeDrive(-1, 0);
     Timer.delay(1);
-    m_drivebase.arcadeDrive(0, 0);
+    Tank.arcadeDrive(0, 0);
     Timer.delay(1);
-    m_drivebase.arcadeDrive(0, 1);
+    Tank.arcadeDrive(0, 1);
     Timer.delay(1);
-    m_drivebase.arcadeDrive(0, 0);
+    Tank.arcadeDrive(0, 0);
     Timer.delay(1);
-    m_drivebase.arcadeDrive(0, -1);
+    Tank.arcadeDrive(0, -1);
     Timer.delay(1);
-    m_drivebase.arcadeDrive(0, 0);
+    Tank.arcadeDrive(0, 0);
     Timer.delay(1);
   }
 
   @Override
   public void end(boolean interrupted) {
-    m_drivebase.arcadeDrive(0, 0);
+    Tank.arcadeDrive(0, 0);
   }
 
   @Override

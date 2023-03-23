@@ -18,18 +18,20 @@ public class FineDriveCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    // nothing to do here
+  }
 
   @Override
   public void execute() {
     // double check getMaxSpeed(), might be wrong
-    m_drivebase.arcadeDrive(
+    Tank.arcadeDrive(
         RebindHat.ControllerToYAxis() * 0.43, RebindHat.ControllerToXAxis() * 0.43);
   }
 
   @Override
   public void end(boolean interrupted) {
-    m_drivebase.arcadeDrive(0, 0);
+    Tank.arcadeDrive(0, 0);
   }
 
   @Override
