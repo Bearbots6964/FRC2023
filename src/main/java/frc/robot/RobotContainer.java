@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import io.github.oblarg.oblog.Logger;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -80,6 +81,8 @@ public class RobotContainer {
     tab.add(m_Tank);
     tab.add(m_Turret);
     tab.add(m_claw);
+
+    Logger.configureLoggingAndConfig(this, false);
   }
 
   /**
@@ -213,5 +216,9 @@ public class RobotContainer {
   public void initTest() {
     // Set the default tank command to DriveCommand
     
+  }
+
+  public void robotPeriodic() {
+    Logger.updateEntries();
   }
 }

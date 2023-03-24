@@ -65,6 +65,8 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
+    implementation "com.github.Oblarg:Oblog:5.1.0"
+
     
 
 }
@@ -92,6 +94,10 @@ wpi.java.configureTestTasks(test)
 // Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
+}
+
+repositories {
+  maven { url 'https://jitpack.io' }
 }
 
 //Configure repositorie
