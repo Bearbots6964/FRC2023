@@ -16,7 +16,7 @@ import frc.robot.Interfaces.*;
 import java.util.Map;
 
 public class Claw extends SubsystemBase {
-  private CANSparkMax clawMotor;
+  public CANSparkMax clawMotor;
 
   private GenericEntry stallWidget;
   private GenericEntry freeWidget;
@@ -27,8 +27,9 @@ public class Claw extends SubsystemBase {
   public Claw() {
     clawMotor = new CANSparkMax(8, MotorType.kBrushless);
     clawMotor.setIdleMode(IdleMode.kBrake);
-    clawMotor.setSmartCurrentLimit(14, 11);
+    clawMotor.setSmartCurrentLimit(18, 11);
     clawMotor.burnFlash();
+    addChild("Claw Motor", clawMotor);
 
     Shuffleboard.getTab("Motors").add("Claw", clawMotor);
 

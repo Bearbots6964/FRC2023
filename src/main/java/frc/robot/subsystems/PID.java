@@ -4,13 +4,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-// TODO@totbas1 - Have PID require either mecanum OR tank -- update in the initializer for each
-// command to the base to correspond to the selected one
-// In the meantime, I'll try not to touch this file :-)
 
 public class PID extends SubsystemBase {
   public AHRS gyro;
@@ -32,9 +29,13 @@ public class PID extends SubsystemBase {
     toleranceDeg = 0.5;
     iLimit = 2.0;
     gyro = new AHRS(SPI.Port.kMXP);
+    addChild("Gyro", gyro);
+    Shuffleboard.getTab("Driver").add("Gyro", gyro);
 
     initPitch = gyro.getPitch();
     pidController = new PIDController(P, I, D);
+
+    addChild("PID Controller", pidController);
   }
 
   @Override

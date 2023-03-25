@@ -21,6 +21,7 @@ public class Turret extends SubsystemBase {
     xMotor.setIdleMode(IdleMode.kBrake);
     xMotor.setSmartCurrentLimit(5, 10);
     xMotor.burnFlash();
+    addChild("Turret Motor", xMotor);
     Shuffleboard.getTab("Motors").add("Turret", xMotor);
   }
 

@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import com.revrobotics.CANSparkMax.IdleMode;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -17,8 +18,9 @@ public class BalanceCommand extends CommandBase {
   private final PID pid;
 
   private final Tank driveBase;
-  private double initPitch, max;
+  private double initPitch, max, lastTimeStamp, lastError, pitchOffset;
   private boolean onRamp;
+  private Timer timer;
 
   public BalanceCommand(PID m_pid, Tank m_driveBase) {
     pid = m_pid;
@@ -37,6 +39,10 @@ public class BalanceCommand extends CommandBase {
     pid.resetPitch();
     initPitch = pid.gyro.getPitch();
     SmartDashboard.putNumber("init pitch", initPitch);
+
+    // timer.start();
+    lastTimeStamp = Timer.getFPGATimestamp();
+
     max = 0;
     onRamp = false;
   }
@@ -44,7 +50,9 @@ public class BalanceCommand extends CommandBase {
   // avoid while loops inside execute
   @Override
   public void execute() {
-    double pitchOffset = pid.gyro.getPitch() - initPitch;
+    double errorRate = (pitchOffset - lastError) / (Timer.getFPGATimestamp() - lastTimeStamp);
+
+    double pitchOffset = initPitch - pid.gyro.getPitch();
     SmartDashboard.putNumber("pitch offset", pitchOffset);
 
     if (pitchOffset > max) {
@@ -52,7 +60,7 @@ public class BalanceCommand extends CommandBase {
     }
     SmartDashboard.putNumber("max offset", max);
 
-    if (pitchOffset < 15.7 && !onRamp) {
+    if (pitchOffset < 17 && !onRamp) {
       driveBase.setAllMotors(0.5);
       SmartDashboard.putBoolean("onRamp", onRamp);
 
@@ -63,13 +71,15 @@ public class BalanceCommand extends CommandBase {
       if (Math.abs(pitchOffset) < 2) {
         driveBase.setAllMotors(0);
       } else {
-        driveBase.setAllMotors(
-            0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
+        driveBase.setAllMotors(Constants.OperatorConstants.Pconstant * (pitchOffset));
 
         SmartDashboard.putNumber(
-            "motor speed", 0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
+            "motor speed", Constants.OperatorConstants.Pconstant * (pitchOffset));
       }
     }
+
+    lastError = pitchOffset;
+    lastTimeStamp = Timer.getFPGATimestamp();
   }
 
   @Override

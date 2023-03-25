@@ -7,9 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
 
-
 public class AutoCommand extends SequentialCommandGroup {
-  public AutoCommand(PID m_pid, Tank m_driveBase) {
-    addCommands(new BalanceCommand(m_pid, m_driveBase));
+  public AutoCommand(PID m_pid, Tank m_driveBase, Claw m_claw, Arm m_arm) {
+    addCommands(null);
+    // new PlaceCubeFirstLevelCommand(m_driveBase, m_claw, m_arm)
+    // new PlaceConeSecondLevelCommand(m_driveBase, m_arm)
+    // new BalanceCommand(m_pid, m_driveBase)
   }
 }

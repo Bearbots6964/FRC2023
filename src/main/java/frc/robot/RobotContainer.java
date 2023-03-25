@@ -20,6 +20,8 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private static double lastAxis;
+
   public static final Joystick m_armController = new Joystick(0);
   public static final XboxController m_armController2 = new XboxController(1);
   public static final XboxController m_driverController = new XboxController(2);
@@ -39,9 +41,9 @@ public class RobotContainer {
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final PlaceGamePieceCommand m_PlaceGamePieceCommand =
-      new PlaceGamePieceCommand(m_Tank, m_claw, m_Arm);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank);
+  private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand =
+      new PlaceConeSecondLevelCommand(m_Tank, m_Arm);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_claw, m_Arm);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
       new IncreaseMaxSpeedCommand(m_Tank);
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand =
@@ -57,12 +59,24 @@ public class RobotContainer {
 
     // add a few things to the shuffleboard
     // joysticks
-    Shuffleboard.getTab("Driver").add("Left Stick Y", m_driverController.getRawAxis(1));
-    Shuffleboard.getTab("Driver").add("Right Stick X", m_driverController.getRawAxis(4));
-    Shuffleboard.getTab("Driver")
-        .add("Left Stick Y Adjusted", getDriverControllerLeftStickYAdjusted());
-    Shuffleboard.getTab("Driver")
-        .add("Right Stick X Adjusted", getDriverControllerRightStickXAdjusted());
+    var tab = Shuffleboard.getTab("Subsystems");
+    tab.add(m_Arm);
+    tab.add(m_AutoCommand);
+    tab.add(m_BalanceCommand);
+    tab.add(m_CloseClawCommand);
+    tab.add(m_DecreaseMaxSpeedCommand);
+    tab.add(m_DriveCommand);
+    tab.add(m_FineDriveCommand);
+    tab.add(m_IncreaseMaxSpeedCommand);
+    tab.add(m_MoveArmYCommand);
+    tab.add(m_PDP);
+
+    tab.add(m_PID);
+    tab.add(m_PlaceConeSecondLevelCommand);
+    tab.add(m_SwitchIdleModeCommmand);
+    tab.add(m_Tank);
+    tab.add(m_Turret);
+    tab.add(m_claw);
   }
 
   /**
@@ -73,9 +87,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, XboxController.Button.kY.value)
         .whileTrue(m_BalanceCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kA.value)
-        .whileTrue(m_PlaceGamePieceCommand);
-
     new JoystickButton(m_driverController, XboxController.Button.kStart.value)
         .whileTrue(m_IncreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kBack.value)
@@ -83,13 +94,16 @@ public class RobotContainer {
     new JoystickButton(m_driverController, XboxController.Button.kX.value)
         .whileTrue(m_SwitchIdleModeCommmand);
 
-    new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
-        .whileTrue(m_CloseClawCommand);
-    new JoystickButton(m_armController2, XboxController.Button.kRightBumper.value)
+    new JoystickButton(m_armController2, XboxController.Button.kX.value)
         .whileTrue(m_OpenClawCommand);
-
+    new JoystickButton(m_armController2, XboxController.Button.kY.value)
+        .whileTrue(m_CloseClawCommand);
     new JoystickButton(m_armController2, XboxController.Button.kA.value)
         .whileTrue(m_FineDriveCommand);
+    // new JoystickButton(m_armController2,
+    // XboxController.Button.kY.value).whileTrue(m_PlaceCubeFirstLevelCommand);
+    // new JoystickButton(m_armController2,
+    // XboxController.Button.kX.value).whileTrue(m_PlaceConeSecondLevelCommand);
   }
 
   public static double getDriverControllerLeftStickY() {
