@@ -90,7 +90,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController, XboxController.Button.kBack.value)
         .whileTrue(m_DecreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kX.value)
-        .onTrue(m_InvertDriveCommand);
+        .toggleOnTrue(m_InvertDriveCommand);
 
     new JoystickButton(m_armController2, XboxController.Button.kX.value)
         .whileTrue(m_CloseClawCommand);
