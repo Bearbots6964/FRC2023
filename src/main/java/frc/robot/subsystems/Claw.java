@@ -27,7 +27,7 @@ public class Claw extends SubsystemBase {
   public Claw() {
     clawMotor = new CANSparkMax(8, MotorType.kBrushless);
     clawMotor.setIdleMode(IdleMode.kBrake);
-    clawMotor.setSmartCurrentLimit(20, 11);
+    clawMotor.setSmartCurrentLimit(10);
     clawMotor.burnFlash();
     addChild("Claw Motor", clawMotor);
 
@@ -51,20 +51,15 @@ public class Claw extends SubsystemBase {
 
   @Override
   public void periodic() {
-    double freeLimit;
-    double stallLimit;
-    stallLimit = stallWidget.getDouble(10);
-    freeLimit = freeWidget.getDouble(11);
-
-    clawMotor.setSmartCurrentLimit((int) stallLimit, (int) freeLimit);
+    
   }
 
   public void closeClaw() {
-    clawMotor.set(0.75);
+    clawMotor.set(0.7);
   }
 
   public void openClaw() {
-    clawMotor.set(-0.5);
+    clawMotor.set(-0.7);
   }
 
   public void stopClaw() {

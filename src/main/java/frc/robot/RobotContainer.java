@@ -29,7 +29,6 @@ public class RobotContainer {
   private final Arm m_Arm = new Arm();
   private final Claw m_claw = new Claw();
   private final Tank m_Tank = new Tank();
-  private final Turret m_Turret = new Turret();
   private final PID m_PID = new PID();
   private final PDP m_PDP = new PDP();
   private final LineupPID m_LineupPID = new LineupPID();
@@ -38,7 +37,7 @@ public class RobotContainer {
   // INSTANTIATES ALL COMMANDS
   private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
   private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
-  private final MoveArmXCommand m_MoveArmXCommand = new MoveArmXCommand(m_Turret);
+
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
@@ -79,7 +78,6 @@ public class RobotContainer {
     tab.add(m_PID);
     tab.add(m_PlaceConeSecondLevelCommand);
     tab.add(m_Tank);
-    tab.add(m_Turret);
     tab.add(m_claw);
 
     Logger.configureLoggingAndConfig(this, false);
@@ -209,7 +207,7 @@ public class RobotContainer {
   public void initTeleop() {
     // Set the default tank command to DriveCommand
     m_Tank.setDefaultCommand(m_DriveCommand);
-    m_Turret.setDefaultCommand(m_MoveArmXCommand);
+
     m_Arm.setDefaultCommand(m_MoveArmYCommand);
   }
 

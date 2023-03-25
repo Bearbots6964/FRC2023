@@ -3,6 +3,10 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2023.4.2"
 }
 
+repositories {
+  maven { url 'https://jitpack.io' }
+  jcenter()
+}
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -66,7 +70,9 @@ dependencies {
     simulationRelease wpi.sim.enableRelease()
 
     implementation "com.github.Oblarg:Oblog:5.1.0"
-
+    
+    
+    implementation 'org.json:json:20211205'
     
 
 }
@@ -96,9 +102,7 @@ tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
 }
 
-repositories {
-  maven { url 'https://jitpack.io' }
-}
+
 
 //Configure repositorie
 
