@@ -5,25 +5,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Claw;
 
-public class OpenClawCommand extends CommandBase {
+public class MoveClawCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Claw m_subsystem;
 
-  public OpenClawCommand(Claw subsystem) {
+  public MoveClawCommand(Claw subsystem) {
     m_subsystem = subsystem;
     addRequirements(subsystem);
   }
 
   @Override
-  public void initialize() {
-    // no initialization needed
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
-    m_subsystem.openClaw();
+    if(Math.abs(RobotContainer.getControllerLeftTrigger()) < 0.2){
+        m_subsystem.clawMotor.set(RobotContainer.getControllerRightTrigger() * 0.7);
+    } else{
+        m_subsystem.clawMotor.set(-RobotContainer.getControllerLeftTrigger() * 0.7);
+    }
   }
 
   @Override

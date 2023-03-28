@@ -150,10 +150,10 @@ public class Tank extends SubsystemBase {
     maxSpeed = Constants.CanConstants.maxSpeed;
 
     // set the current limits for all four motors
-    leftFront.setSmartCurrentLimit(40, 60);
-    leftRear.setSmartCurrentLimit(40, 60);
-    rightFront.setSmartCurrentLimit(40, 60);
-    rightRear.setSmartCurrentLimit(40, 60);
+    leftFront.setSmartCurrentLimit(40, 50);
+    leftRear.setSmartCurrentLimit(40, 50);
+    rightFront.setSmartCurrentLimit(40, 50);
+    rightRear.setSmartCurrentLimit(40, 50);
 
     tankLayout = Shuffleboard.getTab("Config")
         .getLayout("Tank", BuiltInLayouts.kList)

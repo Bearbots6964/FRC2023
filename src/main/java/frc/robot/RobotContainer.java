@@ -21,27 +21,28 @@ import io.github.oblarg.oblog.Logger;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  public static boolean inverted = false;
+
   public static final Joystick m_armController = new Joystick(0);
   public static final XboxController m_armController2 = new XboxController(1);
   public static final XboxController m_driverController = new XboxController(2);
 
   // INSTANTIATES ALL SUBSYSTEMS
   private final Arm m_Arm = new Arm();
-  private final Claw m_claw = new Claw();
+  private final Claw m_Claw = new Claw();
   private final Tank m_Tank = new Tank();
   private final PID m_PID = new PID();
   private final PDP m_PDP = new PDP();
-  private final LineupPID m_LineupPID = new LineupPID();
+
   private final Vision m_Vision = new Vision();
 
   // INSTANTIATES ALL COMMANDS
-  private final OpenClawCommand m_OpenClawCommand = new OpenClawCommand(m_claw);
-  private final CloseClawCommand m_CloseClawCommand = new CloseClawCommand(m_claw);
-
+  private final MoveClawCommand m_MoveClawCommand = new MoveClawCommand(m_Claw);
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_claw, m_Arm);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_Claw, m_Arm);
+  private final InvertDriveCommand m_InvertDriveCommand = new InvertDriveCommand(m_Tank, this);
   private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand =
       new PlaceConeSecondLevelCommand(m_Tank, m_Arm);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
@@ -49,7 +50,7 @@ public class RobotContainer {
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand =
       new DecreaseMaxSpeedCommand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
-  private final LineupCommand m_LineupCommand = new LineupCommand(m_LineupPID);
+
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -63,22 +64,20 @@ public class RobotContainer {
     tab.add(m_Arm);
     tab.add(m_AutoCommand);
     tab.add(m_BalanceCommand);
-    tab.add(m_CloseClawCommand);
     tab.add(m_DecreaseMaxSpeedCommand);
     tab.add(m_DriveCommand);
     tab.add(m_FineDriveCommand);
     tab.add(m_IncreaseMaxSpeedCommand);
     tab.add(m_MoveArmYCommand);
     tab.add(m_PDP);
-    tab.add(m_OpenClawCommand);
-    tab.add(m_LineupPID);
-    tab.add(m_LineupCommand);
+
+
 
 
     tab.add(m_PID);
     tab.add(m_PlaceConeSecondLevelCommand);
     tab.add(m_Tank);
-    tab.add(m_claw);
+    tab.add(m_Claw);
 
     Logger.configureLoggingAndConfig(this, false);
   }
@@ -95,13 +94,13 @@ public class RobotContainer {
         .whileTrue(m_IncreaseMaxSpeedCommand);
     new JoystickButton(m_driverController, XboxController.Button.kBack.value)
         .whileTrue(m_DecreaseMaxSpeedCommand);
-    new JoystickButton(m_driverController, XboxController.Button.kA.value)
-        .whileTrue(m_LineupCommand);
+    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+        .toggleOnTrue(m_InvertDriveCommand);
 
-    new JoystickButton(m_armController2, XboxController.Button.kX.value)
-        .whileTrue(m_CloseClawCommand);
-    new JoystickButton(m_armController2, XboxController.Button.kY.value)
-        .whileTrue(m_OpenClawCommand);
+    // new JoystickButton(m_armController2, XboxController.Button.kX.value)
+    //     .whileTrue(m_CloseClawCommand);
+    // new JoystickButton(m_armController2, XboxController.Button.kY.value)
+    //     .whileTrue(m_OpenClawCommand);
     new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_FineDriveCommand);
     new JoystickButton(m_armController2, XboxController.Button.kB.value)
@@ -183,17 +182,17 @@ public class RobotContainer {
     return axis;
   }
 
-  public static double getJoystickArmY() {
-    double axis = m_armController.getRawAxis(1);
-    if (Math.abs(axis) < 0.15) {
+  public static double getControllerRightTrigger() {
+    double axis = m_armController2.getRightTriggerAxis();
+    if (Math.abs(axis) < 0.01) {
       axis = 0;
     }
     return axis;
   }
 
-  public static double getJoystickArmTwist() {
-    double axis = m_armController.getRawAxis(2);
-    if (Math.abs(axis) < 0.15) {
+  public static double getControllerLeftTrigger() {
+    double axis = m_armController2.getLeftTriggerAxis();
+    if (Math.abs(axis) < 0.01) {
       axis = 0;
     }
     return axis;
@@ -205,10 +204,13 @@ public class RobotContainer {
   }
 
   public void initTeleop() {
-    // Set the default tank command to DriveCommand
-    m_Tank.setDefaultCommand(m_DriveCommand);
-
+    if(inverted){
+      m_Tank.setDefaultCommand(m_InvertDriveCommand);
+    } else{
+      m_Tank.setDefaultCommand(m_DriveCommand);
+    }
     m_Arm.setDefaultCommand(m_MoveArmYCommand);
+    m_Claw.setDefaultCommand(m_MoveClawCommand);
   }
 
   public void initTest() {

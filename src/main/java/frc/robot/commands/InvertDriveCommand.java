@@ -7,36 +7,41 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
-public class DriveCommand extends CommandBase {
+public class InvertDriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank m_drivebase;
+  private final RobotContainer robot;
 
-  public DriveCommand(Tank subsystem) {
+  public InvertDriveCommand(Tank subsystem, RobotContainer robot) {
     m_drivebase = subsystem;
+    this.robot = robot;
+
     addRequirements(m_drivebase);
   }
 
   @Override
   public void initialize() {
-    // nothing to do here
+    RobotContainer.inverted = true;
+    robot.initTeleop();
   }
 
   @Override
   public void execute() {
     // double check getMaxSpeed(), might be wrong
-    Tank.arcadeDrive(
-        RobotContainer.getDriverControllerLeftStickYAdjusted() * Constants.CanConstants.maxSpeed,
+    m_drivebase.arcadeDrive(
+        -RobotContainer.getDriverControllerLeftStickYAdjusted() * Constants.CanConstants.maxSpeed,
         RobotContainer.getDriverControllerRightStickXAdjusted() * 0.75);
-
-    SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
   }
 
   @Override
   public void end(boolean interrupted) {
-    Tank.arcadeDrive(0, 0);
+    m_drivebase.arcadeDrive(0, 0);
+    RobotContainer.inverted = false;
+    robot.initTeleop();
   }
 
   @Override
