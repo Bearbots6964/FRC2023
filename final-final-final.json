@@ -9,7 +9,7 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
-        "titleType": 2,
+        "titleType": 1,
         "tiles": {
           "0,0": {
             "size": [
@@ -38,7 +38,7 @@
               "Visuals/Show voltage and current values": true
             }
           },
-          "26,0": {
+          "27,0": {
             "size": [
               5,
               8
@@ -88,14 +88,27 @@
                   "Visuals/Num tick marks": 5,
                   "Visuals/Show text": true,
                   "Visuals/Orientation": "HORIZONTAL"
+                },
+                {
+                  "_type": "Number Bar",
+                  "_source0": "network_table:///Shuffleboard/Config/Tank/Max Speed",
+                  "_title": "Max Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": 0.0,
+                  "Range/Max": 1.0,
+                  "Range/Center": 0.0,
+                  "Visuals/Num tick marks": 5,
+                  "Visuals/Show text": true,
+                  "Visuals/Orientation": "HORIZONTAL"
                 }
               ]
             }
           },
           "8,0": {
             "size": [
-              9,
-              8
+              16,
+              14
             ],
             "content": {
               "_type": "Camera Stream",
@@ -106,37 +119,16 @@
               "Crosshair/Show crosshair": true,
               "Crosshair/Crosshair color": "#FFFFFFFF",
               "Controls/Show controls": true,
-              "Controls/Rotation": "HALF",
+              "Controls/Rotation": "NONE",
               "compression": 35.0,
               "fps": 15,
               "imageWidth": 640,
               "imageHeight": 480
             }
           },
-          "17,0": {
+          "25,8": {
             "size": [
-              9,
-              8
-            ],
-            "content": {
-              "_type": "Camera Stream",
-              "_source0": "camera_server://limelight",
-              "_title": "limelight",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Crosshair/Show crosshair": true,
-              "Crosshair/Crosshair color": "#FFFFFFFF",
-              "Controls/Show controls": true,
-              "Controls/Rotation": "HALF",
-              "compression": 27.0,
-              "fps": -1,
-              "imageWidth": -1,
-              "imageHeight": -1
-            }
-          },
-          "12,8": {
-            "size": [
-              19,
+              7,
               7
             ],
             "content": {
@@ -154,38 +146,6 @@
               "Y-axis/Unit": "v",
               "Visible data/FMSInfo/FMSControlData": true,
               "Visible data/Shuffleboard/PDP/PDP/Voltage": true
-            }
-          },
-          "9,10": {
-            "size": [
-              3,
-              3
-            ],
-            "content": {
-              "_type": "Number Bar",
-              "_source0": "network_table:///Shuffleboard/Config/Tank/Max Speed",
-              "_title": "Shuffleboard/Config/Tank/Max Speed",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Range/Min": 0.0,
-              "Range/Max": 1.0,
-              "Range/Center": 0.0,
-              "Visuals/Num tick marks": 5,
-              "Visuals/Show text": true,
-              "Visuals/Orientation": "HORIZONTAL"
-            }
-          },
-          "9,8": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///FMSInfo/FMSControlData",
-              "_title": "/FMSInfo/FMSControlData",
-              "_glyph": 148,
-              "_showGlyph": false
             }
           }
         }
@@ -455,6 +415,35 @@
               "_type": "Network Table Tree",
               "_source0": "network_table:///FMSInfo",
               "_title": "/FMSInfo",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "42,2": {
+            "size": [
+              5,
+              1
+            ],
+            "content": {
+              "_type": "Field",
+              "_source0": "network_table:///SmartDashboard/Field",
+              "_title": "Field",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Game/Game": "A2023_Charged_Up",
+              "Visuals/Robot Icon Size": 50.0,
+              "Visuals/Show Outside Circles": false
+            }
+          },
+          "34,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/rightTrigger",
+              "_title": "rightTrigger",
               "_glyph": 148,
               "_showGlyph": false
             }

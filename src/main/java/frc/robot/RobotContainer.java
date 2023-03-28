@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -51,6 +53,7 @@ public class RobotContainer {
       new DecreaseMaxSpeedCommand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
 
+  private GenericEntry timeWidget = Shuffleboard.getTab("stuff").add("time", 0).withWidget("Match Time").getEntry();  
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -220,5 +223,6 @@ public class RobotContainer {
 
   public void robotPeriodic() {
     Logger.updateEntries();
+    timeWidget.setDouble(DriverStation.getMatchTime());
   }
 }
