@@ -41,10 +41,10 @@ public class RobotContainer {
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_Claw, m_Arm);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_Arm, m_Claw);
   private final InvertDriveCommand m_InvertDriveCommand = new InvertDriveCommand(m_Tank, this);
   private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand =
-      new PlaceConeSecondLevelCommand(m_Tank, m_Arm, m_claw);
+      new PlaceConeSecondLevelCommand(m_Tank, m_Arm, m_Claw);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
       new IncreaseMaxSpeedCommand(m_Tank);
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand =
@@ -119,9 +119,9 @@ public class RobotContainer {
   public static double getDriverControllerLeftStickYAdjusted() {
     double val = getDriverControllerLeftStickY();
     if (val > 0) {
-      return (val * val + 0.6) / 1.6;
+      return (val * val + 0.3) / 1.3;
     } else if (val < 0) {
-      return -(val * val + 0.6) / 1.6;
+      return -(val * val + 0.3) / 1.3;
     } else {
       return 0;
     }
@@ -138,9 +138,9 @@ public class RobotContainer {
   public static double getDriverControllerRightStickXAdjusted() {
     double val = getDriverControllerRightStickX();
     if (val > 0) {
-      return (val * val + 0.6) / 1.6;
+      return (val * val + 0.3) / 1.3;
     } else if (val < 0) {
-      return -(val * val + 0.6) / 1.6;
+      return -(val * val + 0.3) / 1.3;
     } else {
       return 0;
     }
