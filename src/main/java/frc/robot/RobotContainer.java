@@ -44,7 +44,7 @@ public class RobotContainer {
   private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_Claw, m_Arm);
   private final InvertDriveCommand m_InvertDriveCommand = new InvertDriveCommand(m_Tank, this);
   private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand =
-      new PlaceConeSecondLevelCommand(m_Tank, m_Arm);
+      new PlaceConeSecondLevelCommand(m_Tank, m_Arm, m_claw);
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
       new IncreaseMaxSpeedCommand(m_Tank);
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand =

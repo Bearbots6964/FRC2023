@@ -10,14 +10,15 @@ import frc.robot.subsystems.*;
 public class PlaceConeSecondLevelCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank drive;
-
+  private final Claw claw;
   private final Arm arm;
 
   private boolean firstStep = true;
 
-  public PlaceConeSecondLevelCommand(Tank drive, Arm arm) {
+  public PlaceConeSecondLevelCommand(Tank drive, Arm arm, Claw claw) {
     this.drive = drive;
     this.arm = arm;
+    this.claw = claw;
     addRequirements(drive);
     addRequirements(arm);
   }
@@ -37,6 +38,7 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
   public void execute() {
     if (firstStep) {
       if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 105) {
+        claw.closeClaw();
         arm.armMotor.set(0.4);
       }
 
@@ -48,6 +50,7 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
 
       // go over charge station
       if (Math.abs(drive.getAverageDistance()) < 4.6 && firstStep == false) {
+        claw.stopClaw(); 
         drive.setAllMotors(-0.3); // move back so that cone falls in
         arm.armMotor.set(-0.45);
       }
