@@ -9,7 +9,7 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
-        "titleType": 1,
+        "titleType": 2,
         "tiles": {
           "0,0": {
             "size": [
@@ -146,6 +146,24 @@
               "Y-axis/Unit": "v",
               "Visible data/FMSInfo/FMSControlData": true,
               "Visible data/Shuffleboard/PDP/PDP/Voltage": true
+            }
+          },
+          "24,0": {
+            "size": [
+              3,
+              3
+            ],
+            "content": {
+              "_type": "Match Time",
+              "_source0": "network_table:///Shuffleboard/stuff/time",
+              "_title": "Shuffleboard/stuff/time",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Appearance/Colors on": true,
+              "Appearance/Font size": 60,
+              "Match length/Autonomous length": 15.0,
+              "Match length/Teleop length": 105.0,
+              "Match length/Endgame length": 30.0
             }
           }
         }

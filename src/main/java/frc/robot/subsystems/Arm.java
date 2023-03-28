@@ -24,7 +24,7 @@ public class Arm extends SubsystemBase {
   public Arm() {
     armMotor = new CANSparkMax(7, MotorType.kBrushless);
     armMotor.setIdleMode(IdleMode.kBrake);
-    armMotor.setSmartCurrentLimit(20, 40);
+    armMotor.setSmartCurrentLimit(30, 40);
     armMotor.burnFlash();
     addChild("Arm Motor", armMotor);
 

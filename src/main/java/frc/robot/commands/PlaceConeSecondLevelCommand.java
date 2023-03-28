@@ -37,25 +37,25 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
   @Override
   public void execute() {
     if (firstStep) {
-      if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 105) {
+      if (Math.abs(arm.armMotor.getEncoder().getPosition()) < 115) {
         claw.closeClaw();
         arm.armMotor.set(0.4);
       }
 
-      if (Math.abs(arm.armMotor.getEncoder().getPosition()) >= 105) {
+      if (Math.abs(arm.armMotor.getEncoder().getPosition()) >= 115) {
         firstStep = false;
         arm.armMotor.set(0);
         arm.armMotor.getEncoder().setPosition(0);
       }
 
       // go over charge station
-      if (Math.abs(drive.getAverageDistance()) < 4.6 && firstStep == false) {
+      if (Math.abs(drive.getAverageDistance()) < 4.8 && firstStep == false) {
         claw.stopClaw(); 
         drive.setAllMotors(-0.3); // move back so that cone falls in
         arm.armMotor.set(-0.45);
       }
 
-      if (Math.abs(drive.getAverageDistance()) >= 4.6) {
+      if (Math.abs(drive.getAverageDistance()) >= 4.8) {
         drive.setAllMotors(0);
       }
     }
@@ -75,6 +75,6 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return Math.abs(drive.getAverageDistance()) >= 4.6;
+    return Math.abs(drive.getAverageDistance()) >= 4.8;
   }
 }
