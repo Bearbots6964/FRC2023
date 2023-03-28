@@ -9,8 +9,9 @@ import frc.robot.subsystems.*;
 
 public class AutoCommand extends SequentialCommandGroup {
   public AutoCommand(PID m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
-    addCommands(new PlaceConeSecondLevelCommand(m_driveBase, m_arm, m_claw));
-    addCommands(new BalanceCommand(m_pid, m_driveBase));
+    addCommands(new PlaceConeSecondLevelCommand(m_driveBase, m_arm, m_claw), new BalanceCommand(m_pid, m_driveBase));
+
+    // new BalanceCommand(m_pid, m_driveBase)
     // new PlaceCubeFirstLevelCommand(m_driveBase, m_claw, m_arm)
     // new PlaceConeSecondLevelCommand(m_driveBase, m_arm)
   }

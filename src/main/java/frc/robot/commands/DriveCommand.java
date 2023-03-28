@@ -29,7 +29,7 @@ public class DriveCommand extends CommandBase {
     // double check getMaxSpeed(), might be wrong
     Tank.arcadeDrive(
         RobotContainer.getDriverControllerLeftStickYAdjusted() * Constants.CanConstants.maxSpeed,
-        RobotContainer.getDriverControllerRightStickXAdjusted() * 0.75);
+        RobotContainer.getDriverControllerRightStickXAdjusted() * 0.7);
 
     SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
   }
