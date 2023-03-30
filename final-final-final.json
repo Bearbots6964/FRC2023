@@ -120,32 +120,10 @@
               "Crosshair/Crosshair color": "#FFFFFFFF",
               "Controls/Show controls": true,
               "Controls/Rotation": "NONE",
-              "compression": 35.0,
+              "compression": 27.078429483899882,
               "fps": 15,
               "imageWidth": 640,
               "imageHeight": 480
-            }
-          },
-          "25,8": {
-            "size": [
-              7,
-              7
-            ],
-            "content": {
-              "_type": "Graph",
-              "_source0": "network_table:///FMSInfo/FMSControlData",
-              "_source1": "network_table:///Shuffleboard/PDP/PDP/Voltage",
-              "_title": "Voltage",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Graph/Visible time": 60.0,
-              "Graph/X-axis auto scrolling": true,
-              "Y-axis/Automatic bounds": false,
-              "Y-axis/Upper bound": 13.0,
-              "Y-axis/Lower bound": 6.0,
-              "Y-axis/Unit": "v",
-              "Visible data/FMSInfo/FMSControlData": true,
-              "Visible data/Shuffleboard/PDP/PDP/Voltage": true
             }
           },
           "24,0": {
@@ -498,9 +476,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.199999809265137,
-    "y": -7.199999809265137,
-    "width": 1550.4000244140625,
-    "height": 838.4000244140625
+    "x": -6.400000095367432,
+    "y": 1.600000023841858,
+    "width": 1547.199951171875,
+    "height": 828.7999877929688
   }
 }

@@ -51,16 +51,7 @@ public class Tank extends SubsystemBase {
 
   private ShuffleboardTab motorsTab;
 
-  private GenericEntry leftFrontWidget;
-  private GenericEntry leftRearWidget;
-  private GenericEntry rightFrontWidget;
-  private GenericEntry rightRearWidget;
 
-  private GenericEntry leftWidget;
-  private GenericEntry rightWidget;
-  private GenericEntry allWidget;
-
-  private GenericEntry driveWidget;
 
   private DifferentialDriveOdometry odometry;
 
@@ -155,35 +146,7 @@ public class Tank extends SubsystemBase {
     rightFront.setSmartCurrentLimit(40, 50);
     rightRear.setSmartCurrentLimit(40, 50);
 
-    tankLayout = Shuffleboard.getTab("Config")
-        .getLayout("Tank", BuiltInLayouts.kList)
-        .withSize(1, 4)
-        .withPosition(0, 0);
 
-    // create a new slider widget for the current limits
-    stallWidget = tankLayout.add("Stall Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
-    freeWidget = tankLayout.add("Free Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
-
-    // create a new boolean box widget for the idle mode
-    idleModeWidget = tankLayout.add("Braking Mode", false).withWidget(BuiltInWidgets.kBooleanBox);
-
-    // create a new button widget for the idle mode switch
-    idleModeSwitch = tankLayout
-        .add("Switch Idle Mode", false)
-        .withWidget(BuiltInWidgets.kToggleButton)
-        .getEntry();
-
-    // create a new slider widget for the ramp rate
-    rampRateWidget = tankLayout
-        .add("Ramp Rate", Constants.CanConstants.kRampRate)
-        .withWidget(BuiltInWidgets.kNumberSlider)
-        .getEntry();
-
-    // create a new slider widget for the max speed (don't call getEntry() yet, it
-    // can be changed
-    // by button inputs)
-    maxSpeedWidget = tankLayout.add("Max Speed", maxSpeed).withWidget(BuiltInWidgets.kNumberSlider);
-    maxSpeedEntry = maxSpeedWidget.getEntry();
 
     // implement odometry
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(gyro.getAngle()),
@@ -204,30 +167,6 @@ public class Tank extends SubsystemBase {
     SmartDashboard.putNumber("leftStickY", RobotContainer.getDriverControllerLeftStickY());
     SmartDashboard.putNumber("rightStickX", RobotContainer.getDriverControllerRightStickX());
 
-    // set all four motors to the stall and free limit widget values
-    stallLimit = (int) stallWidget.getDouble(10);
-    freeLimit = (int) freeWidget.getDouble(40);
-
-    leftFront.setSmartCurrentLimit(stallLimit, freeLimit);
-    leftRear.setSmartCurrentLimit(stallLimit, freeLimit);
-    rightFront.setSmartCurrentLimit(stallLimit, freeLimit);
-    rightRear.setSmartCurrentLimit(stallLimit, freeLimit);
-
-    // set the ramp rate to the ramp rate widget value
-    rampRate = rampRateWidget.getDouble(Constants.CanConstants.kRampRate);
-
-    leftFront.setOpenLoopRampRate(rampRate);
-    leftRear.setOpenLoopRampRate(rampRate);
-    rightFront.setOpenLoopRampRate(rampRate);
-    rightRear.setOpenLoopRampRate(rampRate);
-
-    // check if the max speed widget value has changed
-    if (maxSpeed != maxSpeedEntry.getDouble(maxSpeed)) {
-      // set the max speed to the new value
-      maxSpeed = maxSpeedEntry.getDouble(maxSpeed);
-    }
-    // set the widget value to the current max speed
-    maxSpeedEntry.setDouble(maxSpeed);
 
     // i hate my life
 
@@ -253,12 +192,10 @@ public class Tank extends SubsystemBase {
    * @param rotation The rotation speed.
    */
   public static void arcadeDrive(double speed, double rotation) {
-    try {
+    
       drive.arcadeDrive(
           -speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));
-    } catch (Exception e) {
-      throw e;
-    }
+
   }
 
   public void increaseMaxSpeed() {
@@ -319,14 +256,12 @@ public class Tank extends SubsystemBase {
 
   // for some reason -speed is forward. dont ask me why
   public void setAllMotors(double speed) {
-    try {
+    
       leftFront.set(-speed);
       leftRear.set(-speed);
       rightFront.set(-speed);
       rightRear.set(-speed);
-    } catch (Exception e) {
-      throw e;
-    }
+
   }
 
   public double getLeftDistance() {

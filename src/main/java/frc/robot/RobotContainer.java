@@ -52,6 +52,7 @@ public class RobotContainer {
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand =
       new DecreaseMaxSpeedCommand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
+  private final PlaceCubeSecondLevelCommand m_PlaceCubeSecondLevelCommand = new PlaceCubeSecondLevelCommand(m_Tank, m_Arm, m_Claw);
 
   private GenericEntry timeWidget = Shuffleboard.getTab("stuff").add("time", 0).withWidget("Match Time").getEntry();  
 
@@ -73,6 +74,7 @@ public class RobotContainer {
     tab.add(m_IncreaseMaxSpeedCommand);
     tab.add(m_MoveArmYCommand);
     tab.add(m_PDP);
+    tab.add(m_PlaceCubeSecondLevelCommand);
 
 
 
@@ -106,6 +108,8 @@ public class RobotContainer {
     //     .whileTrue(m_OpenClawCommand);
     new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_FineDriveCommand);
+    new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceConeSecondLevelCommand);
+
     // new JoystickButton(m_armController2, XboxController.Button.kB.value)
     //     .whileTrue(m_PlaceConeSecondLevelCommand);
   }

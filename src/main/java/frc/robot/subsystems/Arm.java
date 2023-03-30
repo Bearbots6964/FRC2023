@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,6 +23,9 @@ public class Arm extends SubsystemBase {
 
   public double gearRatio = 87;
 
+
+  public GenericEntry encoderWidget;
+
   public Arm() {
     armMotor = new CANSparkMax(7, MotorType.kBrushless);
     armMotor.setIdleMode(IdleMode.kBrake);
@@ -28,12 +33,18 @@ public class Arm extends SubsystemBase {
     armMotor.burnFlash();
     addChild("Arm Motor", armMotor);
 
+    encoderWidget = Shuffleboard.getTab("Motors").add("Arm Encoder", armMotor.getEncoder().getPosition()).getEntry();
+    
+
     Shuffleboard.getTab("Motors").add("Arm", armMotor);
+    
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("zeroDeg", allTheWayDownRear.get());
+
+    encoderWidget.setDouble(armMotor.getEncoder().getPosition());
   }
 
   public void moveArm(double leftStickYaxis) {

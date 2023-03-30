@@ -16,14 +16,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Interfaces.*;
-import java.util.Map;
+
 
 public class Claw extends SubsystemBase {
   public CANSparkMax clawMotor;
 
-  private GenericEntry stallWidget;
-  private GenericEntry freeWidget;
-  private ShuffleboardLayout layout;
 
   // gear ratio is 100:1
 
@@ -36,20 +33,6 @@ public class Claw extends SubsystemBase {
 
     Shuffleboard.getTab("Motors").add("Claw", clawMotor);
 
-    layout = Shuffleboard.getTab("Config").getLayout("Claw", BuiltInLayouts.kList);
-
-    stallWidget =
-        layout
-            .add("Stall Limit", 10)
-            .withWidget(BuiltInWidgets.kNumberSlider)
-            .withProperties(Map.of("min", 0, "max", 20))
-            .getEntry();
-    freeWidget =
-        layout
-            .add("Free Limit", 11)
-            .withWidget(BuiltInWidgets.kNumberSlider)
-            .withProperties(Map.of("min", 0, "max", 20))
-            .getEntry();
   }
 
   @Override
@@ -58,11 +41,11 @@ public class Claw extends SubsystemBase {
   }
 
   public void closeClaw() {
-    clawMotor.set(0.7);
+    clawMotor.set(1);
   }
 
   public void openClaw() {
-    clawMotor.set(-0.7);
+    clawMotor.set(-1);
   }
 
   public void stopClaw() {

@@ -25,7 +25,6 @@ public class PID extends SubsystemBase {
 
   private float initPitch;
 
-  public PIDController pidController;
 
   public PID() {
     toleranceDeg = 0.5;
@@ -33,8 +32,7 @@ public class PID extends SubsystemBase {
 
 
     initPitch = gyro.getPitch();
-    pidController = new PIDController(P, I, D);
-    addChild("PID Controller", pidController);
+
   }
 
   @Override
@@ -69,9 +67,6 @@ public class PID extends SubsystemBase {
     I = kI * errorSum;
     D = kD * errorRate;
 
-    pidController.setP(P);
-    pidController.setI(I);
-    pidController.setD(D);
 
     double outputSpeed = P + I + D;
 
