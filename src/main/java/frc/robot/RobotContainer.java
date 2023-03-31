@@ -108,7 +108,7 @@ public class RobotContainer {
     //     .whileTrue(m_OpenClawCommand);
     new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_FineDriveCommand);
-    new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceConeSecondLevelCommand);
+    new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceCubeSecondLevelCommand);
 
     // new JoystickButton(m_armController2, XboxController.Button.kB.value)
     //     .whileTrue(m_PlaceConeSecondLevelCommand);

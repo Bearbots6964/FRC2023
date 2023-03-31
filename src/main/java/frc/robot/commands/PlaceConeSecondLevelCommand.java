@@ -49,7 +49,7 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
       }
 
       // go over charge station
-      if (Math.abs(drive.getAverageDistance()) < 4.95 && firstStep == false) {
+      if (Math.abs(drive.getAverageDistance()) < 4.95 && !firstStep) {
         claw.stopClaw(); 
         drive.setAllMotors(-0.3); // move back so that cone falls in
         arm.armMotor.set(-0.5);
@@ -67,7 +67,7 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
     drive.leftRear.getEncoder().setPosition(0);
     drive.rightFront.getEncoder().setPosition(0);
     drive.rightRear.getEncoder().setPosition(0);
-    arm.armMotor.getEncoder().setPosition(0);
+
 
     drive.setAllMotors(0);
     arm.armMotor.set(0); // stop the arm motor

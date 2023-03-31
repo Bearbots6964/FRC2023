@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
 public class PlaceCubeSecondLevelCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Tank drive;
   private final Claw claw;
   private final Arm arm;
@@ -24,19 +24,19 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
     this.claw = claw;
     addRequirements(drive);
     addRequirements(arm);
-    
 
-    
   }
 
   @Override
-   public void initialize() {
-/*    drive.leftFront.getEncoder().setPosition(0);
-    drive.leftRear.getEncoder().setPosition(0);
-    drive.rightFront.getEncoder().setPosition(0);
-    drive.rightRear.getEncoder().setPosition(0); */
+  public void initialize() {
+    /*
+     * drive.leftFront.getEncoder().setPosition(0);
+     * drive.leftRear.getEncoder().setPosition(0);
+     * drive.rightFront.getEncoder().setPosition(0);
+     * drive.rightRear.getEncoder().setPosition(0);
+     */
 
-    arm.armMotor.getEncoder().setPosition(0);
+
     widget = Shuffleboard.getTab("stuff").add("arm thing", arm.armMotor.getEncoder().getPosition()).getEntry();
 
   }
@@ -45,48 +45,50 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
   @Override
   public void execute() {
     widget.setDouble(arm.armMotor.getEncoder().getPosition());
-    
-      if (firstStep) {
-        claw.closeClaw();
-        arm.armMotor.set(0.25);
-      }
 
+    if (firstStep) {
+      claw.closeClaw();
+      arm.armMotor.set(0.25);
+    }
 
-      if (arm.armMotor.getEncoder().getPosition() >= 60) {
-        firstStep = false;
-        arm.armMotor.set(0);
-        arm.armMotor.getEncoder().setPosition(0);
-        claw.openClaw();
-      }
+    if (arm.armMotor.getEncoder().getPosition() >= 60) {
+      firstStep = false;
+      arm.armMotor.set(0);
+      claw.openClaw();
+    }
 
-      // go over charge station
-/*       if (Math.abs(drive.getAverageDistance()) < 4.95 && firstStep == false) {
-        claw.stopClaw(); 
-        drive.setAllMotors(-0.3); // move back so that cone falls in
-        arm.armMotor.set(-0.5);
-      }
+    // go over charge station
+    /*
+     * if (Math.abs(drive.getAverageDistance()) < 4.95 && firstStep == false) {
+     * claw.stopClaw();
+     * drive.setAllMotors(-0.3); // move back so that cone falls in
+     * arm.armMotor.set(-0.5);
+     * }
+     * 
+     * if (Math.abs(drive.getAverageDistance()) >= 4.95) {
+     * drive.setAllMotors(0);
+     * }
+     */
 
-      if (Math.abs(drive.getAverageDistance()) >= 4.95) {
-        drive.setAllMotors(0);
-      } */
-    
   }
 
   @Override
   public void end(boolean interrupted) {
-/*     drive.leftFront.getEncoder().setPosition(0);
-    drive.leftRear.getEncoder().setPosition(0);
-    drive.rightFront.getEncoder().setPosition(0);
-    drive.rightRear.getEncoder().setPosition(0); */
-    arm.armMotor.getEncoder().setPosition(0);
+    /*
+     * drive.leftFront.getEncoder().setPosition(0);
+     * drive.leftRear.getEncoder().setPosition(0);
+     * drive.rightFront.getEncoder().setPosition(0);
+     * drive.rightRear.getEncoder().setPosition(0);
+     */
 
-    //drive.setAllMotors(0);
+
+    // drive.setAllMotors(0);
     arm.armMotor.set(0); // stop the arm motor
   }
 
   @Override
   public boolean isFinished() {
-/*     return Math.abs(drive.getAverageDistance()) >= 4.95; */
-return false;
+    /* return Math.abs(drive.getAverageDistance()) >= 4.95; */
+    return false;
   }
 }
