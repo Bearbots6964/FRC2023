@@ -1,4 +1,4 @@
-package frc.robot.Interfaces;
+package frc.robot.interfaces;
 
 import com.revrobotics.REVLibError;
 import edu.wpi.first.util.sendable.Sendable;

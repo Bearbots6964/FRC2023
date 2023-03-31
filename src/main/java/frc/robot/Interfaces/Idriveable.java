@@ -1,5 +1,4 @@
-package frc.robot.Interfaces;
-
+package frc.robot.interfaces;
 public interface Idriveable {
   void driveForward();
 
