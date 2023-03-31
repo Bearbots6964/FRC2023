@@ -15,12 +15,10 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
-import frc.robot.Interfaces.*;
-
+import frc.robot.interfaces.*;
 
 public class Claw extends SubsystemBase {
   public CANSparkMax clawMotor;
-
 
   // gear ratio is 100:1
 
@@ -37,7 +35,7 @@ public class Claw extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("rightTrigger", RobotContainer.getControllerRightTrigger());
+    SmartDashboard.putNumber("rightTrigger", RobotContainer.getClawInValue());
   }
 
   public void closeClaw() {

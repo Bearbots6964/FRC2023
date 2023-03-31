@@ -21,11 +21,16 @@ public class Vision extends SubsystemBase {
   private double goalHeightInches = 24.125;
   private double angleToGoalRadians = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
   private double angleToGoalDegrees = Units.radiansToDegrees(angleToGoalRadians);
-  private double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/Math.tan(angleToGoalRadians);
+  private double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)
+      / Math.tan(angleToGoalRadians);
   public GenericEntry widget;
+
   public Vision() {
     // Stuff goes here
-    widget = Shuffleboard.getTab("stuff").add("distance", -(goalHeightInches - limelightLensHeightInches)/Math.tan(limelightMountAngleDegrees + ty.getDouble(0))).withWidget(BuiltInWidgets.kGraph).getEntry();
+    widget = Shuffleboard.getTab("stuff")
+        .add("distance",
+            -(goalHeightInches - limelightLensHeightInches) / Math.tan(limelightMountAngleDegrees + ty.getDouble(0)))
+        .withWidget(BuiltInWidgets.kGraph).getEntry();
   }
 
   // display camera on shuffleboard
@@ -33,8 +38,9 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    widget.setDouble(-(goalHeightInches - limelightLensHeightInches)/Math.tan(limelightMountAngleDegrees + ty.getDouble(0)));
-  
+    widget.setDouble(
+        -(goalHeightInches - limelightLensHeightInches) / Math.tan(limelightMountAngleDegrees + ty.getDouble(0)));
+
   }
 
   @Override
@@ -48,8 +54,7 @@ public class Vision extends SubsystemBase {
    * @param property The property to fetch.
    * @return The fetched property.
    */
-  public double[]
-      getProperties() { // we don't know what type we return until we process it in the if statement
+  public double[] getProperties() { // we don't know what type we return until we process it in the if statement
     //
     var tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     var ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
@@ -57,15 +62,11 @@ public class Vision extends SubsystemBase {
     var ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
     var tl = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tl").getDouble(0);
     var cl = NetworkTableInstance.getDefault().getTable("limelight").getEntry("cl").getDouble(0);
-    var tshort =
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("tshort").getDouble(0);
-    var tlong =
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("tlong").getDouble(0);
-    var thor =
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("thor").getDouble(0);
-    var tvert =
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("tvert").getDouble(0);
+    var tshort = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tshort").getDouble(0);
+    var tlong = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tlong").getDouble(0);
+    var thor = NetworkTableInstance.getDefault().getTable("limelight").getEntry("thor").getDouble(0);
+    var tvert = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tvert").getDouble(0);
 
-    return new double[] {tx, ty, tv, ta, tl, cl, tshort, tlong, thor, tvert};
+    return new double[] { tx, ty, tv, ta, tl, cl, tshort, tlong, thor, tvert };
   }
 }

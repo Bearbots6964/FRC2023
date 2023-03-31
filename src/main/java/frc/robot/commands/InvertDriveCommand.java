@@ -12,7 +12,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
 public class InvertDriveCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Tank m_drivebase;
   private final RobotContainer robot;
 
@@ -33,8 +33,8 @@ public class InvertDriveCommand extends CommandBase {
   public void execute() {
     // double check getMaxSpeed(), might be wrong
     m_drivebase.arcadeDrive(
-        -RobotContainer.getDriverControllerLeftStickYAdjusted() * Constants.CanConstants.maxSpeed,
-        RobotContainer.getDriverControllerRightStickXAdjusted() * 0.75);
+        -RobotContainer.getAdjustedTurningStickInput() * Constants.CanConstants.maxSpeed,
+        RobotContainer.getAdjustedForwardStickInput() * 0.75);
   }
 
   @Override

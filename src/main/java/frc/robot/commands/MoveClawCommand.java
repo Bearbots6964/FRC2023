@@ -9,7 +9,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Claw;
 
 public class MoveClawCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Claw m_subsystem;
 
   public MoveClawCommand(Claw subsystem) {
@@ -18,14 +18,15 @@ public class MoveClawCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
   public void execute() {
-    if(Math.abs(RobotContainer.getControllerLeftTrigger()) < 0.2){
-        m_subsystem.clawMotor.set(RobotContainer.getControllerRightTrigger() * 0.7);
-    } else{
-        m_subsystem.clawMotor.set(-RobotContainer.getControllerLeftTrigger() * 0.7);
+    if (Math.abs(RobotContainer.getClawOutValue()) < 0.2) {
+      m_subsystem.clawMotor.set(RobotContainer.getClawInValue() * 0.7);
+    } else {
+      m_subsystem.clawMotor.set(-RobotContainer.getClawOutValue() * 0.7);
     }
   }
 

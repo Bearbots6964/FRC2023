@@ -4,15 +4,17 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Interfaces.CANSparkMax;
+import frc.robot.interfaces.CANSparkMax;
 
 public class Arm extends SubsystemBase {
 
@@ -23,8 +25,9 @@ public class Arm extends SubsystemBase {
 
   public double gearRatio = 87;
 
-
   public GenericEntry encoderWidget;
+
+  public REVPhysicsSim physicsSim;
 
   public Arm() {
     armMotor = new CANSparkMax(7, MotorType.kBrushless);
@@ -34,10 +37,15 @@ public class Arm extends SubsystemBase {
     addChild("Arm Motor", armMotor);
 
     encoderWidget = Shuffleboard.getTab("Motors").add("Arm Encoder", armMotor.getEncoder().getPosition()).getEntry();
-    
 
     Shuffleboard.getTab("Motors").add("Arm", armMotor);
-    
+
+    // add simulation data
+    if (RobotBase.isSimulation()) {
+      physicsSim = new REVPhysicsSim();
+      physicsSim.addSparkMax(armMotor, 5000, 20);
+    }
+
   }
 
   @Override

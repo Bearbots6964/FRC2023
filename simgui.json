@@ -65,6 +65,7 @@
       "/Shuffleboard/Subsystems/PDP": "Subsystem",
       "/Shuffleboard/Subsystems/PID": "Subsystem",
       "/Shuffleboard/Subsystems/PlaceConeSecondLevelCommand": "Command",
+      "/Shuffleboard/Subsystems/PlaceCubeSecondLevelCommand": "Command",
       "/Shuffleboard/Subsystems/PlaceGamePieceCommand": "Command",
       "/Shuffleboard/Subsystems/SwitchIdleModeCommmand": "Command",
       "/Shuffleboard/Subsystems/Tank": "Subsystem",
@@ -81,9 +82,6 @@
       "/SmartDashboard/Field": {
         "Robot": {
           "style": "Track"
-        },
-        "window": {
-          "visible": true
         }
       },
       "/SmartDashboard/Scheduler": {

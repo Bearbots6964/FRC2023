@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -15,8 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Interfaces.*;
 import frc.robot.RobotContainer;
+import frc.robot.interfaces.*;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.SPI;
 
 public class Tank extends SubsystemBase {
@@ -51,8 +53,6 @@ public class Tank extends SubsystemBase {
 
   private ShuffleboardTab motorsTab;
 
-
-
   private DifferentialDriveOdometry odometry;
 
   public static AHRS gyro;
@@ -60,6 +60,8 @@ public class Tank extends SubsystemBase {
   private Field2d field2d;
 
   private int initialCurrentLimit = 30; // TODO tune this
+
+  private REVPhysicsSim physicsSim;
 
   /** */
   public Tank() {
@@ -146,8 +148,6 @@ public class Tank extends SubsystemBase {
     rightFront.setSmartCurrentLimit(40, 50);
     rightRear.setSmartCurrentLimit(40, 50);
 
-
-
     // implement odometry
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(gyro.getAngle()),
         Units.inchesToMeters(
@@ -160,13 +160,24 @@ public class Tank extends SubsystemBase {
     field2d = new Field2d();
     SmartDashboard.putData(field2d);
 
+    // create a physics simulation for the robot
+    if (RobotBase.isSimulation()) {
+      physicsSim = new REVPhysicsSim();
+      // add all the spark maxes to the simulation
+      physicsSim.addSparkMax(leftFront, (float) 2.6, 445);
+      physicsSim.addSparkMax(leftRear, (float) 2.6, 445);
+      physicsSim.addSparkMax(rightFront, (float) 2.6, 445);
+      physicsSim.addSparkMax(rightRear, (float) 2.6, 445);
+      // run the simulation
+      physicsSim.run();
+    }
+
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("leftStickY", RobotContainer.getDriverControllerLeftStickY());
-    SmartDashboard.putNumber("rightStickX", RobotContainer.getDriverControllerRightStickX());
-
+    SmartDashboard.putNumber("leftStickY", RobotContainer.getTurningStickInput());
+    SmartDashboard.putNumber("rightStickX", RobotContainer.getForwardStickInput());
 
     // i hate my life
 
@@ -192,9 +203,9 @@ public class Tank extends SubsystemBase {
    * @param rotation The rotation speed.
    */
   public static void arcadeDrive(double speed, double rotation) {
-    
-      drive.arcadeDrive(
-          -speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));
+
+    drive.arcadeDrive(
+        -speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));
 
   }
 
@@ -256,11 +267,11 @@ public class Tank extends SubsystemBase {
 
   // for some reason -speed is forward. dont ask me why
   public void setAllMotors(double speed) {
-    
-      leftFront.set(-speed);
-      leftRear.set(-speed);
-      rightFront.set(-speed);
-      rightRear.set(-speed);
+
+    leftFront.set(-speed);
+    leftRear.set(-speed);
+    rightFront.set(-speed);
+    rightRear.set(-speed);
 
   }
 

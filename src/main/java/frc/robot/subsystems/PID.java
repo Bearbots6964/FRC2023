@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PID extends SubsystemBase {
-  
+
   private final double kP = 0.18;
   private final double kI = 0.025;
   private final double kD = 0.3;
@@ -25,11 +25,9 @@ public class PID extends SubsystemBase {
 
   private float initPitch;
 
-
   public PID() {
     toleranceDeg = 0.5;
     iLimit = 2.0;
-
 
     initPitch = gyro.getPitch();
 
@@ -67,7 +65,6 @@ public class PID extends SubsystemBase {
     I = kI * errorSum;
     D = kD * errorRate;
 
-
     double outputSpeed = P + I + D;
 
     return outputSpeed;
@@ -82,5 +79,6 @@ public class PID extends SubsystemBase {
   }
 
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+  }
 }

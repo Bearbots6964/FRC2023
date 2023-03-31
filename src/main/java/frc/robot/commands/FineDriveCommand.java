@@ -9,7 +9,7 @@ import frc.robot.RebindHat;
 import frc.robot.subsystems.Tank;
 
 public class FineDriveCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Tank m_drivebase;
 
   public FineDriveCommand(Tank subsystem) {
