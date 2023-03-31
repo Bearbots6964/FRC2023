@@ -22,6 +22,7 @@ public class PID extends SubsystemBase {
   public ShuffleboardTab dash;
 
   public AHRS gyro = Tank.gyro;
+  
 
   private float initPitch;
 
@@ -30,6 +31,8 @@ public class PID extends SubsystemBase {
     toleranceDeg = 0.5;
     iLimit = 2.0;
 
+    addChild("gyro", gyro);
+    Shuffleboard.getTab("stuff").add(gyro);
 
     initPitch = gyro.getPitch();
 

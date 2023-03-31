@@ -257,6 +257,8 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
 
     // current limits
     builder.addIntegerProperty("Current Limit", null, this::setSmartCurrentLimit);
+
+    builder.addDoubleProperty("Encoder Position", this::getEncoderPosition, this::setEncoderPosition);
   }
 
   /**
@@ -319,5 +321,14 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
   public REVLibError setSmartCurrentLimit(Long limit) {
     throwIfClosed();
     return setSmartCurrentLimit(limit.intValue(), 0, 20000);
+  }
+
+  public double getEncoderPosition() {
+    throwIfClosed();
+    return getEncoder().getPosition();
+  }
+  public void setEncoderPosition(double pos) {
+    throwIfClosed();
+    getEncoder().setPosition(pos);
   }
 }

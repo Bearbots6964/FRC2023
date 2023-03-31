@@ -9,12 +9,12 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
-        "titleType": 2,
+        "titleType": 1,
         "tiles": {
           "0,0": {
             "size": [
               8,
-              3
+              6
             ],
             "content": {
               "_type": "Basic FMS Info",
@@ -24,10 +24,10 @@
               "_showGlyph": false
             }
           },
-          "0,3": {
+          "0,6": {
             "size": [
               8,
-              11
+              13
             ],
             "content": {
               "_type": "PDP",
@@ -38,10 +38,10 @@
               "Visuals/Show voltage and current values": true
             }
           },
-          "27,0": {
+          "34,0": {
             "size": [
               5,
-              8
+              19
             ],
             "content": {
               "_type": "Subsystem Layout",
@@ -107,8 +107,8 @@
           },
           "8,0": {
             "size": [
-              16,
-              14
+              23,
+              19
             ],
             "content": {
               "_type": "Camera Stream",
@@ -126,7 +126,7 @@
               "imageHeight": 480
             }
           },
-          "24,0": {
+          "31,0": {
             "size": [
               3,
               3
@@ -476,9 +476,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -6.400000095367432,
-    "y": 1.600000023841858,
-    "width": 1547.199951171875,
-    "height": 828.7999877929688
+    "x": -7.0,
+    "y": 2.0,
+    "width": 1932.0,
+    "height": 1045.0
   }
 }

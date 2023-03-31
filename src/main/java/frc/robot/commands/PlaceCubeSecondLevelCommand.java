@@ -17,6 +17,7 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
   private GenericEntry widget;
 
   private boolean firstStep = true;
+  private int time = 0;
 
   public PlaceCubeSecondLevelCommand(Tank drive, Arm arm, Claw claw) {
     this.drive = drive;
@@ -29,13 +30,12 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    /*
-     * drive.leftFront.getEncoder().setPosition(0);
-     * drive.leftRear.getEncoder().setPosition(0);
-     * drive.rightFront.getEncoder().setPosition(0);
-     * drive.rightRear.getEncoder().setPosition(0);
-     */
-
+    
+      drive.leftFront.getEncoder().setPosition(0);
+      drive.leftRear.getEncoder().setPosition(0);
+      drive.rightFront.getEncoder().setPosition(0);
+      drive.rightRear.getEncoder().setPosition(0);
+    
 
     widget = Shuffleboard.getTab("stuff").add("arm thing", arm.armMotor.getEncoder().getPosition()).getEntry();
 
@@ -70,6 +70,13 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
      * }
      */
 
+    if (!firstStep && time <= 5) {
+      time++;
+    }
+    if (!firstStep && time > 5) {
+      drive.setAllMotors(-0.3);
+    }
+
   }
 
   @Override
@@ -81,7 +88,6 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
      * drive.rightRear.getEncoder().setPosition(0);
      */
 
-
     // drive.setAllMotors(0);
     arm.armMotor.set(0); // stop the arm motor
   }
@@ -89,6 +95,6 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     /* return Math.abs(drive.getAverageDistance()) >= 4.95; */
-    return false;
+    return Math.abs(drive.getAverageDistance()) >= 4.95;
   }
 }

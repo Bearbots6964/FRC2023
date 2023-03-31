@@ -45,7 +45,7 @@ public class Claw extends SubsystemBase {
   }
 
   public void openClaw() {
-    clawMotor.set(-1);
+    clawMotor.set(-0.75);
   }
 
   public void stopClaw() {
