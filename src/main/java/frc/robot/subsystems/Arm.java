@@ -50,28 +50,21 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("zeroDeg", allTheWayDownRear.get());
+    // SmartDashboard.putBoolean("zeroDeg", allTheWayDownRear.get());
 
     encoderWidget.setDouble(armMotor.getEncoder().getPosition());
   }
 
-  public void moveArm(double leftStickYaxis) {
+  /**
+   * uses input double value to set the motor speed of the arm
+   */
+  public void moveArm(double value) {
     double speed = 0.8;
-    double motorDrive = leftStickYaxis * speed;
+    double motorDrive = value * speed;
     armMotor.set(motorDrive);
   }
 
   public void moveArmToZeroDeg() {
-    double speedY = 0.2;
-    while (allTheWayDownRear
-        .get()) { // the '== true' is implied, because the if statement is looking for the
-      // expression to be true. If it is false, it will not run the code inside the if
-      // statement, so we don't need to write it.
-      armMotor.set(-1 * speedY);
-    }
-    armMotor.set(0);
-    armMotor.getEncoder().setPosition(0);
-    currentArmAngle = 0;
   }
 
   @Override
