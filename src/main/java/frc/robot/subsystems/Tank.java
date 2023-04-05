@@ -4,6 +4,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
@@ -58,6 +59,7 @@ public class Tank extends SubsystemBase {
   public static AHRS gyro;
 
   private Field2d field2d;
+  private Pose3d pose3d;
 
   private int initialCurrentLimit = 30; // TODO tune this
 

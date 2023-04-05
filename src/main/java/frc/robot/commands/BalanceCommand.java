@@ -19,6 +19,7 @@ public class BalanceCommand extends CommandBase {
   private final Tank driveBase;
   private double initPitch, max;
   private boolean onRamp;
+  private boolean done;
 
   public BalanceCommand(PID m_pid, Tank m_driveBase) {
     pid = m_pid;
@@ -39,6 +40,7 @@ public class BalanceCommand extends CommandBase {
     SmartDashboard.putNumber("init pitch", initPitch);
     max = 0;
     onRamp = false;
+    done = false;
   }
 
   // avoid while loops inside execute
@@ -52,7 +54,7 @@ public class BalanceCommand extends CommandBase {
     }
     SmartDashboard.putNumber("max offset", max);
 
-    if (pitchOffset < 16 && !onRamp) {
+    if (pitchOffset < 14 && !onRamp) {
       driveBase.setAllMotors(0.5);
       SmartDashboard.putBoolean("onRamp", onRamp);
 

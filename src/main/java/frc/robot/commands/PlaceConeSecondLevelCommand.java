@@ -63,10 +63,7 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    drive.leftFront.getEncoder().setPosition(0);
-    drive.leftRear.getEncoder().setPosition(0);
-    drive.rightFront.getEncoder().setPosition(0);
-    drive.rightRear.getEncoder().setPosition(0);
+
 
 
     drive.setAllMotors(0);

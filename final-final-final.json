@@ -120,7 +120,7 @@
               "Crosshair/Crosshair color": "#FFFFFFFF",
               "Controls/Show controls": true,
               "Controls/Rotation": "NONE",
-              "compression": 27.078429483899882,
+              "compression": 17.0,
               "fps": 15,
               "imageWidth": 640,
               "imageHeight": 480
@@ -253,10 +253,10 @@
               "_showGlyph": false
             }
           },
-          "32,0": {
+          "5,6": {
             "size": [
-              4,
-              2
+              10,
+              12
             ],
             "content": {
               "_type": "Text View",
@@ -377,7 +377,7 @@
           "24,2": {
             "size": [
               6,
-              6
+              4
             ],
             "content": {
               "_type": "Boolean Box",
@@ -398,19 +398,6 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/motor speed",
               "_title": "rtDashboard/motor speed",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "30,13": {
-            "size": [
-              6,
-              10
-            ],
-            "content": {
-              "_type": "Network Table Tree",
-              "_source0": "network_table:///FMSInfo",
-              "_title": "/FMSInfo",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -442,6 +429,26 @@
               "_title": "rightTrigger",
               "_glyph": 148,
               "_showGlyph": false
+            }
+          },
+          "15,6": {
+            "size": [
+              24,
+              13
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///SmartDashboard/pitch angle",
+              "_title": "SmartDashboard/pitch angle",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Graph/Visible time": 30.0,
+              "Graph/X-axis auto scrolling": true,
+              "Y-axis/Automatic bounds": true,
+              "Y-axis/Upper bound": 1.0,
+              "Y-axis/Lower bound": -1.0,
+              "Y-axis/Unit": "ul",
+              "Visible data/SmartDashboard/pitch angle": true
             }
           }
         }
