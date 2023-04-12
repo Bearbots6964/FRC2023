@@ -11,11 +11,9 @@ import frc.robot.Constants;
 import frc.robot.subsystems.PID;
 import frc.robot.subsystems.Tank;
 
-/**
- * This command balances the robot on the charge station. Default auto command.
- */
+/** This command balances the robot on the charge station. Default auto command. */
 public class BalanceCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final PID pidLoop;
 
   private final Tank driveBase;
@@ -53,8 +51,7 @@ public class BalanceCommand extends CommandBase {
     SmartDashboard.putNumber("pitch offset", pitchOffset);
     SmartDashboard.putBoolean("onRamp", onRamp);
     SmartDashboard.putNumber("max offset", maxPitch);
-    SmartDashboard.putNumber(
-        "motor speed", Constants.OperatorConstants.Pconstant * (pitchOffset));
+    SmartDashboard.putNumber("motor speed", Constants.OperatorConstants.Pconstant * (pitchOffset));
     /*
      * if (pitchOffset > maxPitch) {
      * maxPitch = pitchOffset;

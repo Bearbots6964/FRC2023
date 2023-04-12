@@ -4,15 +4,13 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.interfaces.CANSparkMax;
 
@@ -36,7 +34,10 @@ public class Arm extends SubsystemBase {
     armMotor.burnFlash();
     addChild("Arm Motor", armMotor);
 
-    encoderWidget = Shuffleboard.getTab("Motors").add("Arm Encoder", armMotor.getEncoder().getPosition()).getEntry();
+    encoderWidget =
+        Shuffleboard.getTab("Motors")
+            .add("Arm Encoder", armMotor.getEncoder().getPosition())
+            .getEntry();
 
     Shuffleboard.getTab("Motors").add("Arm", armMotor);
 
@@ -45,7 +46,6 @@ public class Arm extends SubsystemBase {
       physicsSim = new REVPhysicsSim();
       physicsSim.addSparkMax(armMotor, 5000, 20);
     }
-
   }
 
   @Override
@@ -55,17 +55,14 @@ public class Arm extends SubsystemBase {
     encoderWidget.setDouble(armMotor.getEncoder().getPosition());
   }
 
-  /**
-   * uses input double value to set the motor speed of the arm
-   */
+  /** uses input double value to set the motor speed of the arm */
   public void moveArm(double value) {
     double speed = 0.8;
     double motorDrive = value * speed;
     armMotor.set(motorDrive);
   }
 
-  public void moveArmToZeroDeg() {
-  }
+  public void moveArmToZeroDeg() {}
 
   @Override
   public void simulationPeriodic() {

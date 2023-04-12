@@ -141,14 +141,14 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
    * public boolean isInverted;
    * public boolean roboRIO;
    * }
-   * 
+   *
    * public class PeriodicStatus1 {
    * public double sensorVelocity;
    * public byte motorTemperature;
    * public double busVoltage;
    * public double outputCurrent;
    * }
-   * 
+   *
    * public class PeriodicStatus2 {
    * public double sensorPosition;
    * public double iAccum;

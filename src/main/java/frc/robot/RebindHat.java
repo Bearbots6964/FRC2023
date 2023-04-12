@@ -1,12 +1,12 @@
 package frc.robot;
 
-/** @deprecated */
+/**
+ * @deprecated
+ */
 // dude come onthis is the deffinition fo unnesseary complecity
 @Deprecated
 public class RebindHat {
-  public static double JoystickToYAxis() {
-
-  }
+  public static double JoystickToYAxis() {}
 
   public static double JoystickToXAxis() {
     if (RobotContainer.m_armController.getPOV() == -1
