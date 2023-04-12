@@ -1,6 +1,6 @@
 // Copyright (c) Elliot Snyder, Parker Brownlowe, and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
-// the WTFPL license file in the internet. Any questions about the mental 
+// the WTFPL license file in the internet. Any questions about the mental
 // health of the authors can be shouted into the endless void of the internet.
 
 package frc.robot.commands;
@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
 public class PlaceConeSecondLevelCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank drive;
+
   private final Claw claw;
   private final Arm arm;
   private boolean coneOut;

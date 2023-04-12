@@ -10,8 +10,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
 public class PlaceCubeSecondLevelCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank drive;
+
   private final Claw claw;
   private final Arm arm;
   private GenericEntry widget;
@@ -26,7 +27,6 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
     this.claw = claw;
     addRequirements(drive);
     addRequirements(arm);
-
   }
 
   @Override
@@ -41,7 +41,10 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
     finalStep = false;
     done = false;
     arm.armMotor.getEncoder().setPosition(0);
-    widget = Shuffleboard.getTab("stuff").add("arm thing", arm.armMotor.getEncoder().getPosition()).getEntry();
+    widget =
+        Shuffleboard.getTab("stuff")
+            .add("arm thing", arm.armMotor.getEncoder().getPosition())
+            .getEntry();
     claw.closeClaw();
     arm.armMotor.set(0.25);
   }
@@ -72,7 +75,6 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
       drive.setAllMotors(0);
       done = true;
     }
-
   }
 
   @Override
@@ -87,7 +89,6 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
 
     // drive.setAllMotors(0);
     arm.armMotor.set(0); // stop the arm motor
-
   }
 
   @Override

@@ -9,7 +9,7 @@ import frc.robot.RebindHat;
 import frc.robot.subsystems.Tank;
 
 public class FineDriveCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank m_drivebase;
 
   public FineDriveCommand(Tank subsystem) {
@@ -25,8 +25,7 @@ public class FineDriveCommand extends CommandBase {
   @Override
   public void execute() {
     // double check getMaxSpeed(), might be wrong
-    Tank.arcadeDrive(
-        RebindHat.ControllerToYAxis() * 0.43, RebindHat.ControllerToXAxis() * 0.43);
+    Tank.arcadeDrive(RebindHat.ControllerToYAxis() * 0.43, RebindHat.ControllerToXAxis() * 0.43);
   }
 
   @Override

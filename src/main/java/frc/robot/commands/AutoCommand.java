@@ -13,28 +13,31 @@ import frc.robot.subsystems.*;
 public class AutoCommand extends SequentialCommandGroup {
   public AutoCommand(PID m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
 
-    //pick one
-    //sideAutoWCone(m_pid,m_driveBase,m_arm,m_claw);
-    //sideAutoWCube(m_pid,m_driveBase,m_arm,m_claw);
-    //middleAutoWCone(m_pid,m_driveBase,m_arm,m_claw);
-    //middleAutoWCube(m_pid,m_driveBase,m_arm,m_claw);
+    // pick one
+    // sideAutoWCone(m_pid,m_driveBase,m_arm,m_claw);
+    // sideAutoWCube(m_pid,m_driveBase,m_arm,m_claw);
+    // middleAutoWCone(m_pid,m_driveBase,m_arm,m_claw);
+    // middleAutoWCube(m_pid,m_driveBase,m_arm,m_claw);
 
   }
   // TODO document this
-  private void sideAutoWCone(PID m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw)
-  {
+  private void sideAutoWCone(PID m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
     addCommands(new PlaceConeSecondLevelCommand(m_driveBase, m_arm, m_claw));
   }
-  private void sideAutoWCube(PID m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw)
-  {
+
+  private void sideAutoWCube(PID m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
     addCommands(new PlaceCubeSecondLevelCommand(m_driveBase, m_arm, m_claw));
   }
-  private void middleAutoWCone(PID m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw)
-  {
-    addCommands(new PlaceConeSecondLevelCommand(m_driveBase, m_arm, m_claw), new BalanceCommand(m_pid, m_driveBase));
+
+  private void middleAutoWCone(PID m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+    addCommands(
+        new PlaceConeSecondLevelCommand(m_driveBase, m_arm, m_claw),
+        new BalanceCommand(m_pid, m_driveBase));
   }
-  private void middleAutoWCube(PID m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw)
-  {
-    addCommands(new PlaceCubeSecondLevelCommand(m_driveBase, m_arm, m_claw), new BalanceCommand(m_pid, m_driveBase));
+
+  private void middleAutoWCube(PID m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+    addCommands(
+        new PlaceCubeSecondLevelCommand(m_driveBase, m_arm, m_claw),
+        new BalanceCommand(m_pid, m_driveBase));
   }
 }

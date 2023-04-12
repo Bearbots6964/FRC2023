@@ -1,14 +1,10 @@
 package edu.bearbots.BearLib.drivebase;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.REVLibError;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.REVLibError;
 
-import java.util.Map;
-
-/**
- * Abstract class to handle common drivebase motor controller functions.
- */
+/** Abstract class to handle common drivebase motor controller functions. */
 public abstract class Drivebase {
   // for all drive bases? don't implement motors
   // odometry
@@ -16,12 +12,12 @@ public abstract class Drivebase {
   // move to
 
   /**
-   * Sets the current limit for Spark Max motor controllers, given a free limit
-   * and a stall limit (in amps) as well as any number of Spark Maxes.
-   * 
-   * @param freeLimit  The free limit (in amps)
+   * Sets the current limit for Spark Max motor controllers, given a free limit and a stall limit
+   * (in amps) as well as any number of Spark Maxes.
+   *
+   * @param freeLimit The free limit (in amps)
    * @param stallLimit The stall limit (in amps)
-   * @param motor      The Spark Maxes
+   * @param motor The Spark Maxes
    * @return An array of errors, if any
    */
   public REVLibError[] setCurrentLimit(int freeLimit, int stallLimit, CANSparkMax... motor) {
@@ -35,13 +31,12 @@ public abstract class Drivebase {
 
     return errors;
   }
-  
 
   /**
-   * Sets the idle mode for Spark Max motor controllers, given an idle mode and
-   * any number of Spark Maxes.
-   * 
-   * @param mode  The idle mode
+   * Sets the idle mode for Spark Max motor controllers, given an idle mode and any number of Spark
+   * Maxes.
+   *
+   * @param mode The idle mode
    * @param motor The Spark Maxes
    * @return An array of errors, if any
    */

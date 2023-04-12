@@ -17,12 +17,9 @@ import frc.robot.subsystems.*;
 import io.github.oblarg.oblog.Logger;
 
 /**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
+ * This class is where the bulk of the robot should be declared. Since Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
@@ -30,9 +27,10 @@ public class RobotContainer {
 
   // INSTANTIATES ALL JOYSTICKS
 
-  /** @deprecated The drivers are much more comfortable with an xbox controller */
-  @Deprecated
-  public static final Joystick m_armController = new Joystick(0);
+  /**
+   * @deprecated The drivers are much more comfortable with an xbox controller
+   */
+  @Deprecated public static final Joystick m_armController = new Joystick(0);
 
   public static final XboxController m_armController2 = new XboxController(1);
   public static final XboxController m_driverController = new XboxController(2);
@@ -53,19 +51,20 @@ public class RobotContainer {
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
   private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_Arm, m_Claw);
   private final InvertDriveCommand m_InvertDriveCommand = new InvertDriveCommand(m_Tank, this);
-  private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand = new PlaceConeSecondLevelCommand(m_Tank,
-      m_Arm, m_Claw);
-  private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand = new IncreaseMaxSpeedCommand(m_Tank);
-  private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand = new DecreaseMaxSpeedCommand(m_Tank);
+  private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand =
+      new PlaceConeSecondLevelCommand(m_Tank, m_Arm, m_Claw);
+  private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
+      new IncreaseMaxSpeedCommand(m_Tank);
+  private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand =
+      new DecreaseMaxSpeedCommand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
-  private final PlaceCubeSecondLevelCommand m_PlaceCubeSecondLevelCommand = new PlaceCubeSecondLevelCommand(m_Tank,
-      m_Arm, m_Claw);
+  private final PlaceCubeSecondLevelCommand m_PlaceCubeSecondLevelCommand =
+      new PlaceCubeSecondLevelCommand(m_Tank, m_Arm, m_Claw);
 
-  private GenericEntry timeWidget = Shuffleboard.getTab("stuff").add("time", 0).withWidget("Match Time").getEntry();
+  private GenericEntry timeWidget =
+      Shuffleboard.getTab("stuff").add("time", 0).withWidget("Match Time").getEntry();
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
@@ -113,16 +112,14 @@ public class RobotContainer {
     // .whileTrue(m_OpenClawCommand);
     new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_FineDriveCommand);
-    new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceConeSecondLevelCommand);
+    new JoystickButton(m_armController2, XboxController.Button.kY.value)
+        .whileTrue(m_PlaceConeSecondLevelCommand);
 
     // new JoystickButton(m_armController2, XboxController.Button.kB.value)
     // .whileTrue(m_PlaceConeSecondLevelCommand);
   }
 
-  /**
-   * gets the value of the left stick on the driver controller to be used for
-   * turning
-   */
+  /** gets the value of the left stick on the driver controller to be used for turning */
   public static double getTurningStickInput() {
     // uses the left stick on the driver controller
     double axis = m_driverController.getRawAxis(1);
@@ -133,9 +130,7 @@ public class RobotContainer {
     return axis * -1;
   }
 
-  /**
-   * returns value used for turning
-   */
+  /** returns value used for turning */
   public static double getAdjustedTurningStickInput() {
     double val = getTurningStickInput();
     if (val > 0) {
@@ -148,8 +143,8 @@ public class RobotContainer {
   }
 
   /**
-   * gets the value of the right stick on the driver controller to be used for
-   * forward and backward movement
+   * gets the value of the right stick on the driver controller to be used for forward and backward
+   * movement
    */
   public static double getForwardStickInput() {
     double axis = m_driverController.getRawAxis(4);
@@ -172,11 +167,10 @@ public class RobotContainer {
   }
 
   /**
-   * This function gets the joystick value of the left stick on the arm controller
-   * The left stick is used to move the arm up and down
-   * The function returns the value of the left stick
-   * The value of the left stick is put on the smart dashboard
-   * 
+   * This function gets the joystick value of the left stick on the arm controller The left stick is
+   * used to move the arm up and down The function returns the value of the left stick The value of
+   * the left stick is put on the smart dashboard
+   *
    * @deprecated This controller is no longer used
    */
   @Deprecated
@@ -191,18 +185,17 @@ public class RobotContainer {
   }
 
   /**
-   * This function gets the joystick x-value of the right stick on the arm
-   * controller
-   * The right stick is used to move the arm left and right
-   * The function returns the value of the right stick
+   * This function gets the joystick x-value of the right stick on the arm controller The right
+   * stick is used to move the arm left and right The function returns the value of the right stick
    * The value of the right stick is put on the smart dashboard
-   * 
-   * @deprecated The turret is no longer on the arm, and this controller is no
-   *             longer used
+   *
+   * @deprecated The turret is no longer on the arm, and this controller is no longer used
    */
   @Deprecated
-  public static double getJoystickArmControllerRightStickX() { // "do not forget to remove this deprecated code someday"
-                                                               // lmao never
+  public static double
+      getJoystickArmControllerRightStickX() { // "do not forget to remove this deprecated code
+    // someday"
+    // lmao never
     double axis = m_armController.getRawAxis(4);
     SmartDashboard.putNumber("arm right stick x", axis);
 
@@ -213,9 +206,8 @@ public class RobotContainer {
   }
 
   /**
-   * This function gets the y-value of the left stick on the arm controller
-   * The left stick is used to move the arm up and down
-   * The function returns the value of the left stick
+   * This function gets the y-value of the left stick on the arm controller The left stick is used
+   * to move the arm up and down The function returns the value of the left stick
    */
   public static double getControllerLeftStickY() {
     double axis = m_armController2.getRawAxis(1);
@@ -233,11 +225,7 @@ public class RobotContainer {
     return axis;
   }
 
-  /**
-   * gets value from the right trigger axis (yes, it's an axis) for grabbing up
-   * the game piece
-   */
-
+  /** gets value from the right trigger axis (yes, it's an axis) for grabbing up the game piece */
   public static double getClawInValue() {
     double axis = m_armController2.getRightTriggerAxis();
     if (Math.abs(axis) < 0.01) {
@@ -246,10 +234,7 @@ public class RobotContainer {
     return axis;
   }
 
-  /**
-   * gets value from the left trigger axis (yes, it's an axis) for ejecting the
-   * game piece
-   */
+  /** gets value from the left trigger axis (yes, it's an axis) for ejecting the game piece */
   public static double getClawOutValue() {
     double axis = m_armController2.getLeftTriggerAxis();
     if (Math.abs(axis) < 0.01) {

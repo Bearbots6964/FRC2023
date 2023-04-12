@@ -1,14 +1,15 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.shuffleboard.*;
@@ -18,8 +19,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.interfaces.*;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.SPI;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -149,13 +148,17 @@ public class Tank extends SubsystemBase {
     rightRear.setSmartCurrentLimit(40, 50);
 
     // implement odometry
-    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(gyro.getAngle()),
-        Units.inchesToMeters(
-            (leftFront.getEncoder().getPosition() / 10) * (leftFront.getEncoder().getPosition() / 10)
-                * Math.PI),
-        Units.inchesToMeters(
-            (rightFront.getEncoder().getPosition() / 10) * (rightFront.getEncoder().getPosition() / 10)
-                * Math.PI));
+    odometry =
+        new DifferentialDriveOdometry(
+            Rotation2d.fromDegrees(gyro.getAngle()),
+            Units.inchesToMeters(
+                (leftFront.getEncoder().getPosition() / 10)
+                    * (leftFront.getEncoder().getPosition() / 10)
+                    * Math.PI),
+            Units.inchesToMeters(
+                (rightFront.getEncoder().getPosition() / 10)
+                    * (rightFront.getEncoder().getPosition() / 10)
+                    * Math.PI));
 
     field2d = new Field2d();
     SmartDashboard.putData(field2d);
@@ -171,7 +174,6 @@ public class Tank extends SubsystemBase {
       // run the simulation
       physicsSim.run();
     }
-
   }
 
   @Override
@@ -181,12 +183,15 @@ public class Tank extends SubsystemBase {
 
     // i hate my life
 
-    odometry.update(Rotation2d.fromDegrees(gyro.getAngle()),
+    odometry.update(
+        Rotation2d.fromDegrees(gyro.getAngle()),
         Units.inchesToMeters(
-            (leftFront.getEncoder().getPosition() / 10) * (leftFront.getEncoder().getPosition() / 10)
+            (leftFront.getEncoder().getPosition() / 10)
+                * (leftFront.getEncoder().getPosition() / 10)
                 * Math.PI),
         Units.inchesToMeters(
-            (rightFront.getEncoder().getPosition() / 10) * (rightFront.getEncoder().getPosition() / 10)
+            (rightFront.getEncoder().getPosition() / 10)
+                * (rightFront.getEncoder().getPosition() / 10)
                 * Math.PI));
 
     field2d.setRobotPose(odometry.getPoseMeters());
@@ -199,14 +204,13 @@ public class Tank extends SubsystemBase {
   /**
    * Drives the robot using arcade drive.
    *
-   * @param speed    The forward/backward speed.
+   * @param speed The forward/backward speed.
    * @param rotation The rotation speed.
    */
   public static void arcadeDrive(double speed, double rotation) {
 
     drive.arcadeDrive(
         -speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));
-
   }
 
   public void increaseMaxSpeed() {
@@ -262,7 +266,6 @@ public class Tank extends SubsystemBase {
     leftRear.setOpenLoopRampRate(rampRate);
     rightFront.setOpenLoopRampRate(rampRate);
     rightRear.setOpenLoopRampRate(rampRate);
-
   }
 
   // for some reason -speed is forward. dont ask me why
@@ -272,17 +275,18 @@ public class Tank extends SubsystemBase {
     leftRear.set(-speed);
     rightFront.set(-speed);
     rightRear.set(-speed);
-
   }
 
   public double getLeftDistance() {
-    double numRotations = (leftFront.getEncoder().getPosition() + leftRear.getEncoder().getPosition()) / 2;
+    double numRotations =
+        (leftFront.getEncoder().getPosition() + leftRear.getEncoder().getPosition()) / 2;
     return -numRotations
         * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
   }
 
   public double getRightDistance() {
-    double numRotations = (rightFront.getEncoder().getPosition() + rightRear.getEncoder().getPosition()) / 2;
+    double numRotations =
+        (rightFront.getEncoder().getPosition() + rightRear.getEncoder().getPosition()) / 2;
     return -numRotations
         * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
   }

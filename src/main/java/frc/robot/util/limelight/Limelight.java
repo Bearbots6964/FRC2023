@@ -3,93 +3,92 @@ package frc.robot.util.limelight;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 public class Limelight {
-    private NetworkTable table;
-    private NetworkTableEntry tv;
-    private NetworkTableEntry tx;
-    private NetworkTableEntry ty;
-    private NetworkTableEntry ta;
-    private NetworkTableEntry ts;
-    private NetworkTableEntry tl;
-    private NetworkTableEntry ledMode;
-    private NetworkTableEntry pipeline;
-    private NetworkTableEntry stream;
-    private List<Pipeline> knownPipelines;
-    private Target lastTarget = null;
+  private NetworkTable table;
+  private NetworkTableEntry tv;
+  private NetworkTableEntry tx;
+  private NetworkTableEntry ty;
+  private NetworkTableEntry ta;
+  private NetworkTableEntry ts;
+  private NetworkTableEntry tl;
+  private NetworkTableEntry ledMode;
+  private NetworkTableEntry pipeline;
+  private NetworkTableEntry stream;
+  private List<Pipeline> knownPipelines;
+  private Target lastTarget = null;
 
+  // set the variables here...
 
+  public Limelight(Pipeline... knownPipelines) {
+    this("limelight", knownPipelines);
+  }
 
-    // set the variables here...
+  public Limelight(String tableName, Pipeline... knownPipelines) {
+    this.table = NetworkTableInstance.getDefault().getTable(tableName);
+    this.tv = table.getEntry("tv");
+    this.tx = table.getEntry("tx");
+    this.ty = table.getEntry("ty");
+    this.ta = table.getEntry("ta");
+    this.ts = table.getEntry("ts");
+    this.tl = table.getEntry("tl");
+    this.pipeline = table.getEntry("pipeline");
+    this.ledMode = table.getEntry("ledMode");
+    this.stream = table.getEntry("stream");
+    this.knownPipelines = Arrays.asList(knownPipelines);
+  }
 
-    public Limelight(Pipeline... knownPipelines) {
-        this("limelight", knownPipelines);
-
-
+  public Optional<Target> getTarget() {
+    boolean exists = tv.getDouble(0.0) > 0.0;
+    if (!exists) {
+      return Optional.empty();
     }
-
-    public Limelight(String tableName, Pipeline... knownPipelines) {
-        this.table = NetworkTableInstance.getDefault().getTable(tableName);
-        this.tv = table.getEntry("tv");
-        this.tx = table.getEntry("tx");
-        this.ty = table.getEntry("ty");
-        this.ta = table.getEntry("ta");
-        this.ts = table.getEntry("ts");
-        this.tl = table.getEntry("tl");
-        this.pipeline = table.getEntry("pipeline");
-        this.ledMode = table.getEntry("ledMode");
-        this.stream = table.getEntry("stream");
-        this.knownPipelines = Arrays.asList(knownPipelines);
-    }
-
-    public Optional<Target> getTarget() {
-        boolean exists = tv.getDouble(0.0) > 0.0;
-        if (!exists) {
-            return Optional.empty();
-        }
-        return Optional.of(lastTarget = new Target(
+    return Optional.of(
+        lastTarget =
+            new Target(
                 tx.getDouble(0.0),
                 ty.getDouble(0.0),
                 ta.getDouble(0.0),
                 ts.getDouble(0.0),
                 tl.getDouble(0.0)));
-    }
+  }
 
-    public Optional<Target> getLastTarget() {
-        return Optional.ofNullable(lastTarget);
-    }
+  public Optional<Target> getLastTarget() {
+    return Optional.ofNullable(lastTarget);
+  }
 
-    public LEDMode getLEDMode() {
-        return LEDMode.fromValue(this.ledMode.getNumber(0.0).intValue());
-    }
+  public LEDMode getLEDMode() {
+    return LEDMode.fromValue(this.ledMode.getNumber(0.0).intValue());
+  }
 
-    public void setLEDMode(LEDMode ledMode) {
-        this.ledMode.setNumber(ledMode.getValue());
-    }
+  public void setLEDMode(LEDMode ledMode) {
+    this.ledMode.setNumber(ledMode.getValue());
+  }
 
-    public int getPipelineId() {
-        return this.pipeline.getNumber(0.0).intValue();
-    }
+  public int getPipelineId() {
+    return this.pipeline.getNumber(0.0).intValue();
+  }
 
-    public Optional<Pipeline> getPipeline() {
-        int id = getPipelineId();
-        return knownPipelines.stream().filter(pipeline -> Objects.equals(pipeline.getId(), id)).findFirst();
-    }
+  public Optional<Pipeline> getPipeline() {
+    int id = getPipelineId();
+    return knownPipelines.stream()
+        .filter(pipeline -> Objects.equals(pipeline.getId(), id))
+        .findFirst();
+  }
 
-    public void setPipeline(Pipeline pipeline) {
-        this.pipeline.setNumber(pipeline.getId());
-    }
+  public void setPipeline(Pipeline pipeline) {
+    this.pipeline.setNumber(pipeline.getId());
+  }
 
-    public StreamMode getStreamMode() {
-        return StreamMode.fromValue(this.stream.getNumber(0.0).intValue());
-    }
+  public StreamMode getStreamMode() {
+    return StreamMode.fromValue(this.stream.getNumber(0.0).intValue());
+  }
 
-    public void setStreamMode(StreamMode streamMode) {
-        this.stream.setNumber(streamMode.getValue());
-    }
+  public void setStreamMode(StreamMode streamMode) {
+    this.stream.setNumber(streamMode.getValue());
+  }
 }
