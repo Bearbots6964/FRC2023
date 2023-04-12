@@ -194,7 +194,7 @@ public class RobotContainer {
   @Deprecated
   public static double
       getJoystickArmControllerRightStickX() { // "do not forget to remove this deprecated code
-                                              // someday"
+    // someday"
     // lmao never
     double axis = m_armController.getRawAxis(4);
     SmartDashboard.putNumber("arm right stick x", axis);
