@@ -1,6 +1,8 @@
 package frc.robot.interfaces;
 
 import com.revrobotics.REVLibError;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 
@@ -316,6 +318,21 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
 
     // current limits
     builder.addIntegerProperty("Current Limit", null, this::setSmartCurrentLimit);
+
+
+    // pid stuff
+    builder.addDoubleProperty("P", this::getP, this::setP);
+    builder.addDoubleProperty("I", this::getI, this::setI);
+    builder.addDoubleProperty("D", this::getD, this::setD);
+    builder.addDoubleProperty("F", this::getF, this::setF);
+    builder.addDoubleProperty("IZone", this::getIZone, this::setIZone);
+    builder.addDoubleProperty("Min Output Range", this::getMinOutputRange, this::setMinOutputRange);
+    builder.addDoubleProperty("Max Output Range", this::getMaxOutputRange, this::setMaxOutputRange);
+
+    // encoder stuff
+    builder.addDoubleProperty("Encoder Position", this::getAbsoluteEncoderPosition, null);
+    builder.addDoubleProperty("Encoder Velocity", this::getAbsoluteEncoderVelocity, null);
+
   }
 
   /**
@@ -380,4 +397,78 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     throwIfClosed();
     return setSmartCurrentLimit(limit.intValue(), 0, 20000);
   }
+
+
+  // pid stuff
+  public void setP(double p) {
+    throwIfClosed();
+    getPIDController().setP(p);
+  }
+  public void setI(double i) {
+    throwIfClosed();
+    getPIDController().setI(i);
+  }
+  public void setD(double d) {
+    throwIfClosed();
+    getPIDController().setD(d);
+  }
+  public void setF(double f) {
+    throwIfClosed();
+    getPIDController().setFF(f);
+  }
+  public void setIZone(double iZone) {
+    throwIfClosed();
+    getPIDController().setIZone(iZone);
+  }
+  public void setMinOutputRange(double minOutputRange) {
+    throwIfClosed();
+    getPIDController().setOutputRange(minOutputRange, getMaxOutputRange());
+  }
+  public void setMaxOutputRange(double maxOutputRange) {
+    throwIfClosed();
+    getPIDController().setOutputRange(getMinOutputRange(), maxOutputRange);
+  }
+
+  public double getP() {
+    throwIfClosed();
+    return getPIDController().getP();
+  }
+  public double getI() {
+    throwIfClosed();
+    return getPIDController().getI();
+  }
+  public double getD() {
+    throwIfClosed();
+    return getPIDController().getD();
+  }
+  public double getF() {
+    throwIfClosed();
+    return getPIDController().getFF();
+  }
+  public double getIZone() {
+    throwIfClosed();
+    return getPIDController().getIZone();
+  }
+  public double getMinOutputRange() {
+    throwIfClosed();
+    return getPIDController().getOutputMin();
+  }
+  public double getMaxOutputRange() {
+    throwIfClosed();
+    return getPIDController().getOutputMax();
+  }
+
+
+  // absolute encoder stuff
+  public double getAbsoluteEncoderPosition() {
+    throwIfClosed();
+    return getAlternateEncoder(4096).getPosition();
+  }
+  public double getAbsoluteEncoderVelocity() {
+    throwIfClosed();
+    return getAlternateEncoder(4096).getVelocity();
+  }
+
+
+
 }

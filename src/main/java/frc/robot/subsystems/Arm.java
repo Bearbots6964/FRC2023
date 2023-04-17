@@ -4,9 +4,12 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.REVPhysicsSim;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -29,12 +32,41 @@ public class Arm extends SubsystemBase {
 
   public REVPhysicsSim physicsSim;
 
+  public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, kSetpoint;
+
+  public SparkMaxPIDController armPID;
+
+  public AbsoluteEncoder encoder;
+
+
   public Arm() {
+
+    kP = 0.0001;
+    kI = 0;
+    kD = 0;
+    kIz = 0;
+    kFF = 0;
+    kMaxOutput = 1;
+    kMinOutput = -1;
+
+    kSetpoint = 0;
+
     armMotor = new CANSparkMax(7, MotorType.kBrushless);
     armMotor.setIdleMode(IdleMode.kBrake);
     armMotor.setSmartCurrentLimit(30, 40);
     armMotor.burnFlash();
     addChild("Arm Motor", armMotor);
+
+    armPID = armMotor.getPIDController();
+
+    armPID.setP(kP);
+    armPID.setI(kI);
+    armPID.setD(kD);
+    armPID.setIZone(kIz);
+    armPID.setFF(kFF);
+    armPID.setOutputRange(kMinOutput, kMaxOutput);
+    
+    AbsoluteEncoder encoder = armMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
     encoderWidget = Shuffleboard.getTab("Motors").add("Arm Encoder", armMotor.getEncoder().getPosition()).getEntry();
 

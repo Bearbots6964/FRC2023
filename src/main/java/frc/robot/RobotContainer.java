@@ -44,7 +44,7 @@ public class RobotContainer {
   private final PID m_PID = new PID();
   private final PDP m_PDP = new PDP();
 
-  private final Vision m_Vision = new Vision();
+
 
   // INSTANTIATES ALL COMMANDS
   private final MoveClawCommand m_MoveClawCommand = new MoveClawCommand(m_Claw);
