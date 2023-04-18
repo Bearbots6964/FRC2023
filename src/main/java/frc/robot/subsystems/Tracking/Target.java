@@ -80,7 +80,7 @@ public class Target extends SubsystemBase {
   public static double getTX() {
     return NetworkTableInstance.getDefault().getTable(name).getEntry("tx").getDouble(0);
   }
-  public double getTY() {
+  public static double getTY() {
     return NetworkTableInstance.getDefault().getTable(name).getEntry("ty").getDouble(0);
   }
   public double getTA() {

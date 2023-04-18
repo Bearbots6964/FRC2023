@@ -39,6 +39,7 @@
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/Tank/All": "Motor Controller",
       "/LiveWindow/Tank/Drive": "DifferentialDrive",
+      "/LiveWindow/Tank/Gyro": "Gyro",
       "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
       "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
       "/Shuffleboard/Driver/Gyro": "Gyro",
@@ -82,6 +83,9 @@
       "/SmartDashboard/Field": {
         "Robot": {
           "style": "Track"
+        },
+        "window": {
+          "visible": true
         }
       },
       "/SmartDashboard/Scheduler": {

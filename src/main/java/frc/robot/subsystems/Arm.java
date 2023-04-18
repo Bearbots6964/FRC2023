@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.REVPhysicsSim;
+import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -41,7 +42,6 @@ public class Arm extends SubsystemBase {
 
   public AbsoluteEncoder encoder;
 
-
   public Arm() {
 
     kP = 0.0001;
@@ -58,6 +58,7 @@ public class Arm extends SubsystemBase {
     armMotor.setIdleMode(IdleMode.kBrake);
     armMotor.setSmartCurrentLimit(30, 40);
     armMotor.burnFlash();
+    // set
     addChild("Arm Motor", armMotor);
 
     armPID = armMotor.getPIDController();
@@ -68,8 +69,12 @@ public class Arm extends SubsystemBase {
     armPID.setIZone(kIz);
     armPID.setFF(kFF);
     armPID.setOutputRange(kMinOutput, kMaxOutput);
+
+    // set the spark max to alternate encoder mode
     
-    AbsoluteEncoder encoder = armMotor.getAbsoluteEncoder(Type.kDutyCycle);
+
+    // configure the data port on top to be used with the REV Through Bore Encoder using the absolute encoder adapter
+    encoder = armMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
     encoderWidget = Shuffleboard.getTab("Motors").add("Arm Encoder", armMotor.getEncoder().getPosition()).getEntry();
 
@@ -98,8 +103,6 @@ public class Arm extends SubsystemBase {
     double motorDrive = value * speed;
     armMotor.set(motorDrive);
   }
-
-
 
   @Override
   public void simulationPeriodic() {

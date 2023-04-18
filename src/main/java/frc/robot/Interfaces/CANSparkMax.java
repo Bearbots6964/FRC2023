@@ -462,11 +462,11 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
   // absolute encoder stuff
   public double getAbsoluteEncoderPosition() {
     throwIfClosed();
-    return getAlternateEncoder(4096).getPosition();
+    return getAbsoluteEncoder(Type.kDutyCycle).getPosition();
   }
   public double getAbsoluteEncoderVelocity() {
     throwIfClosed();
-    return getAlternateEncoder(4096).getVelocity();
+    return getAbsoluteEncoder(Type.kDutyCycle).getVelocity();
   }
 
 

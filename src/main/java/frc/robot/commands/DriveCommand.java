@@ -16,6 +16,8 @@ public class DriveCommand extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Tank m_drivebase;
 
+  private boolean isFinishedVar = false;
+
 
 
 
@@ -47,9 +49,11 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    // we need to return the value in Constants.isDriveCommandFinished but in a static way while keeping the value non-static in Constants
-    private static final boolean x = Constants.isDriveCommandFinished;
-    return x;
+    return isFinishedVar;
+  }
+
+  public void setFinished(boolean x) {
+    isFinishedVar = x;
   }
 
   @Override
