@@ -21,6 +21,9 @@ import frc.robot.interfaces.CANSparkMax;
 
 public class Arm extends SubsystemBase {
 
+  public double armToFrontAngle = 3;
+  public double armToBackAngle = -3;
+
   public CANSparkMax armMotor;
   public DigitalInput allTheWayDownRear = new DigitalInput(1);
   public double desiredArmAngle;
@@ -96,11 +99,15 @@ public class Arm extends SubsystemBase {
     armMotor.set(motorDrive);
   }
 
-  public void moveArmToZeroDeg() {
-  }
+
 
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  public void setArmAngle(double angle) {
+    desiredArmAngle = angle;
+    armPID.setReference(angle, CANSparkMax.ControlType.kPosition);
   }
 }

@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 
 public class Target extends SubsystemBase {
-  private String name = "limelight";
+  private static String name = "limelight";
   private double tx;
   private double ty;
   private double ta;
@@ -36,6 +36,7 @@ public class Target extends SubsystemBase {
   private GenericEntry taEntry;
   private GenericEntry tclassEntry;
   private GenericEntry targetedEntry;
+  private static LimelightHelpers limelightHelpers = new LimelightHelpers();
 
   /** Creates a new Target. */
   public Target() {
@@ -65,14 +66,27 @@ public class Target extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    tx = LimelightHelpers.getTX(name);
-    ty = LimelightHelpers.getTY(name);
-    ta = LimelightHelpers.getTA(name);
+    tx = limelightHelpers.getTX(name);
+    ty = limelightHelpers.getTY(name);
+    ta = limelightHelpers.getTA(name);
     tclass = NetworkTableInstance.getDefault().getTable(name).getEntry("tclass").getDouble(0);
 
     txEntry.setDouble(tx);
     tyEntry.setDouble(ty);
     taEntry.setDouble(ta);
     tclassEntry.setDouble(tclass);
+  }
+
+  public static double getTX() {
+    return NetworkTableInstance.getDefault().getTable(name).getEntry("tx").getDouble(0);
+  }
+  public double getTY() {
+    return NetworkTableInstance.getDefault().getTable(name).getEntry("ty").getDouble(0);
+  }
+  public double getTA() {
+    return NetworkTableInstance.getDefault().getTable(name).getEntry("ta").getDouble(0);
+  }
+  public double getTClass() {
+    return NetworkTableInstance.getDefault().getTable(name).getEntry("tclass").getDouble(0);
   }
 }

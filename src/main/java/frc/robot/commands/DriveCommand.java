@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.security.Guard;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -13,6 +15,9 @@ import frc.robot.subsystems.Tank;
 public class DriveCommand extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Tank m_drivebase;
+
+
+
 
   public DriveCommand(Tank subsystem) {
     m_drivebase = subsystem;
@@ -27,6 +32,7 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     // double check getMaxSpeed(), might be wrong
+    
     Tank.arcadeDrive(
         /* rotation */RobotContainer.getAdjustedTurningStickInput() * Constants.CanConstants.maxSpeed,
         /* speed */RobotContainer.getAdjustedForwardStickInput() * 0.7);
@@ -41,7 +47,9 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    // we need to return the value in Constants.isDriveCommandFinished but in a static way while keeping the value non-static in Constants
+    private static final boolean x = Constants.isDriveCommandFinished;
+    return x;
   }
 
   @Override

@@ -57,4 +57,5 @@ public final class Constants {
   }
 
   public static final String OperatorConstast = null;
+public boolean isDriveCommandFinished = false;
 }
