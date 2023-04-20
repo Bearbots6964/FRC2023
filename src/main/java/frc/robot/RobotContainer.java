@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Tracking.Target;
 import io.github.oblarg.oblog.Logger;
 
 /**
@@ -44,6 +45,7 @@ public class RobotContainer {
   private final Tank m_Tank = new Tank();
   private final PID m_PID = new PID();
   private final PDP m_PDP = new PDP();
+  private final Target m_Target = new Target();
 
 
 
@@ -61,6 +63,9 @@ public class RobotContainer {
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
   private final PlaceCubeSecondLevelCommand m_PlaceCubeSecondLevelCommand = new PlaceCubeSecondLevelCommand(m_Tank,
       m_Arm, m_Claw);
+  
+  // private final XTracking m_XTracking = new XTracking(m_Tank, null, m_Target);
+  // private final YTracking m_YTracking = new YTr
 
   private GenericEntry timeWidget = Shuffleboard.getTab("stuff").add("time", 0).withWidget("Match Time").getEntry();
 
@@ -115,6 +120,9 @@ public class RobotContainer {
     new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_FineDriveCommand);
     new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceConeSecondLevelCommand);
+
+    new JoystickButton(m_armController2, XboxController.Button.kStart.value)
+        .onTrue(m_AutoCommand)
 
     // new JoystickButton(m_armController2, XboxController.Button.kB.value)
     // .whileTrue(m_PlaceConeSecondLevelCommand);

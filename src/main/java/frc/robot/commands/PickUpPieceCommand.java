@@ -6,14 +6,17 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Tank;
 
 public class PickUpPieceCommand extends CommandBase {
   /** Creates a new PickUpPieceCommand. */
   private Claw m_Claw;
-  public PickUpPieceCommand(Claw claw) {
+  private Tank m_Tank;
+  public PickUpPieceCommand(Claw claw, Tank tank) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Claw = claw;
-    addRequirements(claw);
+    m_Tank = tank;
+    addRequirements(claw, tank);
   }
 
   // Called when the command is initially scheduled.
@@ -23,16 +26,18 @@ public class PickUpPieceCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Claw.clawMotor.set(0.5);
+    // This is the big one. First, make sure that the PID loop is finished
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_Claw.clawMotor.set(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_Claw.clawMotor.getEncoder().getVelocity() <= 0.2;
   }
 }

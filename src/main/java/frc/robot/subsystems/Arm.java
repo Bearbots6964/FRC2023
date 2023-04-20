@@ -80,6 +80,9 @@ public class Arm extends SubsystemBase {
 
     Shuffleboard.getTab("Motors").add("Arm", armMotor);
 
+    // configure the PID loop to use the alternate encoder
+    armPID.setFeedbackDevice(encoder);
+
     // add simulation data
     if (RobotBase.isSimulation()) {
       physicsSim = new REVPhysicsSim();
@@ -112,5 +115,9 @@ public class Arm extends SubsystemBase {
   public void setArmAngle(double angle) {
     desiredArmAngle = angle;
     armPID.setReference(angle, CANSparkMax.ControlType.kPosition);
+  }
+
+  public void putArmAtFront() {
+    setArmAngle(armToFrontAngle);
   }
 }
