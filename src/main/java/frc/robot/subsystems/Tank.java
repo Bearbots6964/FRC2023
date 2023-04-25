@@ -202,7 +202,7 @@ public class Tank extends SubsystemBase {
    * @param speed    The forward/backward speed.
    * @param rotation The rotation speed.
    */
-  public static void arcadeDrive(double speed, double rotation) {
+  public void arcadeDrive(double speed, double rotation) {
 
     drive.arcadeDrive(
         -speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));

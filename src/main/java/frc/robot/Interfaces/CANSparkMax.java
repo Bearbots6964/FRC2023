@@ -333,6 +333,9 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     builder.addDoubleProperty("Encoder Position", this::getAbsoluteEncoderPosition, null);
     builder.addDoubleProperty("Encoder Velocity", this::getAbsoluteEncoderVelocity, null);
 
+    builder.addDoubleProperty("Conversion Factor", this::getPositionConversionFactor, this::setPositionConversionFactor);
+
+
   }
 
   /**
@@ -467,6 +470,17 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
   public double getAbsoluteEncoderVelocity() {
     throwIfClosed();
     return getAbsoluteEncoder(Type.kDutyCycle).getVelocity();
+  }
+
+
+  public double getPositionConversionFactor() {
+    throwIfClosed();
+    return getAbsoluteEncoder(Type.kDutyCycle).getPositionConversionFactor();
+  }
+
+  public void setPositionConversionFactor(double a) {
+    throwIfClosed();
+    getAbsoluteEncoder(Type.kDutyCycle).setPositionConversionFactor(a);
   }
 
 
