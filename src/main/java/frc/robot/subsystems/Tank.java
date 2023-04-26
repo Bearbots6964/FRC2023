@@ -134,7 +134,7 @@ public class Tank extends SubsystemBase {
     drive.setSafetyEnabled(false);
     drive.setExpiration(0.1);
 
-    drive.setMaxOutput(1.0);
+    drive.setMaxOutput(0.8);
 
     brakeMode = true;
     SmartDashboard.putBoolean("brakeMode", brakeMode);

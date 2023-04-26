@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -78,25 +79,30 @@ public class RobotContainer {
 
     // add a few things to the shuffleboard
     // joysticks
-    var tab = Shuffleboard.getTab("Subsystems");
-    tab.add(m_Arm);
-    tab.add(m_AutoCommand);
-    tab.add(m_BalanceCommand);
-    tab.add(m_DecreaseMaxSpeedCommand);
-    tab.add(m_DriveCommand);
-    tab.add(m_FineDriveCommand);
-    tab.add(m_IncreaseMaxSpeedCommand);
-    tab.add(m_MoveArmYCommand);
-    tab.add(m_PDP);
-    tab.add(m_PlaceCubeSecondLevelCommand);
-    tab.add(m_Vision);
+    var subsystemsTab = Shuffleboard.getTab("Subsystems");
+    var mainTab = Shuffleboard.getTab("Main");
+    subsystemsTab.add(m_Arm);
+    subsystemsTab.add(m_AutoCommand);
+    subsystemsTab.add(m_BalanceCommand);
+    subsystemsTab.add(m_DecreaseMaxSpeedCommand);
+    subsystemsTab.add(m_DriveCommand);
+    subsystemsTab.add(m_FineDriveCommand);
+    subsystemsTab.add(m_IncreaseMaxSpeedCommand);
+    subsystemsTab.add(m_MoveArmYCommand);
+    subsystemsTab.add(m_PDP);
+    subsystemsTab.add(m_PlaceCubeSecondLevelCommand);
+    subsystemsTab.add(m_Vision);
 
-    tab.add(m_PID);
-    tab.add(m_PlaceConeSecondLevelCommand);
-    tab.add(m_Tank);
-    tab.add(m_Claw);
+    subsystemsTab.add(m_PID);
+    subsystemsTab.add(m_PlaceConeSecondLevelCommand);
+    subsystemsTab.add(m_Tank);
+    subsystemsTab.add(m_Claw);
 
     Logger.configureLoggingAndConfig(this, false);
+
+
+
+
   }
 
   /**

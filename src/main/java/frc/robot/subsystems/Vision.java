@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
 public class Vision extends PIDSubsystem {
   /** Creates a new Vision. */
-  private static double kP = 0.18;
-  private static double kI = 0.025;
-  private static double kD = 0.3;
+  private static double kP = 0.02;
+  private static double kI = 0.05;
+  private static double kD = 0.0007;
 
   public PIDController pidController;
   public Tank m_tank;
@@ -26,17 +26,33 @@ public class Vision extends PIDSubsystem {
 
     addChild(getName(), m_controller);
     m_tank = tank;
+    m_controller.setSetpoint(0);
+    m_controller.setTolerance(2);
+    m_controller.setIntegratorRange(-0.43, 0.43);
 
     Shuffleboard.getTab(getName()).add(m_controller);
-    
+
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
     // Use the output here
-    m_tank.arcadeDrive(0.05, output);
 
+    if (0.40 < output) {
+      output = 0.40;
+    } else if (-0.40 > output) {
+      output = -0.40;
+    } else if (0 < output && output < 0.40) {
+      output = 0.40;
+    } else if (-0.40 < output && output < 0) {
+      output = -0.40;
+    }
     
+
+    m_tank.arcadeDrive(0, -output * 1);
+    SmartDashboard.putNumber("will this work?", output);
+    SmartDashboard.putNumber("setpoint", setpoint);
+
   }
 
   @Override
@@ -65,8 +81,8 @@ public class Vision extends PIDSubsystem {
   @Override
   public void periodic() {
     super.periodic();
-    SmartDashboard.putNumber("stuff again", m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
+    SmartDashboard.putNumber("calculated turning output from vision",
+        m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
   }
-
 
 }

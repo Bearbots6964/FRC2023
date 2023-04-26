@@ -71,6 +71,8 @@
       "/Shuffleboard/Subsystems/SwitchIdleModeCommmand": "Command",
       "/Shuffleboard/Subsystems/Tank": "Subsystem",
       "/Shuffleboard/Subsystems/Turret": "Subsystem",
+      "/Shuffleboard/Subsystems/Vision": "Subsystem",
+      "/Shuffleboard/Vision/Vision": "PIDController",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Scheduler": "Scheduler"
     },

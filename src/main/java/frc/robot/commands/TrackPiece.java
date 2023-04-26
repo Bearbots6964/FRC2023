@@ -23,12 +23,15 @@ public class TrackPiece extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Tank.arcadeDrive(0.05, m_Vision.getController().calculate(m_Vision.getMeasurement(), m_Vision.getSetpoint()));
+    //m_Tank.arcadeDrive(0.05, m_Vision.getController().calculate(m_Vision.getMeasurement(), m_Vision.getSetpoint()));
+    m_Vision.enable();
     SmartDashboard.putString("a", "pid on");
+
   }
 
   @Override
   public void execute() {
+
     SmartDashboard.putNumber(getName(), m_Vision.getController().calculate(m_Vision.getMeasurement(), m_Vision.getSetpoint()));
   }
   // Called once the command ends or is interrupted.
