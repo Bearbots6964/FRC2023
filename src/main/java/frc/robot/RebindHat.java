@@ -5,7 +5,17 @@ package frc.robot;
 @Deprecated
 public class RebindHat {
   public static double JoystickToYAxis() {
-
+    if (RobotContainer.m_armController.getPOV() == -1
+         || RobotContainer.m_armController.getPOV() == 90
+         || RobotContainer.m_armController.getPOV() == 270) {
+       return 0;
+     }
+     if (RobotContainer.m_armController.getPOV() > 270
+         || RobotContainer.m_armController.getPOV() < 90) {
+       return 1;
+     } else {
+       return -1;
+     }
   }
 
   public static double JoystickToXAxis() {
