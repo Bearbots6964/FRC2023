@@ -47,6 +47,8 @@ public class RobotContainer {
   private final PID m_PID = new PID();
   private final PDP m_PDP = new PDP();
   private final Vision m_Vision = new Vision(m_Tank, m_Claw);
+  private final PoleTracking m_PoleTracking = new PoleTracking(m_Tank);
+
 
   // INSTANTIATES ALL COMMANDS
   private final MoveClawCommand m_MoveClawCommand = new MoveClawCommand(m_Claw);
@@ -63,6 +65,7 @@ public class RobotContainer {
   private final PlaceCubeSecondLevelCommand m_PlaceCubeSecondLevelCommand = new PlaceCubeSecondLevelCommand(m_Tank,
       m_Arm, m_Claw);
   private final TrackPiece m_TrackPiece = new TrackPiece(m_Vision, m_Tank, m_Claw);
+  private final TrackPole m_TrackPole = new TrackPole(m_PoleTracking, m_Tank);
 
   // private final XTracking m_XTracking = new XTracking(m_Tank, null, m_Target);
   // private final YTracking m_YTracking = new YTr
@@ -125,6 +128,7 @@ public class RobotContainer {
     new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceConeSecondLevelCommand);
 
     new JoystickButton(m_armController2, XboxController.Button.kX.value).whileTrue(m_TrackPiece);
+    new JoystickButton(m_armController2, XboxController.Button.kB.value).whileTrue(m_TrackPole);
 
     // new JoystickButton(m_armController2, XboxController.Button.kB.value)
     // .whileTrue(m_PlaceConeSecondLevelCommand);

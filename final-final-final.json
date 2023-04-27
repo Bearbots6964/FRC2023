@@ -199,6 +199,19 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "30,15": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///limelight/pipeline",
+              "_title": "limelight/pipeline",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -278,8 +291,7 @@
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
               "Y-axis/Lower bound": -1.0,
-              "Y-axis/Unit": "ul",
-              "Visible data/SmartDashboard/stuff again": true
+              "Y-axis/Unit": "ul"
             }
           },
           "17,11": {

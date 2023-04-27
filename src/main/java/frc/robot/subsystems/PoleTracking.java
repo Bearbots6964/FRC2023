@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.RobotContainer;
 
-public class Vision extends PIDSubsystem {
+public class PoleTracking extends PIDSubsystem {
   /** Creates a new Vision. */
   private static double kP = 0.1;
   private static double kI = 0;
@@ -19,44 +19,25 @@ public class Vision extends PIDSubsystem {
 
   public PIDController pidController;
   public Tank m_tank;
-  public Claw m_claw;
 
-  public Vision(Tank tank, Claw claw) {
+  public PoleTracking(Tank tank) {
     super(
         // The PIDController used by the subsystem
         new PIDController(kP, kI, kD));
 
     addChild(getName(), m_controller);
     m_tank = tank;
-    m_claw = claw;
     m_controller.setSetpoint(0);
     m_controller.setTolerance(1);
     m_controller.setIntegratorRange(-0.43, 0.43);
 
     Shuffleboard.getTab(getName()).add(m_controller);
-    
 
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(2);
-
-    double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
-
-    // Use the output here
-    double forward = 1 - Math.abs(output) / 30;
-    if (forward < .1) {
-      forward = .1;
-    }
-    forward *= 0.6;
-    if (ty < 0) {
-      forward = 0.5;
-    }
-    double stick = RobotContainer.getControllerRightStickY();
-    if (stick > .5) {
-      forward += (stick / 2) - .25;
-    }
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(1);
 
     if (0.50 < output) {
       output = 0.50;
@@ -68,9 +49,7 @@ public class Vision extends PIDSubsystem {
       output = -0.40;
     }
 
-    m_tank.arcadeDrive(-forward, -output * 1);
-    SmartDashboard.putNumber("will this work?", output);
-    SmartDashboard.putNumber("setpoint", setpoint);
+    m_tank.arcadeDrive(0, -output * 1);
 
   }
 
@@ -100,7 +79,7 @@ public class Vision extends PIDSubsystem {
   @Override
   public void periodic() {
     super.periodic();
-    SmartDashboard.putNumber("calculated turning output from vision",
+    SmartDashboard.putNumber("calculated turning output from vision (pole)",
         m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
   }
 
