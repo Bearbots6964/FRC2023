@@ -8,6 +8,8 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RebindHat;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
 public class FineDriveCommand extends CommandBase {
@@ -30,6 +32,7 @@ public class FineDriveCommand extends CommandBase {
   @Override
   public void execute() {
     // double check getMaxSpeed(), might be wrong
+    RobotContainer.rumbleGabeController(1);
     m_drivebase.arcadeDrive(
         RebindHat.ControllerToYAxis() * multWidget.getDouble(0), RebindHat.ControllerToXAxis() * multWidget.getDouble(0));
   }
@@ -37,6 +40,7 @@ public class FineDriveCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drivebase.arcadeDrive(0, 0);
+    RobotContainer.rumbleGabeController(0);
   }
 
   @Override

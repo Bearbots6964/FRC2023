@@ -42,6 +42,9 @@ public class Arm extends SubsystemBase {
 
   public AbsoluteEncoder encoder;
 
+  double lastEncoderValue;
+  int rotations;
+
   public Arm() {
 
     kP = 0.0001;
@@ -71,14 +74,16 @@ public class Arm extends SubsystemBase {
     armPID.setOutputRange(kMinOutput, kMaxOutput);
 
     // set the spark max to alternate encoder mode
-    
 
-    // configure the data port on top to be used with the REV Through Bore Encoder using the absolute encoder adapter
+    // configure the data port on top to be used with the REV Through Bore Encoder
+    // using the absolute encoder adapter
     encoder = armMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
     encoderWidget = Shuffleboard.getTab("Motors").add("Arm Encoder", armMotor.getEncoder().getPosition()).getEntry();
 
     Shuffleboard.getTab("Motors").add("Arm", armMotor);
+
+    lastEncoderValue = armMotor.getEncoder().getPosition();
 
     // configure the PID loop to use the alternate encoder
     armPID.setFeedbackDevice(encoder);
@@ -94,8 +99,18 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard.putBoolean("zeroDeg", allTheWayDownRear.get());
+    double encoderValue = armMotor.getEncoder().getPosition();
+    double change = encoderValue - lastEncoderValue;
+    if (Math.abs(change) > 0.5) {
+      if (change < 0) {
+        rotations++;
+      } else {
+        rotations--;
+      }
+    }
+    lastEncoderValue = encoderValue;
 
-    encoderWidget.setDouble(armMotor.getEncoder().getPosition());
+    encoderWidget.setDouble(encoderValue);
   }
 
   /**

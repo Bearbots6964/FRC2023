@@ -9,25 +9,28 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import frc.robot.RobotContainer;
 
 public class Vision extends PIDSubsystem {
   /** Creates a new Vision. */
-  private static double kP = 0.02;
-  private static double kI = 0.05;
-  private static double kD = 0.0007;
+  private static double kP = 0.1;
+  private static double kI = 0;
+  private static double kD = 0;
 
   public PIDController pidController;
   public Tank m_tank;
+  public Claw m_claw;
 
-  public Vision(Tank tank) {
+  public Vision(Tank tank, Claw claw) {
     super(
         // The PIDController used by the subsystem
         new PIDController(kP, kI, kD));
 
     addChild(getName(), m_controller);
     m_tank = tank;
+    m_claw = claw;
     m_controller.setSetpoint(0);
-    m_controller.setTolerance(2);
+    m_controller.setTolerance(1);
     m_controller.setIntegratorRange(-0.43, 0.43);
 
     Shuffleboard.getTab(getName()).add(m_controller);
@@ -36,20 +39,34 @@ public class Vision extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    // Use the output here
 
-    if (0.40 < output) {
+    double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
+
+    // Use the output here
+    double forward = 1 - Math.abs(output) / 30;
+    if (forward < .1) {
+      forward = .1;
+    }
+    forward *= 0.6;
+    if (ty < 0) {
+      forward = 0.5;
+    }
+    double stick = RobotContainer.getControllerRightStickY();
+    if (stick > .5) {
+      forward += (stick / 2) - .25;
+    }
+
+    if (0.50 < output) {
+      output = 0.50;
+    } else if (-0.50 > output) {
+      output = -0.50;
+    } else if (0.1 < output && output < 0.40) {
       output = 0.40;
-    } else if (-0.40 > output) {
-      output = -0.40;
-    } else if (0 < output && output < 0.40) {
-      output = 0.40;
-    } else if (-0.40 < output && output < 0) {
+    } else if (-0.40 < output && output < -0.1) {
       output = -0.40;
     }
-    
 
-    m_tank.arcadeDrive(0, -output * 1);
+    m_tank.arcadeDrive(-forward, -output * 1);
     SmartDashboard.putNumber("will this work?", output);
     SmartDashboard.putNumber("setpoint", setpoint);
 

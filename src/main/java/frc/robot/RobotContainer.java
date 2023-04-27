@@ -9,6 +9,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,9 +46,7 @@ public class RobotContainer {
   private final Tank m_Tank = new Tank();
   private final PID m_PID = new PID();
   private final PDP m_PDP = new PDP();
-  private final Vision m_Vision = new Vision(m_Tank);
-
-
+  private final Vision m_Vision = new Vision(m_Tank, m_Claw);
 
   // INSTANTIATES ALL COMMANDS
   private final MoveClawCommand m_MoveClawCommand = new MoveClawCommand(m_Claw);
@@ -63,8 +62,8 @@ public class RobotContainer {
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
   private final PlaceCubeSecondLevelCommand m_PlaceCubeSecondLevelCommand = new PlaceCubeSecondLevelCommand(m_Tank,
       m_Arm, m_Claw);
-  private final TrackPiece m_TrackPiece = new TrackPiece(m_Vision, m_Tank);
-  
+  private final TrackPiece m_TrackPiece = new TrackPiece(m_Vision, m_Tank, m_Claw);
+
   // private final XTracking m_XTracking = new XTracking(m_Tank, null, m_Target);
   // private final YTracking m_YTracking = new YTr
 
@@ -100,9 +99,6 @@ public class RobotContainer {
 
     Logger.configureLoggingAndConfig(this, false);
 
-
-
-
   }
 
   /**
@@ -128,10 +124,7 @@ public class RobotContainer {
         .whileTrue(m_FineDriveCommand);
     new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceConeSecondLevelCommand);
 
-
     new JoystickButton(m_armController2, XboxController.Button.kX.value).whileTrue(m_TrackPiece);
-
-
 
     // new JoystickButton(m_armController2, XboxController.Button.kB.value)
     // .whileTrue(m_PlaceConeSecondLevelCommand);
@@ -250,6 +243,19 @@ public class RobotContainer {
     }
     return axis;
   }
+  
+  public static double getControllerRightStickY() {
+    double axis = m_armController2.getRawAxis(5);
+    if (Math.abs(axis) < 0.4) {
+      axis = 0;
+    }
+    return -axis;
+  }
+
+  public static void rumbleGabeController(double rumble) {
+    XboxController controller = m_driverController;
+    controller.setRumble(RumbleType.kBothRumble, rumble);
+  }
 
   /**
    * gets value from the right trigger axis (yes, it's an axis) for grabbing up
@@ -300,7 +306,5 @@ public class RobotContainer {
     Logger.updateEntries();
     timeWidget.setDouble(DriverStation.getMatchTime());
   }
-
-
 
 }

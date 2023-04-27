@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Tank;
 import frc.robot.subsystems.Vision;
 
@@ -13,11 +15,13 @@ public class TrackPiece extends CommandBase {
   /** Creates a new TrackPiece. */
   private Vision m_Vision;
   private Tank m_Tank;
-  public TrackPiece(Vision vision, Tank tank) {
+  private Claw m_Claw;
+  public TrackPiece(Vision vision, Tank tank, Claw claw) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Vision = vision;
     m_Tank = tank;
-    addRequirements(m_Vision, m_Tank);
+    m_Claw = claw;
+    addRequirements(m_Vision, m_Tank, m_Claw);
   }
 
   // Called when the command is initially scheduled.
@@ -26,25 +30,30 @@ public class TrackPiece extends CommandBase {
     //m_Tank.arcadeDrive(0.05, m_Vision.getController().calculate(m_Vision.getMeasurement(), m_Vision.getSetpoint()));
     m_Vision.enable();
     SmartDashboard.putString("a", "pid on");
+    m_Claw.closeClaw();
 
   }
 
   @Override
   public void execute() {
+    //m_Tank.setAllMotors(-0.2);
+    RobotContainer.rumbleGabeController(1);
 
     SmartDashboard.putNumber(getName(), m_Vision.getController().calculate(m_Vision.getMeasurement(), m_Vision.getSetpoint()));
   }
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.rumbleGabeController(0);
     m_Vision.disable();
     m_Tank.arcadeDrive(0,0);
     SmartDashboard.putString("a", "pid off");
+    m_Claw.stopClaw();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_Vision.atSetpoint();
+    return false;
   }
 }
