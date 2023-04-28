@@ -17,6 +17,7 @@ public class AutoArmPostioning extends PIDSubsystem {
     public PIDController m_controller;
     public double target;
     public Arm m_arm;
+    public boolean going;
 
     public AutoArmPostioning(Arm arm) {
         super(
@@ -25,6 +26,7 @@ public class AutoArmPostioning extends PIDSubsystem {
         m_arm = arm;
         m_controller.setTolerance(0.1);
         m_controller.setSetpoint(0);
+        going = false;
     }
 
     public void setTarget(double target) {
@@ -61,9 +63,11 @@ public class AutoArmPostioning extends PIDSubsystem {
 
     @Override
     public void periodic() {
-        super.periodic();
-        SmartDashboard.putNumber("caluclated power to arm form PID",
-                m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
+        if (going) {
+            super.periodic();
+            SmartDashboard.putNumber("caluclated power to arm form PID",
+                    m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
+        }
     }
 
 }
