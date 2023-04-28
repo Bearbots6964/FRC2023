@@ -69,10 +69,7 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-    implementation "com.github.Oblarg:Oblog:5.1.0"
     
-    
-    implementation 'org.json:json:20211205'
     
 
 }
