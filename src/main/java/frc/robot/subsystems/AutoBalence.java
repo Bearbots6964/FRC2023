@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class PID extends SubsystemBase {
+public class AutoBalence extends SubsystemBase {
 
   private final double kP = 0.18;
   private final double kI = 0.025;
@@ -25,7 +25,7 @@ public class PID extends SubsystemBase {
 
   private float initPitch;
 
-  public PID() {
+  public AutoBalence() {
     toleranceDeg = 0.5;
     iLimit = 2.0;
 

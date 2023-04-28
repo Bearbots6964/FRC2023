@@ -11,7 +11,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.PoleTracking;
 import frc.robot.subsystems.Tank;
-import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.AutoPiecePickUp;
 
 public class TrackPole extends CommandBase {
   /** Creates a new TrackPiece. */

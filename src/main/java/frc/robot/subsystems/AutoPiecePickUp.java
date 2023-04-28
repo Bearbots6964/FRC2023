@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.RobotContainer;
 
-public class Vision extends PIDSubsystem {
+public class AutoPiecePickUp extends PIDSubsystem {
   /** Creates a new Vision. */
   private static double kP = 0.1;
   private static double kI = 0;
@@ -21,7 +21,7 @@ public class Vision extends PIDSubsystem {
   public Tank m_tank;
   public Claw m_claw;
 
-  public Vision(Tank tank, Claw claw) {
+  public AutoPiecePickUp(Tank tank, Claw claw) {
     super(
         // The PIDController used by the subsystem
         new PIDController(kP, kI, kD));

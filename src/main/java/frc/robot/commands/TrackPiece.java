@@ -10,14 +10,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Tank;
-import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.AutoPiecePickUp;
 
 public class TrackPiece extends CommandBase {
   /** Creates a new TrackPiece. */
-  private Vision m_Vision;
+  private AutoPiecePickUp m_Vision;
   private Tank m_Tank;
   private Claw m_Claw;
-  public TrackPiece(Vision vision, Tank tank, Claw claw) {
+  public TrackPiece(AutoPiecePickUp vision, Tank tank, Claw claw) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Vision = vision;
     m_Tank = tank;

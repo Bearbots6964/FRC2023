@@ -44,18 +44,17 @@ public class RobotContainer {
   private final Arm m_Arm = new Arm();
   private final Claw m_Claw = new Claw();
   private final Tank m_Tank = new Tank();
-  private final PID m_PID = new PID();
+  private final AutoBalence m_Balance = new AutoBalence();
   private final PDP m_PDP = new PDP();
-  private final Vision m_Vision = new Vision(m_Tank, m_Claw);
+  private final AutoPiecePickUp m_Vision = new AutoPiecePickUp(m_Tank, m_Claw);
   private final PoleTracking m_PoleTracking = new PoleTracking(m_Tank);
-
 
   // INSTANTIATES ALL COMMANDS
   private final MoveClawCommand m_MoveClawCommand = new MoveClawCommand(m_Claw);
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
-  private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_PID, m_Tank);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_PID, m_Tank, m_Arm, m_Claw);
+  private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_Balance, m_Tank);
+  private final AutoCommand m_AutoCommand = new AutoCommand(m_Balance, m_Tank, m_Arm, m_Claw);
   private final InvertDriveCommand m_InvertDriveCommand = new InvertDriveCommand(m_Tank, this);
   private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand = new PlaceConeSecondLevelCommand(m_Tank,
       m_Arm, m_Claw);
@@ -95,7 +94,7 @@ public class RobotContainer {
     subsystemsTab.add(m_PlaceCubeSecondLevelCommand);
     subsystemsTab.add(m_Vision);
 
-    subsystemsTab.add(m_PID);
+    subsystemsTab.add(m_Balance);
     subsystemsTab.add(m_PlaceConeSecondLevelCommand);
     subsystemsTab.add(m_Tank);
     subsystemsTab.add(m_Claw);
@@ -247,7 +246,7 @@ public class RobotContainer {
     }
     return axis;
   }
-  
+
   public static double getControllerRightStickY() {
     double axis = m_armController2.getRawAxis(5);
     if (Math.abs(axis) < 0.4) {

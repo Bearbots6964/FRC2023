@@ -27,8 +27,8 @@ public class Arm extends SubsystemBase {
 
   public CANSparkMax armMotor;
   public DigitalInput allTheWayDownRear = new DigitalInput(1);
-  public double desiredArmAngle;
-  public double currentArmAngle;
+  //public double desiredArmAngle;
+  //public double currentArmAngle;
 
   public double gearRatio = 87;
 
@@ -38,7 +38,7 @@ public class Arm extends SubsystemBase {
 
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, kSetpoint;
 
-  public SparkMaxPIDController armPID;
+  //public SparkMaxPIDController armPID;
 
   public AbsoluteEncoder encoder;
 
@@ -47,15 +47,15 @@ public class Arm extends SubsystemBase {
 
   public Arm() {
 
-    kP = 0.0001;
-    kI = 0;
-    kD = 0;
-    kIz = 0;
-    kFF = 0;
-    kMaxOutput = 1;
-    kMinOutput = -1;
+    // kP = 0.0001;
+    // kI = 0;
+    // kD = 0;
+    // kIz = 0;
+    // kFF = 0;
+    // kMaxOutput = 1;
+    // kMinOutput = -1;
 
-    kSetpoint = 0;
+    // kSetpoint = 0;
 
     armMotor = new CANSparkMax(7, MotorType.kBrushless);
     armMotor.setIdleMode(IdleMode.kBrake);
@@ -64,14 +64,14 @@ public class Arm extends SubsystemBase {
     // set
     addChild("Arm Motor", armMotor);
 
-    armPID = armMotor.getPIDController();
+    // armPID = armMotor.getPIDController();
 
-    armPID.setP(kP);
-    armPID.setI(kI);
-    armPID.setD(kD);
-    armPID.setIZone(kIz);
-    armPID.setFF(kFF);
-    armPID.setOutputRange(kMinOutput, kMaxOutput);
+    // armPID.setP(kP);
+    // armPID.setI(kI);
+    // armPID.setD(kD);
+    // armPID.setIZone(kIz);
+    // armPID.setFF(kFF);
+    // armPID.setOutputRange(kMinOutput, kMaxOutput);
 
     // set the spark max to alternate encoder mode
 
@@ -86,7 +86,7 @@ public class Arm extends SubsystemBase {
     lastEncoderValue = armMotor.getEncoder().getPosition();
 
     // configure the PID loop to use the alternate encoder
-    armPID.setFeedbackDevice(encoder);
+   // armPID.setFeedbackDevice(encoder);
 
     // add simulation data
     if (RobotBase.isSimulation()) {
@@ -126,13 +126,16 @@ public class Arm extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
-
-  public void setArmAngle(double angle) {
-    desiredArmAngle = angle;
-    armPID.setReference(angle, CANSparkMax.ControlType.kPosition);
+  public double getAngle(){
+    return armMotor.getEncoder().getPosition() + rotations;
   }
 
-  public void putArmAtFront() {
-    setArmAngle(armToFrontAngle);
-  }
+  // public void setArmAngle(double angle) {
+  //   //desiredArmAngle = angle;
+  //   //armPID.setReference(angle, CANSparkMax.ControlType.kPosition);
+  // }
+
+  // public void putArmAtFront() {
+  //   setArmAngle(armToFrontAngle);
+  // }
 }

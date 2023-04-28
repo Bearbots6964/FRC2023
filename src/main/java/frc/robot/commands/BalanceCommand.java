@@ -8,7 +8,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.PID;
+import frc.robot.subsystems.AutoBalence;
+import frc.robot.subsystems.AutoPiecePickUp;
 import frc.robot.subsystems.Tank;
 
 /**
@@ -16,14 +17,14 @@ import frc.robot.subsystems.Tank;
  */
 public class BalanceCommand extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-  private final PID pidLoop;
+  private final AutoBalence pidLoop;
 
   private final Tank driveBase;
   private double initPitch, maxPitch;
   private boolean onRamp;
 
   /** Create a new {@link BalanceCommand}. */
-  public BalanceCommand(PID m_pid, Tank m_driveBase) {
+  public BalanceCommand(AutoBalence m_pid, Tank m_driveBase) {
     pidLoop = m_pid;
     driveBase = m_driveBase;
     addRequirements(pidLoop);
