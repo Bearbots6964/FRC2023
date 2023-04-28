@@ -8,22 +8,26 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.PID;
+import frc.robot.subsystems.AutoBalence;
+import frc.robot.subsystems.AutoPiecePickUp;
 import frc.robot.subsystems.Tank;
 
-/** An example command that uses an example subsystem. */
+/**
+ * This command balances the robot on the charge station. Default auto command.
+ */
 public class BalanceCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final PID pid;
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  private final AutoBalence pidLoop;
 
   private final Tank driveBase;
-  private double initPitch, max;
+  private double initPitch, maxPitch;
   private boolean onRamp;
 
-  public BalanceCommand(PID m_pid, Tank m_driveBase) {
-    pid = m_pid;
+  /** Create a new {@link BalanceCommand}. */
+  public BalanceCommand(AutoBalence m_pid, Tank m_driveBase) {
+    pidLoop = m_pid;
     driveBase = m_driveBase;
-    addRequirements(pid);
+    addRequirements(pidLoop);
     addRequirements(driveBase);
   }
 
@@ -34,46 +38,50 @@ public class BalanceCommand extends CommandBase {
     driveBase.rightFront.setIdleMode(IdleMode.kBrake);
     driveBase.rightRear.setIdleMode(IdleMode.kBrake);
 
-    pid.resetPitch();
-    initPitch = pid.gyro.getPitch();
-    SmartDashboard.putNumber("init pitch", initPitch);
-    max = 0;
+    pidLoop.resetPitch();
+    initPitch = pidLoop.gyro.getPitch();
+    SmartDashboard.putNumber("inital pitch", initPitch);
+    maxPitch = 0;
     onRamp = false;
+    // start driving forward
+    driveBase.setAllMotors(0.5);
   }
 
   // avoid while loops inside execute
   @Override
   public void execute() {
-    double pitchOffset = pid.gyro.getPitch() - initPitch;
+    double pitchOffset = initPitch - pidLoop.gyro.getPitch();
     SmartDashboard.putNumber("pitch offset", pitchOffset);
+    SmartDashboard.putBoolean("onRamp", onRamp);
+    SmartDashboard.putNumber("max offset", maxPitch);
+    SmartDashboard.putNumber(
+        "motor speed", Constants.OperatorConstants.Pconstant * (pitchOffset));
+    /*
+     * if (pitchOffset > maxPitch) {
+     * maxPitch = pitchOffset;
+     * }
+     */
 
-    if (pitchOffset > max) {
-      max = pitchOffset;
-    }
-    SmartDashboard.putNumber("max offset", max);
-
-    if (pitchOffset < 15.7 && !onRamp) {
-      driveBase.setAllMotors(0.5);
-      SmartDashboard.putBoolean("onRamp", onRamp);
-
-    } else {
+    // set boolean to true when robot is on ramp to run p loop
+    if (!onRamp && pitchOffset >= 16) {
       onRamp = true;
-      SmartDashboard.putBoolean("onRamp", onRamp);
+    }
 
+    if (onRamp) {
+      // dead zone of tilt
       if (Math.abs(pitchOffset) < 2) {
         driveBase.setAllMotors(0);
       } else {
-        driveBase.setAllMotors(
-            0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
-
-        SmartDashboard.putNumber(
-            "motor speed", 0.15 * (pitchOffset / Constants.OperatorConstants.ProportionalDivisor));
+        // run p loop
+        driveBase.setAllMotors(Constants.OperatorConstants.Pconstant * (pitchOffset));
       }
     }
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    // not used
+  }
 
   @Override
   public boolean isFinished() {

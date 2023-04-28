@@ -11,8 +11,13 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
 public class DriveCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Tank m_drivebase;
+
+  private boolean isFinishedVar = false;
+
+
+
 
   public DriveCommand(Tank subsystem) {
     m_drivebase = subsystem;
@@ -20,14 +25,17 @@ public class DriveCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    // nothing to do here
+  }
 
   @Override
   public void execute() {
     // double check getMaxSpeed(), might be wrong
+    
     m_drivebase.arcadeDrive(
-        RobotContainer.getDriverControllerLeftStickYAdjusted() * Constants.CanConstants.maxSpeed,
-        RobotContainer.getDriverControllerRightStickXAdjusted() * 0.65);
+        /* rotation */RobotContainer.getAdjustedTurningStickInput() * Constants.CanConstants.maxSpeed,
+        /* speed */RobotContainer.getAdjustedForwardStickInput() * 0.7);
 
     SmartDashboard.putNumber("maxSpeed", Constants.CanConstants.maxSpeed);
   }
@@ -39,7 +47,11 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return isFinishedVar;
+  }
+
+  public void setFinished(boolean x) {
+    isFinishedVar = x;
   }
 
   @Override

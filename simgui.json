@@ -1,20 +1,36 @@
 {
   "HALProvider": {
     "Other Devices": {
+      "SPARK MAX [2]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK MAX [3]": {
         "header": {
           "open": true
         }
       },
-      "navX-Sensor[0]": {
-        "header": {
+      "window": {
+        "visible": false
+      }
+    },
+    "PowerDistributions": {
+      "0": {
+        "PowerDistribution[0]": {
           "open": true
         }
+      },
+      "window": {
+        "visible": true
       }
     },
     "RoboRIO": {
-      "window": {
-        "visible": true
+      "6V Rail": {
+        "open": true
+      },
+      "RoboRIO Input": {
+        "open": true
       }
     }
   },
@@ -23,18 +39,53 @@
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/Tank/All": "Motor Controller",
       "/LiveWindow/Tank/Drive": "DifferentialDrive",
+      "/LiveWindow/Tank/Gyro": "Gyro",
       "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
       "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+      "/Shuffleboard/Driver/Gyro": "Gyro",
       "/Shuffleboard/Motors/All": "Motor Controller",
       "/Shuffleboard/Motors/Drive": "DifferentialDrive",
       "/Shuffleboard/Motors/Left": "Motor Controller",
       "/Shuffleboard/Motors/Right": "Motor Controller",
       "/Shuffleboard/PID/Accelerometer": "Gyro",
       "/Shuffleboard/PID/Gyro": "Gyro",
+      "/Shuffleboard/Subsystems/Arm": "Subsystem",
+      "/Shuffleboard/Subsystems/AutoCommand": "Command",
+      "/Shuffleboard/Subsystems/BalanceCommand": "Command",
+      "/Shuffleboard/Subsystems/Claw": "Subsystem",
+      "/Shuffleboard/Subsystems/CloseClawCommand": "Command",
+      "/Shuffleboard/Subsystems/DecreaseMaxSpeedCommand": "Command",
+      "/Shuffleboard/Subsystems/DriveCommand": "Command",
+      "/Shuffleboard/Subsystems/FineDriveCommand": "Command",
+      "/Shuffleboard/Subsystems/IncreaseMaxSpeedCommand": "Command",
+      "/Shuffleboard/Subsystems/Lineup Controller": "PIDController",
+      "/Shuffleboard/Subsystems/LineupCommand": "Command",
+      "/Shuffleboard/Subsystems/LineupPID": "Subsystem",
+      "/Shuffleboard/Subsystems/MoveArmYCommand": "Command",
+      "/Shuffleboard/Subsystems/OpenClawCommand": "Command",
+      "/Shuffleboard/Subsystems/PDP": "Subsystem",
+      "/Shuffleboard/Subsystems/PID": "Subsystem",
+      "/Shuffleboard/Subsystems/PlaceConeSecondLevelCommand": "Command",
+      "/Shuffleboard/Subsystems/PlaceCubeSecondLevelCommand": "Command",
+      "/Shuffleboard/Subsystems/PlaceGamePieceCommand": "Command",
+      "/Shuffleboard/Subsystems/SwitchIdleModeCommmand": "Command",
+      "/Shuffleboard/Subsystems/Tank": "Subsystem",
+      "/Shuffleboard/Subsystems/Turret": "Subsystem",
+      "/Shuffleboard/Subsystems/Vision": "Subsystem",
+      "/Shuffleboard/Vision/Vision": "PIDController",
+      "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Scheduler": "Scheduler"
     },
     "windows": {
       "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
+        "Robot": {
+          "style": "Track"
+        },
         "window": {
           "visible": true
         }
@@ -48,9 +99,38 @@
   },
   "NetworkTables": {
     "transitory": {
+      "LiveWindow": {
+        "open": true
+      },
       "Shuffleboard": {
+        "Subsystems": {
+          "Lineup Controller": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      },
+      "SmartDashboard": {
         "open": true
       }
+    }
+  },
+  "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Connections": {
+      "open": true
+    },
+    "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
     }
   }
 }

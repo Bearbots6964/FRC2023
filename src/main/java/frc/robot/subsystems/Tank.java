@@ -1,16 +1,25 @@
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.shuffleboard.*;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Interfaces.*;
 import frc.robot.RobotContainer;
+import frc.robot.interfaces.*;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.SPI;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -22,7 +31,7 @@ public class Tank extends SubsystemBase {
   public MotorControllerGroup right;
   public MotorControllerGroup all;
 
-  public DifferentialDrive drive;
+  public static DifferentialDrive drive;
 
   public boolean brakeMode;
   private GenericEntry stallWidget;
@@ -44,26 +53,31 @@ public class Tank extends SubsystemBase {
 
   private ShuffleboardTab motorsTab;
 
-  private GenericEntry leftFrontWidget;
-  private GenericEntry leftRearWidget;
-  private GenericEntry rightFrontWidget;
-  private GenericEntry rightRearWidget;
+  private DifferentialDriveOdometry odometry;
 
-  private GenericEntry leftWidget;
-  private GenericEntry rightWidget;
-  private GenericEntry allWidget;
+  public static AHRS gyro;
 
-  private GenericEntry driveWidget;
+  private Field2d field2d;
+
+  private int initialCurrentLimit = 30; // TODO tune this
+
+  private REVPhysicsSim physicsSim;
+
   /** */
   public Tank() {
+
+    gyro = new AHRS(SPI.Port.kMXP);
+    addChild("Gyro", gyro);
+    Shuffleboard.getTab("Driver").add("Gyro", gyro);
+
     motorsTab = Shuffleboard.getTab("Motors");
 
     leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
     leftFront.restoreFactoryDefaults();
     leftFront.setInverted(true);
     leftFront.setIdleMode(IdleMode.kBrake);
-    leftFront.setSmartCurrentLimit(40);
-    // leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    leftFront.setSmartCurrentLimit(initialCurrentLimit);
+    leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftFront.burnFlash();
     motorsTab.add("Left Front", leftFront);
     addChild("Left Front", leftFront);
@@ -72,8 +86,8 @@ public class Tank extends SubsystemBase {
     leftRear.restoreFactoryDefaults();
     leftRear.setInverted(true);
     leftRear.setIdleMode(IdleMode.kBrake);
-    leftRear.setSmartCurrentLimit(40);
-    // leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    leftRear.setSmartCurrentLimit(initialCurrentLimit);
+    leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     leftRear.burnFlash();
     motorsTab.add("Left Rear", leftRear);
     addChild("Left Rear", leftRear);
@@ -87,8 +101,8 @@ public class Tank extends SubsystemBase {
     rightFront.setInverted(false);
 
     rightFront.setIdleMode(IdleMode.kBrake);
-    rightFront.setSmartCurrentLimit(40);
-    // rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    rightFront.setSmartCurrentLimit(initialCurrentLimit);
+    rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightFront.burnFlash();
     motorsTab.add("Right Front", rightFront);
     addChild("Right Front", rightFront);
@@ -97,8 +111,8 @@ public class Tank extends SubsystemBase {
     rightRear.restoreFactoryDefaults();
     rightRear.setInverted(false);
     rightRear.setIdleMode(IdleMode.kBrake);
-    rightRear.setSmartCurrentLimit(40);
-    // rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
+    rightRear.setSmartCurrentLimit(initialCurrentLimit);
+    rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
     rightRear.burnFlash();
     motorsTab.add("Right Rear", rightRear);
 
@@ -120,7 +134,7 @@ public class Tank extends SubsystemBase {
     drive.setSafetyEnabled(false);
     drive.setExpiration(0.1);
 
-    drive.setMaxOutput(1.0);
+    drive.setMaxOutput(0.8);
 
     brakeMode = true;
     SmartDashboard.putBoolean("brakeMode", brakeMode);
@@ -129,77 +143,53 @@ public class Tank extends SubsystemBase {
     maxSpeed = Constants.CanConstants.maxSpeed;
 
     // set the current limits for all four motors
-    leftFront.setSmartCurrentLimit(40, 60);
-    leftRear.setSmartCurrentLimit(40, 60);
-    rightFront.setSmartCurrentLimit(40, 60);
-    rightRear.setSmartCurrentLimit(40, 60);
+    leftFront.setSmartCurrentLimit(40, 50);
+    leftRear.setSmartCurrentLimit(40, 50);
+    rightFront.setSmartCurrentLimit(40, 50);
+    rightRear.setSmartCurrentLimit(40, 50);
 
-    tankLayout =
-        Shuffleboard.getTab("Config")
-            .getLayout("Tank", BuiltInLayouts.kList)
-            .withSize(1, 4)
-            .withPosition(0, 0);
+    // implement odometry
+    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(gyro.getAngle()),
+        Units.inchesToMeters(
+            (leftFront.getEncoder().getPosition() / 10) * (leftFront.getEncoder().getPosition() / 10)
+                * Math.PI),
+        Units.inchesToMeters(
+            (rightFront.getEncoder().getPosition() / 10) * (rightFront.getEncoder().getPosition() / 10)
+                * Math.PI));
 
-    // create a new slider widget for the current limits
-    stallWidget =
-        tankLayout.add("Stall Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
-    freeWidget =
-        tankLayout.add("Free Limit", 40).withWidget(BuiltInWidgets.kNumberSlider).getEntry();
+    field2d = new Field2d();
+    SmartDashboard.putData(field2d);
 
-    // create a new boolean box widget for the idle mode
-    idleModeWidget = tankLayout.add("Braking Mode", false).withWidget(BuiltInWidgets.kBooleanBox);
+    // create a physics simulation for the robot
+    if (RobotBase.isSimulation()) {
+      physicsSim = new REVPhysicsSim();
+      // add all the spark maxes to the simulation
+      physicsSim.addSparkMax(leftFront, (float) 2.6, 445);
+      physicsSim.addSparkMax(leftRear, (float) 2.6, 445);
+      physicsSim.addSparkMax(rightFront, (float) 2.6, 445);
+      physicsSim.addSparkMax(rightRear, (float) 2.6, 445);
+      // run the simulation
+      physicsSim.run();
+    }
 
-    // create a new button widget for the idle mode switch
-    idleModeSwitch =
-        tankLayout
-            .add("Switch Idle Mode", false)
-            .withWidget(BuiltInWidgets.kToggleButton)
-            .getEntry();
-
-    // create a new slider widget for the ramp rate
-    rampRateWidget =
-        tankLayout
-            .add("Ramp Rate", Constants.CanConstants.kRampRate)
-            .withWidget(BuiltInWidgets.kNumberSlider)
-            .getEntry();
-
-    // create a new slider widget for the max speed (don't call getEntry() yet, it can be changed
-    // by button inputs)
-    maxSpeedWidget = tankLayout.add("Max Speed", maxSpeed).withWidget(BuiltInWidgets.kNumberSlider);
-    maxSpeedEntry = maxSpeedWidget.getEntry();
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("leftStickY", RobotContainer.getDriverControllerLeftStickY());
-    SmartDashboard.putNumber("rightStickX", RobotContainer.getDriverControllerRightStickX());
-
-    // set all four motors to the stall and free limit widget values
-    stallLimit = (int) stallWidget.getDouble(10);
-    freeLimit = (int) freeWidget.getDouble(40);
-
-    leftFront.setSmartCurrentLimit(stallLimit, freeLimit);
-    leftRear.setSmartCurrentLimit(stallLimit, freeLimit);
-    rightFront.setSmartCurrentLimit(stallLimit, freeLimit);
-    rightRear.setSmartCurrentLimit(stallLimit, freeLimit);
-
-    // set the ramp rate to the ramp rate widget value
-    rampRate = rampRateWidget.getDouble(Constants.CanConstants.kRampRate);
-
-    leftFront.setOpenLoopRampRate(rampRate);
-    leftRear.setOpenLoopRampRate(rampRate);
-    rightFront.setOpenLoopRampRate(rampRate);
-    rightRear.setOpenLoopRampRate(rampRate);
-
-    // check if the max speed widget value has changed
-    if (maxSpeed != maxSpeedEntry.getDouble(maxSpeed)) {
-      // set the max speed to the new value
-      maxSpeed = maxSpeedEntry.getDouble(maxSpeed);
-    }
-    // set the widget value to the current max speed
-    maxSpeedEntry.setDouble(maxSpeed);
+    SmartDashboard.putNumber("leftStickY", RobotContainer.getTurningStickInput());
+    SmartDashboard.putNumber("rightStickX", RobotContainer.getForwardStickInput());
 
     // i hate my life
+
+    odometry.update(Rotation2d.fromDegrees(gyro.getAngle()),
+        Units.inchesToMeters(
+            (leftFront.getEncoder().getPosition() / 10) * (leftFront.getEncoder().getPosition() / 10)
+                * Math.PI),
+        Units.inchesToMeters(
+            (rightFront.getEncoder().getPosition() / 10) * (rightFront.getEncoder().getPosition() / 10)
+                * Math.PI));
+
+    field2d.setRobotPose(odometry.getPoseMeters());
   }
 
   public double getMaxSpeed() {
@@ -209,16 +199,14 @@ public class Tank extends SubsystemBase {
   /**
    * Drives the robot using arcade drive.
    *
-   * @param speed The forward/backward speed.
+   * @param speed    The forward/backward speed.
    * @param rotation The rotation speed.
    */
   public void arcadeDrive(double speed, double rotation) {
-    try {
-      drive.arcadeDrive(
-          -speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));
-    } catch (Exception e) {
-      throw e;
-    }
+
+    drive.arcadeDrive(
+        -speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));
+
   }
 
   public void increaseMaxSpeed() {
@@ -270,38 +258,31 @@ public class Tank extends SubsystemBase {
 
   /** Change the ramp rate of the motor controllers. */
   public void setRampRate(double rampRate) {
-    try {
-      leftFront.setOpenLoopRampRate(rampRate);
-      leftRear.setOpenLoopRampRate(rampRate);
-      rightFront.setOpenLoopRampRate(rampRate);
-      rightRear.setOpenLoopRampRate(rampRate);
-    } catch (Exception e) {
-      throw e;
-    }
+    leftFront.setOpenLoopRampRate(rampRate);
+    leftRear.setOpenLoopRampRate(rampRate);
+    rightFront.setOpenLoopRampRate(rampRate);
+    rightRear.setOpenLoopRampRate(rampRate);
+
   }
 
   // for some reason -speed is forward. dont ask me why
   public void setAllMotors(double speed) {
-    try {
-      leftFront.set(-speed);
-      leftRear.set(-speed);
-      rightFront.set(-speed);
-      rightRear.set(-speed);
-    } catch (Exception e) {
-      throw e;
-    }
+
+    leftFront.set(-speed);
+    leftRear.set(-speed);
+    rightFront.set(-speed);
+    rightRear.set(-speed);
+
   }
 
   public double getLeftDistance() {
-    double numRotations =
-        (leftFront.getEncoder().getPosition() + leftRear.getEncoder().getPosition()) / 2;
+    double numRotations = (leftFront.getEncoder().getPosition() + leftRear.getEncoder().getPosition()) / 2;
     return -numRotations
         * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
   }
 
   public double getRightDistance() {
-    double numRotations =
-        (rightFront.getEncoder().getPosition() + rightRear.getEncoder().getPosition()) / 2;
+    double numRotations = (rightFront.getEncoder().getPosition() + rightRear.getEncoder().getPosition()) / 2;
     return -numRotations
         * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
   }

@@ -7,55 +7,35 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Interfaces.*;
-import java.util.Map;
+import frc.robot.RobotContainer;
+import frc.robot.interfaces.*;
 
 public class Claw extends SubsystemBase {
-  private CANSparkMax clawMotor;
-
-  private GenericEntry stallWidget;
-  private GenericEntry freeWidget;
-  private ShuffleboardLayout layout;
+  public CANSparkMax clawMotor;
 
   // gear ratio is 100:1
 
   public Claw() {
     clawMotor = new CANSparkMax(8, MotorType.kBrushless);
     clawMotor.setIdleMode(IdleMode.kBrake);
-    clawMotor.setSmartCurrentLimit(14, 11);
+    clawMotor.setSmartCurrentLimit(20);
     clawMotor.burnFlash();
+    addChild("Claw Motor", clawMotor);
 
     Shuffleboard.getTab("Motors").add("Claw", clawMotor);
 
-    layout = Shuffleboard.getTab("Config").getLayout("Claw", BuiltInLayouts.kList);
-
-    stallWidget =
-        layout
-            .add("Stall Limit", 10)
-            .withWidget(BuiltInWidgets.kNumberSlider)
-            .withProperties(Map.of("min", 0, "max", 20))
-            .getEntry();
-    freeWidget =
-        layout
-            .add("Free Limit", 11)
-            .withWidget(BuiltInWidgets.kNumberSlider)
-            .withProperties(Map.of("min", 0, "max", 20))
-            .getEntry();
   }
 
   @Override
   public void periodic() {
-    double freeLimit;
-    double stallLimit;
-    stallLimit = stallWidget.getDouble(10);
-    freeLimit = freeWidget.getDouble(11);
-
-    clawMotor.setSmartCurrentLimit((int) stallLimit, (int) freeLimit);
+    SmartDashboard.putNumber("rightTrigger", RobotContainer.getClawInValue());
   }
 
   public void closeClaw() {
@@ -63,7 +43,7 @@ public class Claw extends SubsystemBase {
   }
 
   public void openClaw() {
-    clawMotor.set(-0.5);
+    clawMotor.set(-0.75);
   }
 
   public void stopClaw() {

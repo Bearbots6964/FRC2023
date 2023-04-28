@@ -9,7 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Interfaces.CANSparkMax;
+import frc.robot.interfaces.CANSparkMax;
 
 public class Turret extends SubsystemBase {
   private CANSparkMax xMotor;
@@ -21,6 +21,7 @@ public class Turret extends SubsystemBase {
     xMotor.setIdleMode(IdleMode.kBrake);
     xMotor.setSmartCurrentLimit(5, 10);
     xMotor.burnFlash();
+    addChild("Turret Motor", xMotor);
     Shuffleboard.getTab("Motors").add("Turret", xMotor);
   }
 
