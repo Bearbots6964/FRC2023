@@ -72,7 +72,7 @@ dependencies {
     implementation "com.github.Oblarg:Oblog:5.1.0"
     
     
-    implementation 'org.json:json:20211205'
+    implementation 'org.json:json:20230227'
     
 
 }
