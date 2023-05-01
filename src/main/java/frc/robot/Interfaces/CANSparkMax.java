@@ -5,6 +5,7 @@ import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import frc.robot.util.Alert;
 
 // This code has bugs.
 
@@ -319,7 +320,6 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     // current limits
     builder.addIntegerProperty("Current Limit", null, this::setSmartCurrentLimit);
 
-
     // pid stuff
     builder.addDoubleProperty("P", this::getP, this::setP);
     builder.addDoubleProperty("I", this::getI, this::setI);
@@ -333,8 +333,8 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     builder.addDoubleProperty("Encoder Position", this::getAbsoluteEncoderPosition, null);
     builder.addDoubleProperty("Encoder Velocity", this::getAbsoluteEncoderVelocity, null);
 
-    builder.addDoubleProperty("Conversion Factor", this::getPositionConversionFactor, this::setPositionConversionFactor);
-
+    builder.addDoubleProperty("Conversion Factor", this::getPositionConversionFactor,
+        this::setPositionConversionFactor);
 
   }
 
@@ -401,32 +401,37 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     return setSmartCurrentLimit(limit.intValue(), 0, 20000);
   }
 
-
   // pid stuff
   public void setP(double p) {
     throwIfClosed();
     getPIDController().setP(p);
   }
+
   public void setI(double i) {
     throwIfClosed();
     getPIDController().setI(i);
   }
+
   public void setD(double d) {
     throwIfClosed();
     getPIDController().setD(d);
   }
+
   public void setF(double f) {
     throwIfClosed();
     getPIDController().setFF(f);
   }
+
   public void setIZone(double iZone) {
     throwIfClosed();
     getPIDController().setIZone(iZone);
   }
+
   public void setMinOutputRange(double minOutputRange) {
     throwIfClosed();
     getPIDController().setOutputRange(minOutputRange, getMaxOutputRange());
   }
+
   public void setMaxOutputRange(double maxOutputRange) {
     throwIfClosed();
     getPIDController().setOutputRange(getMinOutputRange(), maxOutputRange);
@@ -436,42 +441,47 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     throwIfClosed();
     return getPIDController().getP();
   }
+
   public double getI() {
     throwIfClosed();
     return getPIDController().getI();
   }
+
   public double getD() {
     throwIfClosed();
     return getPIDController().getD();
   }
+
   public double getF() {
     throwIfClosed();
     return getPIDController().getFF();
   }
+
   public double getIZone() {
     throwIfClosed();
     return getPIDController().getIZone();
   }
+
   public double getMinOutputRange() {
     throwIfClosed();
     return getPIDController().getOutputMin();
   }
+
   public double getMaxOutputRange() {
     throwIfClosed();
     return getPIDController().getOutputMax();
   }
-
 
   // absolute encoder stuff
   public double getAbsoluteEncoderPosition() {
     throwIfClosed();
     return getAbsoluteEncoder(Type.kDutyCycle).getPosition();
   }
+
   public double getAbsoluteEncoderVelocity() {
     throwIfClosed();
     return getAbsoluteEncoder(Type.kDutyCycle).getVelocity();
   }
-
 
   public double getPositionConversionFactor() {
     throwIfClosed();
@@ -483,6 +493,24 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     getAbsoluteEncoder(Type.kDutyCycle).setPositionConversionFactor(a);
   }
 
+  private static REVLibError withError(REVLibError error, Alert alert, String text) {
+    if (error != REVLibError.kOk) {
+      alert.set(true);
+      alert.setText(text.concat(" Error: " + error.toString() + ""));
+    }
+    return error;
+  }
 
+  public static CANSparkMax initMotor(int port, MotorType motorType, boolean isInverted, int smartCurrentLimit,
+      IdleMode idleMode, double rampRate, Alert alert, String text) {
+    CANSparkMax motor = new CANSparkMax(port, motorType);
+    withError(motor.restoreFactoryDefaults(), alert, text);
+    motor.setInverted(isInverted);
+    withError(motor.setIdleMode(idleMode), alert, text);
+    withError(motor.setSmartCurrentLimit(smartCurrentLimit), alert, text);
+    withError(motor.setOpenLoopRampRate(rampRate), alert, text);
+    motor.burnFlash();
+    return motor;
+  }
 
 }

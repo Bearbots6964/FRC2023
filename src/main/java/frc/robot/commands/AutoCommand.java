@@ -12,7 +12,7 @@ import frc.robot.subsystems.*;
  * be run in sequence.
  */
 public class AutoCommand extends SequentialCommandGroup {
-  public AutoCommand(AutoBalence m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+  public AutoCommand(AutoBalance m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
 
     // pick one
     // sideAutoWCone(m_pid,m_driveBase,m_arm,m_claw);
@@ -23,19 +23,19 @@ public class AutoCommand extends SequentialCommandGroup {
   }
 
   // TODO document this
-  private void sideAutoWCone(AutoBalence m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+  private void sideAutoWCone(AutoBalance m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
     addCommands(new PlaceConeSecondLevelCommand(m_driveBase, m_arm, m_claw));
   }
 
-  private void sideAutoWCube(AutoBalence m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+  private void sideAutoWCube(AutoBalance m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
     addCommands(new PlaceCubeSecondLevelCommand(m_driveBase, m_arm, m_claw));
   }
 
-  private void middleAutoWCone(AutoBalence m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+  private void middleAutoWCone(AutoBalance m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
     addCommands(new PlaceConeSecondLevelCommand(m_driveBase, m_arm, m_claw), new BalanceCommand(m_pid, m_driveBase));
   }
 
-  private void middleAutoWCube(AutoBalence m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+  private void middleAutoWCube(AutoBalance m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
     addCommands(new PlaceCubeSecondLevelCommand(m_driveBase, m_arm, m_claw), new BalanceCommand(m_pid, m_driveBase));
   }
 }

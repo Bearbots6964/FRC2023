@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.SparkMaxAlternateEncoder;
@@ -17,10 +19,12 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.interfaces.CANSparkMax;
+import frc.robot.util.Alert;
 
 public class Arm extends PIDSubsystem {
 
@@ -41,6 +45,7 @@ public class Arm extends PIDSubsystem {
   public double gearRatio = 87;
 
   public GenericEntry encoderWidget;
+  public GenericEntry appliedOutputWidget;
 
   public REVPhysicsSim physicsSim;
 
@@ -49,20 +54,17 @@ public class Arm extends PIDSubsystem {
   public AbsoluteEncoder encoder;
 
   double lastEncoderValue;
-  int rotations=1;
+  int rotations = 1;
 
   public double target;
 
-
-
-// widgets for three set points, will be able to change them on the fly
+  // widgets for three set points, will be able to change them on the fly
   public GenericEntry setPoint1;
   public GenericEntry setPoint2;
   public GenericEntry setPoint3;
 
-
-
-
+  private String errorText = "The arm has encountered an error!";
+  private Alert alert = new Alert("Arm", errorText, Alert.AlertType.ERROR);
 
   public Arm() {
     super(
@@ -82,12 +84,14 @@ public class Arm extends PIDSubsystem {
 
     // kSetpoint = 0;
 
-    armMotor = new CANSparkMax(7, MotorType.kBrushless);
+/*     armMotor = new CANSparkMax(7, MotorType.kBrushless);
     armMotor.setIdleMode(IdleMode.kBrake);
     armMotor.setSmartCurrentLimit(30, 40);
     armMotor.burnFlash();
     // set
-    addChild("Arm Motor", armMotor);
+    addChild("Arm Motor", armMotor); */
+
+    armMotor = CANSparkMax.initMotor(7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
 
     // armPID = armMotor.getPIDController();
 
@@ -104,10 +108,12 @@ public class Arm extends PIDSubsystem {
     // using the absolute encoder adapter
     encoder = armMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
-    encoderWidget = Shuffleboard.getTab("Motors").add("Arm Encoder", armMotor.getEncoder().getPosition()).getEntry();
+    ShuffleboardLayout armLayout = Shuffleboard.getTab("Main").getLayout("Arm System");
+    armLayout.addNumber("Arm Output", () -> armMotor.getAppliedOutput()).withProperties(Map.of("Min", -1, "Max", 1));
 
-    Shuffleboard.getTab("Motors").add("Arm", armMotor);
-    //will cause it to pick rotation zero if it is just under one rotation
+    encoderWidget = Shuffleboard.getTab("stuff").add("Arm Encoder", 0).getEntry();
+
+    // will cause it to pick rotation zero if it is just under one rotation
     lastEncoderValue = .01;
 
     // configure the PID loop to use the alternate encoder
@@ -118,7 +124,6 @@ public class Arm extends PIDSubsystem {
       physicsSim = new REVPhysicsSim();
       physicsSim.addSparkMax(armMotor, 5000, 20);
     }
-
 
     // widgets
     setPoint1 = Shuffleboard.getTab("Motors").add("Set Point 1", 0).getEntry();
@@ -180,9 +185,9 @@ public class Arm extends PIDSubsystem {
   public void setTarget(double target) {
     this.target = target;
     m_controller.setSetpoint(target);
-    going=true;
-    if(target<0){
-      going=false;
+    going = true;
+    if (target < 0) {
+      going = false;
     }
   }
 
@@ -213,7 +218,6 @@ public class Arm extends PIDSubsystem {
     m_controller.setTolerance(tolerance);
   }
 
-  
   public void moveToSetPoint1() {
     setTarget(setPoint1.getDouble(0));
   }
