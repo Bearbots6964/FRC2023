@@ -9,63 +9,63 @@ import frc.robot.subsystems.Arm;
 
 /** Add your docs here. */
 public class SetPointCommands {
-    public class moveToSetPoint1 extends CommandBase {
-        private Arm arm;
+  public class moveToSetPoint1 extends CommandBase {
+    private Arm arm;
 
-        public moveToSetPoint1(Arm arm) {
-            this.arm = arm;
-            addRequirements(arm);
-        }
-
-        @Override
-        public void initialize() {
-            arm.moveToSetPoint1();
-            arm.enable();
-        }
-
-        @Override
-        public void end(boolean interrupted) {
-            arm.disable();
-        }
+    public moveToSetPoint1(Arm arm) {
+      this.arm = arm;
+      addRequirements(arm);
     }
 
-    public class moveToSetPoint2 extends CommandBase {
-        private Arm arm;
-
-        public moveToSetPoint2(Arm arm) {
-            this.arm = arm;
-            addRequirements(arm);
-        }
-
-        @Override
-        public void initialize() {
-            arm.moveToSetPoint2();
-            arm.enable();
-        }
-
-        @Override
-        public void end(boolean interrupted) {
-            arm.disable();
-        }
+    @Override
+    public void initialize() {
+      arm.moveToSetPoint1();
+      arm.enable();
     }
 
-    public class moveToSetPoint3 extends CommandBase {
-        private Arm arm;
-
-        public moveToSetPoint3(Arm arm) {
-            this.arm = arm;
-            addRequirements(arm);
-        }
-
-        @Override
-        public void initialize() {
-            arm.moveToSetPoint3();
-            arm.enable();
-        }
-
-        @Override
-        public void end(boolean interrupted) {
-            arm.disable();
-        }
+    @Override
+    public void end(boolean interrupted) {
+      arm.disable();
     }
+  }
+
+  public class moveToSetPoint2 extends CommandBase {
+    private Arm arm;
+
+    public moveToSetPoint2(Arm arm) {
+      this.arm = arm;
+      addRequirements(arm);
+    }
+
+    @Override
+    public void initialize() {
+      arm.moveToSetPoint2();
+      arm.enable();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+      arm.disable();
+    }
+  }
+
+  public class moveToSetPoint3 extends CommandBase {
+    private Arm arm;
+
+    public moveToSetPoint3(Arm arm) {
+      this.arm = arm;
+      addRequirements(arm);
+    }
+
+    @Override
+    public void initialize() {
+      arm.moveToSetPoint3();
+      arm.enable();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+      arm.disable();
+    }
+  }
 }

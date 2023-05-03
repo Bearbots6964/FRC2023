@@ -1,16 +1,15 @@
 package frc.robot.subsystems;
 
-import java.util.Map;
-
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.REVLibError;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.revrobotics.REVLibError;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.shuffleboard.*;
@@ -20,8 +19,7 @@ import frc.robot.Constants;
 import frc.robot.interfaces.*;
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
-import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.SPI.Port;
+import java.util.Map;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -78,8 +76,15 @@ public class Tank extends SubsystemBase {
     return error;
   }
 
-  private CANSparkMax initMotor(int port, MotorType motorType, boolean isInverted, int smartCurrentLimit,
-      IdleMode idleMode, double rampRate, Alert alert, String text) {
+  private CANSparkMax initMotor(
+      int port,
+      MotorType motorType,
+      boolean isInverted,
+      int smartCurrentLimit,
+      IdleMode idleMode,
+      double rampRate,
+      Alert alert,
+      String text) {
     CANSparkMax motor = new CANSparkMax(port, motorType);
     withError(motor.restoreFactoryDefaults(), alert, text);
     motor.setInverted(isInverted);
@@ -100,20 +105,52 @@ public class Tank extends SubsystemBase {
     isCalibrating = new BooleanLogEntry(log, "NavX/Is Calibrating");
     yawAngle = new DoubleLogEntry(log, "NavX/Yaw Angle");
 
-    leftFront = initMotor(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless, true, initialCurrentLimit,
-        IdleMode.kBrake, Constants.CanConstants.kRampRate, leftFrontError, leftFrontErrorText);
+    leftFront =
+        initMotor(
+            Constants.CanConstants.kLeftFrontMotorPort,
+            MotorType.kBrushless,
+            true,
+            initialCurrentLimit,
+            IdleMode.kBrake,
+            Constants.CanConstants.kRampRate,
+            leftFrontError,
+            leftFrontErrorText);
 
-    leftRear = initMotor(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless, true, initialCurrentLimit,
-        IdleMode.kBrake, Constants.CanConstants.kRampRate, leftRearError, leftRearErrorText);
+    leftRear =
+        initMotor(
+            Constants.CanConstants.kLeftRearMotorPort,
+            MotorType.kBrushless,
+            true,
+            initialCurrentLimit,
+            IdleMode.kBrake,
+            Constants.CanConstants.kRampRate,
+            leftRearError,
+            leftRearErrorText);
 
     left = new MotorControllerGroup(leftFront, leftRear);
     addChild("Left Side", left);
 
-    rightFront = initMotor(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless, false,
-        initialCurrentLimit, IdleMode.kBrake, Constants.CanConstants.kRampRate, rightFrontError, rightFrontErrorText);
+    rightFront =
+        initMotor(
+            Constants.CanConstants.kRightFrontMotorPort,
+            MotorType.kBrushless,
+            false,
+            initialCurrentLimit,
+            IdleMode.kBrake,
+            Constants.CanConstants.kRampRate,
+            rightFrontError,
+            rightFrontErrorText);
 
-    rightRear = initMotor(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless, false, initialCurrentLimit,
-        IdleMode.kBrake, Constants.CanConstants.kRampRate, rightRearError, rightRearErrorText);
+    rightRear =
+        initMotor(
+            Constants.CanConstants.kRightRearMotorPort,
+            MotorType.kBrushless,
+            false,
+            initialCurrentLimit,
+            IdleMode.kBrake,
+            Constants.CanConstants.kRampRate,
+            rightRearError,
+            rightRearErrorText);
 
     addChild("Right Rear", rightRear);
 
@@ -144,9 +181,10 @@ public class Tank extends SubsystemBase {
     rightFront.setSmartCurrentLimit(40, 50);
     rightRear.setSmartCurrentLimit(40, 50);
 
-    Shuffleboard.getTab("Main").getLayout("Arm System").addNumber("Max Speed", this::getMaxSpeed)
+    Shuffleboard.getTab("Main")
+        .getLayout("Arm System")
+        .addNumber("Max Speed", this::getMaxSpeed)
         .withProperties(Map.of("Min", 0, "Max", 1));
-
   }
 
   @Override
@@ -166,14 +204,13 @@ public class Tank extends SubsystemBase {
   /**
    * Drives the robot using arcade drive.
    *
-   * @param speed    The forward/backward speed.
+   * @param speed The forward/backward speed.
    * @param rotation The rotation speed.
    */
   public void arcadeDrive(double speed, double rotation) {
 
     drive.arcadeDrive(
         -speed * Math.pow(Math.abs(speed), 0.5), rotation * Math.pow(Math.abs(rotation), 0.5));
-
   }
 
   public void increaseMaxSpeed() {
@@ -229,7 +266,6 @@ public class Tank extends SubsystemBase {
     leftRear.setOpenLoopRampRate(rampRate);
     rightFront.setOpenLoopRampRate(rampRate);
     rightRear.setOpenLoopRampRate(rampRate);
-
   }
 
   // for some reason -speed is forward. dont ask me why
@@ -239,17 +275,18 @@ public class Tank extends SubsystemBase {
     leftRear.set(-speed);
     rightFront.set(-speed);
     rightRear.set(-speed);
-
   }
 
   public double getLeftDistance() {
-    double numRotations = (leftFront.getEncoder().getPosition() + leftRear.getEncoder().getPosition()) / 2;
+    double numRotations =
+        (leftFront.getEncoder().getPosition() + leftRear.getEncoder().getPosition()) / 2;
     return -numRotations
         * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
   }
 
   public double getRightDistance() {
-    double numRotations = (rightFront.getEncoder().getPosition() + rightRear.getEncoder().getPosition()) / 2;
+    double numRotations =
+        (rightFront.getEncoder().getPosition() + rightRear.getEncoder().getPosition()) / 2;
     return -numRotations
         * Constants.AutoConstants.encoderFactor; // This is flipped to make forward positive
   }

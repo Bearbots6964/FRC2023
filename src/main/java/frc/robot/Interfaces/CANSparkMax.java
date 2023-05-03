@@ -2,7 +2,6 @@ package frc.robot.interfaces;
 
 import com.revrobotics.REVLibError;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
-
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import frc.robot.util.Alert;
@@ -144,14 +143,14 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
    * public boolean isInverted;
    * public boolean roboRIO;
    * }
-   * 
+   *
    * public class PeriodicStatus1 {
    * public double sensorVelocity;
    * public byte motorTemperature;
    * public double busVoltage;
    * public double outputCurrent;
    * }
-   * 
+   *
    * public class PeriodicStatus2 {
    * public double sensorPosition;
    * public double iAccum;
@@ -333,9 +332,8 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     builder.addDoubleProperty("Encoder Position", this::getAbsoluteEncoderPosition, null);
     builder.addDoubleProperty("Encoder Velocity", this::getAbsoluteEncoderVelocity, null);
 
-    builder.addDoubleProperty("Conversion Factor", this::getPositionConversionFactor,
-        this::setPositionConversionFactor);
-
+    builder.addDoubleProperty(
+        "Conversion Factor", this::getPositionConversionFactor, this::setPositionConversionFactor);
   }
 
   /**
@@ -501,8 +499,15 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     return error;
   }
 
-  public static CANSparkMax initMotor(int port, MotorType motorType, boolean isInverted, int smartCurrentLimit,
-      IdleMode idleMode, double rampRate, Alert alert, String text) {
+  public static CANSparkMax initMotor(
+      int port,
+      MotorType motorType,
+      boolean isInverted,
+      int smartCurrentLimit,
+      IdleMode idleMode,
+      double rampRate,
+      Alert alert,
+      String text) {
     CANSparkMax motor = new CANSparkMax(port, motorType);
     withError(motor.restoreFactoryDefaults(), alert, text);
     motor.setInverted(isInverted);
@@ -512,5 +517,4 @@ public class CANSparkMax extends com.revrobotics.CANSparkMax implements Sendable
     motor.burnFlash();
     return motor;
   }
-
 }

@@ -8,15 +8,17 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.AutoPiecePickUp;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Tank;
-import frc.robot.subsystems.AutoPiecePickUp;
 
 public class TrackPiece extends CommandBase {
   /** Creates a new TrackPiece. */
   private AutoPiecePickUp m_Vision;
+
   private Tank m_Tank;
   private Claw m_Claw;
+
   public TrackPiece(AutoPiecePickUp vision, Tank tank, Claw claw) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Vision = vision;
@@ -28,30 +30,31 @@ public class TrackPiece extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //m_Tank.arcadeDrive(0.05, m_Vision.getController().calculate(m_Vision.getMeasurement(), m_Vision.getSetpoint()));
+    // m_Tank.arcadeDrive(0.05, m_Vision.getController().calculate(m_Vision.getMeasurement(),
+    // m_Vision.getSetpoint()));
     m_Vision.enable();
     SmartDashboard.putString("a", "pid on");
     m_Claw.closeClaw();
 
-
     // set pipeline to 2
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(2);
-
   }
 
   @Override
   public void execute() {
-    //m_Tank.setAllMotors(-0.2);
+    // m_Tank.setAllMotors(-0.2);
     RobotContainer.rumbleGabeController(1);
 
-    SmartDashboard.putNumber(getName(), m_Vision.getController().calculate(m_Vision.getMeasurement(), m_Vision.getSetpoint()));
+    SmartDashboard.putNumber(
+        getName(),
+        m_Vision.getController().calculate(m_Vision.getMeasurement(), m_Vision.getSetpoint()));
   }
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.rumbleGabeController(0);
     m_Vision.disable();
-    m_Tank.arcadeDrive(0,0);
+    m_Tank.arcadeDrive(0, 0);
     SmartDashboard.putString("a", "pid off");
     m_Claw.stopClaw();
 

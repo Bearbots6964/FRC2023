@@ -1,6 +1,5 @@
 package frc.robot;
 
-
 public class RebindHat {
   public static double JoystickToYAxis() {
     if (RobotContainer.m_armController.getPOV() == -1

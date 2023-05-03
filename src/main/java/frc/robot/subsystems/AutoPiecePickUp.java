@@ -14,6 +14,7 @@ import frc.robot.RobotContainer;
 public class AutoPiecePickUp extends PIDSubsystem {
   /** Creates a new Vision. */
   private static double kP = 0.1;
+
   private static double kI = 0;
   private static double kD = 0;
 
@@ -34,15 +35,14 @@ public class AutoPiecePickUp extends PIDSubsystem {
     m_controller.setIntegratorRange(-0.43, 0.43);
 
     Shuffleboard.getTab(getName()).add(m_controller);
-    
-
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(2);
 
-    double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
+    double ty =
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
 
     // Use the output here
     double forward = 1 - Math.abs(output) / 30;
@@ -71,7 +71,6 @@ public class AutoPiecePickUp extends PIDSubsystem {
     m_tank.arcadeDrive(-forward, -output * 1);
     SmartDashboard.putNumber("will this work?", output);
     SmartDashboard.putNumber("setpoint", setpoint);
-
   }
 
   @Override
@@ -100,8 +99,8 @@ public class AutoPiecePickUp extends PIDSubsystem {
   @Override
   public void periodic() {
     super.periodic();
-    SmartDashboard.putNumber("calculated turning output from vision",
+    SmartDashboard.putNumber(
+        "calculated turning output from vision",
         m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
   }
-
 }

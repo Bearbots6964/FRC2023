@@ -8,13 +8,13 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RebindHat;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
 public class FineDriveCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank m_drivebase;
+
   private double speedMult = 0.43;
   private GenericEntry multWidget;
 
@@ -25,16 +25,15 @@ public class FineDriveCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
     // double check getMaxSpeed(), might be wrong
     RobotContainer.rumbleGabeController(1);
     m_drivebase.arcadeDrive(
-        RebindHat.ControllerToYAxis() * multWidget.getDouble(0), RebindHat.ControllerToXAxis() * multWidget.getDouble(0));
+        RebindHat.ControllerToYAxis() * multWidget.getDouble(0),
+        RebindHat.ControllerToXAxis() * multWidget.getDouble(0));
   }
 
   @Override

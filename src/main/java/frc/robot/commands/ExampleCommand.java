@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ExampleSubsystem;
 
 public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField", "PMD.UnusedImport" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField", "PMD.UnusedImport"})
   private final ExampleSubsystem m_subsystem; // NOPMD
 
   public ExampleCommand(ExampleSubsystem subsystem) {
