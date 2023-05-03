@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -54,7 +55,6 @@ public class RobotContainer {
   private final MoveArmYCommand m_MoveArmYCommand = new MoveArmYCommand(m_Arm);
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_Balance, m_Tank);
-  private final AutoCommand m_AutoCommand = new AutoCommand(m_Balance, m_Tank, m_Arm, m_Claw);
   private final InvertDriveCommand m_InvertDriveCommand = new InvertDriveCommand(m_Tank, this);
   private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand = new PlaceConeSecondLevelCommand(m_Tank,
       m_Arm, m_Claw);
@@ -66,6 +66,29 @@ public class RobotContainer {
   private final TrackPiece m_TrackPiece = new TrackPiece(m_Vision, m_Tank, m_Claw);
   private final TrackPole m_TrackPole = new TrackPole(m_PoleTracking, m_Tank);
 
+  private final AutoCommands m_AutoCommands = new AutoCommands();
+  // auto commands
+  private final AutoCommands.MiddleAutoWCone m_MiddleAutoWCone = m_AutoCommands.new MiddleAutoWCone(m_Balance, m_Tank, m_Arm,
+      m_Claw);
+
+  private final AutoCommands.MiddleAutoWCube m_MiddleAutoWCube = m_AutoCommands.new MiddleAutoWCube(m_Balance, m_Tank, m_Arm,
+      m_Claw);
+  
+  private final AutoCommands.SideAutoWCone m_SideAutoWCone = m_AutoCommands.new SideAutoWCone(m_Balance, m_Tank, m_Arm,
+      m_Claw);
+
+  private final AutoCommands.SideAutoWCube m_SideAutoWCube = m_AutoCommands.new SideAutoWCube(m_Balance, m_Tank, m_Arm,
+      m_Claw);
+
+  private final AutoCommands.None m_None = m_AutoCommands.new None();
+
+  private final AutoCommands.JustBalance m_JustBalance = m_AutoCommands.new JustBalance(m_Balance, m_Tank);
+
+      SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
+  
+
   // private final XTracking m_XTracking = new XTracking(m_Tank, null, m_Target);
   // private final YTracking m_YTracking = new YTr
 
@@ -75,6 +98,13 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    m_chooser.setDefaultOption("Middle Auto W/ Cone", m_MiddleAutoWCone);
+    m_chooser.addOption("Middle Auto W/ Cube", m_MiddleAutoWCube);
+    m_chooser.addOption("Side Auto W/ Cone", m_SideAutoWCone);
+    m_chooser.addOption("Side Auto W/ Cube", m_SideAutoWCube);
+    m_chooser.addOption("Just Balance", m_JustBalance);
+    m_chooser.addOption("None", m_None);
+    SmartDashboard.putData("Auto mode", m_chooser);
     // Configure the button bindings
     configureButtonBindings();
 
@@ -83,7 +113,6 @@ public class RobotContainer {
     var subsystemsTab = Shuffleboard.getTab("Subsystems");
     var mainTab = Shuffleboard.getTab("Main");
     subsystemsTab.add(m_Arm);
-    subsystemsTab.add(m_AutoCommand);
     subsystemsTab.add(m_BalanceCommand);
     subsystemsTab.add(m_DecreaseMaxSpeedCommand);
     subsystemsTab.add(m_DriveCommand);
@@ -287,7 +316,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_AutoCommand;
+    return m_chooser.getSelected();
   }
 
   public void initTeleop() {

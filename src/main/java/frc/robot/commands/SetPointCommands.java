@@ -28,4 +28,44 @@ public class SetPointCommands {
             arm.disable();
         }
     }
+
+    public class moveToSetPoint2 extends CommandBase {
+        private Arm arm;
+
+        public moveToSetPoint2(Arm arm) {
+            this.arm = arm;
+            addRequirements(arm);
+        }
+
+        @Override
+        public void initialize() {
+            arm.moveToSetPoint2();
+            arm.enable();
+        }
+
+        @Override
+        public void end(boolean interrupted) {
+            arm.disable();
+        }
+    }
+
+    public class moveToSetPoint3 extends CommandBase {
+        private Arm arm;
+
+        public moveToSetPoint3(Arm arm) {
+            this.arm = arm;
+            addRequirements(arm);
+        }
+
+        @Override
+        public void initialize() {
+            arm.moveToSetPoint3();
+            arm.enable();
+        }
+
+        @Override
+        public void end(boolean interrupted) {
+            arm.disable();
+        }
+    }
 }

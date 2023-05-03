@@ -84,7 +84,7 @@ public class Arm extends PIDSubsystem {
 
     armMotor = new CANSparkMax(7, MotorType.kBrushless);
     armMotor.setIdleMode(IdleMode.kBrake);
-    armMotor.setSmartCurrentLimit(30, 40);
+    armMotor.setSmartCurrentLimit(40);
     armMotor.burnFlash();
     // set
     addChild("Arm Motor", armMotor);
