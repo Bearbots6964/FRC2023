@@ -85,12 +85,14 @@ public class Arm extends PIDSubsystem {
 
     // kSetpoint = 0;
 
-/*     armMotor = new CANSparkMax(7, MotorType.kBrushless);
-    armMotor.setIdleMode(IdleMode.kBrake);
-    armMotor.setSmartCurrentLimit(40);
-    armMotor.burnFlash();
-    // set
-    addChild("Arm Motor", armMotor); */
+    /*
+     * armMotor = new CANSparkMax(7, MotorType.kBrushless);
+     * armMotor.setIdleMode(IdleMode.kBrake);
+     * armMotor.setSmartCurrentLimit(40);
+     * armMotor.burnFlash();
+     * // set
+     * addChild("Arm Motor", armMotor);
+     */
 
     armMotor = CANSparkMax.initMotor(7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
 
@@ -131,14 +133,9 @@ public class Arm extends PIDSubsystem {
     setPoint2 = Shuffleboard.getTab("Motors").add("Set Point 2", 0).getEntry();
     setPoint3 = Shuffleboard.getTab("Motors").add("Set Point 3", 0).getEntry();
 
-
     Shuffleboard.getTab("Motors").add("Arm PID", m_controller);
 
-
     addChild("Arm PID", m_controller);
-
-
-
 
     Shuffleboard.getTab("Motors").add("Arm motor", armMotor);
   }
@@ -153,21 +150,19 @@ public class Arm extends PIDSubsystem {
     double change = encoderValue - lastEncoderValue;
     double roundedPosition = ((double) ((int) (encoderValue * 100))) / 100;
     if (lastEncoderValue < 0.3 && encoderValue > 0.8) {
-    rotations--;
+      rotations--;
     } else if (lastEncoderValue > 0.8 && encoderValue < 0.3) {
-    rotations++;
+      rotations++;
     }
     // get the velocity of the encoder (in rotations per second) and if there is a
     // change between the signs of the velocity and the change in encoder value,
     // then there has been a Full Rotation(tm)
     // if (Math.signum(roundedVelocity) != Math.signum(roundedPosition)) {
-    //   rotations += Math.signum(roundedVelocity);
+    // rotations += Math.signum(roundedVelocity);
     // }
     lastEncoderValue = encoderValue;
 
     encoderWidget.setDouble(encoderValue);
-
-
 
     SmartDashboard.putNumber("rotations", rotations);
     SmartDashboard.putNumber("velocity", encoder.getVelocity());
@@ -175,7 +170,6 @@ public class Arm extends PIDSubsystem {
     SmartDashboard.putNumber("roundedPosition", roundedPosition);
 
     // round velocity to the hundredths place
-    
 
   }
 
@@ -207,26 +201,20 @@ public class Arm extends PIDSubsystem {
   // }
 
   // public void setTarget(double target) {
-  //   this.target = target;
-  //   m_controller.setSetpoint(target);
-  //   going = true;
-  //   if (target < 0) {
-  //     going = false;
-  //   }
+  // this.target = target;
+  // m_controller.setSetpoint(target);
+  // going = true;
+  // if (target < 0) {
+  // going = false;
   // }
-
-  
+  // }
 
   @Override
   protected void useOutput(double output, double setpoint) {
-    if (0.50 < output) {
-      output = 0.50;
-    } else if (-0.50 > output) {
-      output = -0.50;
-    } else if (0.1 < output && output < 0.40) {
-      output = 0.40;
-    } else if (-0.40 < output && output < -0.1) {
-      output = -0.40;
+  if (0.05 < output && output < 0.80) {
+      output = 0.80;
+    } else if (-0.80 < output && output < -0.05) {
+      output = -0.80;
     }
 
     moveArm(-output);
