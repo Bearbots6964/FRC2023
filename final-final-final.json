@@ -181,6 +181,34 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "0,14": {
+            "size": [
+              8,
+              5
+            ],
+            "content": {
+              "_type": "3-Axis Accelerometer",
+              "_title": "3-Axis Accelerometer",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Accelerometer/Range": "k16G",
+              "Visuals/Show value": true,
+              "Visuals/Precision": 2,
+              "Visuals/Show tick marks": false
+            }
+          },
+          "30,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Alerts",
+              "_title": "Alerts",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -657,6 +685,19 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/roundedVelocity",
               "_title": "SmartDashboard/roundedVelocity",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "11,7": {
+            "size": [
+              2,
+              3
+            ],
+            "content": {
+              "_type": "PID Controller",
+              "_source0": "network_table:///Shuffleboard/Motors/Arm PID",
+              "_title": "Shuffleboard/Motors/Arm PID",
               "_glyph": 148,
               "_showGlyph": false
             }

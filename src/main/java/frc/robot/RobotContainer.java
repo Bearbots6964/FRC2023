@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -26,6 +27,8 @@ import frc.robot.commands.SetPointCommands.moveToSetPoint1;
 import frc.robot.commands.SetPointCommands.moveToSetPoint2;
 import frc.robot.commands.SetPointCommands.moveToSetPoint3;
 import frc.robot.subsystems.*;
+import frc.robot.util.Alert;
+import frc.robot.util.SystemChecks;
 import io.github.oblarg.oblog.Logger;
 
 /**
@@ -97,7 +100,6 @@ public class RobotContainer {
 
   private final AutoCommands.JustBalance m_JustBalance = m_AutoCommands.new JustBalance(m_Balance, m_Tank);
 
-
   private final SetPointCommands m_SetPointCommands = new SetPointCommands();
   // set point commands
   private final moveToSetPoint1 m_SetPoint1 = m_SetPointCommands.new moveToSetPoint1(m_Arm);
@@ -108,8 +110,6 @@ public class RobotContainer {
 
   // private final XTracking m_XTracking = new XTracking(m_Tank, null, m_Target);
   // private final YTracking m_YTracking = new YTr
-
-  private GenericEntry timeWidget = Shuffleboard.getTab("stuff").add("time", 0).withWidget("Match Time").getEntry();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -138,8 +138,19 @@ public class RobotContainer {
     mainTab.getLayout("Arm System", BuiltInLayouts.kList).withPosition(34, 0).withSize(5, 8);
     Logger.configureLoggingAndConfig(this, false);
 
+    mainTab.add(m_chooser).withPosition(0, 14).withSize(8, 5);
+
     // add the limelight stream to the main tab
-    // mainTab.addCamera("Limelight", "limelight", "http://10.69.64.11:5800").withPosition(8, 0).withSize(22, 19);
+    try {
+      mainTab.addCamera("Limelight", "limelight", "http://10.69.64.11:5800").withPosition(8, 0).withSize(22, 19);
+    } catch (Exception e) {
+      System.out.println("limelight not found!");
+      SystemChecks.alert.set(true);
+    }
+
+    // add the time widget to the main tab
+    mainTab.addNumber("Timer", Timer::getMatchTime).withWidget("Match Time").withPosition(30, 0).withSize(4, 4);
+    
 
   }
 
@@ -168,8 +179,6 @@ public class RobotContainer {
 
     new JoystickButton(m_armController2, XboxController.Button.kX.value).whileTrue(m_TrackPiece);
     new JoystickButton(m_armController2, XboxController.Button.kB.value).whileTrue(m_TrackPole);
-
-
 
     new JoystickButton(m_armController2, XboxController.Button.kStart.value).whileTrue(m_SetPoint1);
     new JoystickButton(m_armController2, XboxController.Button.kBack.value).whileTrue(m_SetPoint2);
@@ -344,6 +353,7 @@ public class RobotContainer {
     }
     m_Arm.setDefaultCommand(m_MoveArmYCommand);
     m_Claw.setDefaultCommand(m_MoveClawCommand);
+
   }
 
   public void initTest() {
@@ -353,7 +363,7 @@ public class RobotContainer {
 
   public void robotPeriodic() {
     Logger.updateEntries();
-    timeWidget.setDouble(DriverStation.getMatchTime());
+
   }
 
 }

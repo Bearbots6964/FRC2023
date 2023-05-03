@@ -65,7 +65,7 @@ public class Arm extends PIDSubsystem {
   public GenericEntry setPoint3;
 
   private String errorText = "The arm has encountered an error!";
-  private Alert alert = new Alert("Arm", errorText, Alert.AlertType.ERROR);
+  private Alert alert = new Alert(errorText, Alert.AlertType.ERROR);
 
   public Arm() {
     super(

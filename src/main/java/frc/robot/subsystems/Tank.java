@@ -51,7 +51,6 @@ public class Tank extends SubsystemBase {
   private DoubleLogEntry pitchAngle;
   private BooleanLogEntry isCalibrating;
   private DoubleLogEntry yawAngle;
-  
 
   // errors
   // Credit goes to Mechanical Advantage 6328 for the framework for this
@@ -62,10 +61,10 @@ public class Tank extends SubsystemBase {
   private String rightFrontErrorText = "The right front drive motor has encountered an error!";
   private String rightRearErrorText = "The right rear drive motor has encountered an error!";
 
-  private Alert leftFrontError = new Alert("Drivebase", leftFrontErrorText, AlertType.ERROR);
-  private Alert leftRearError = new Alert("Drivebase", leftRearErrorText, AlertType.ERROR);
-  private Alert rightFrontError = new Alert("Drivebase", rightFrontErrorText, AlertType.ERROR);
-  private Alert rightRearError = new Alert("Drivebase", rightRearErrorText, AlertType.ERROR);
+  private Alert leftFrontError = new Alert(leftFrontErrorText, AlertType.ERROR);
+  private Alert leftRearError = new Alert(leftRearErrorText, AlertType.ERROR);
+  private Alert rightFrontError = new Alert(rightFrontErrorText, AlertType.ERROR);
+  private Alert rightRearError = new Alert(rightRearErrorText, AlertType.ERROR);
 
   // quick little function that can throw an error just by passing in another
   // function (e.g.
@@ -100,7 +99,6 @@ public class Tank extends SubsystemBase {
     pitchAngle = new DoubleLogEntry(log, "NavX/Pitch Angle");
     isCalibrating = new BooleanLogEntry(log, "NavX/Is Calibrating");
     yawAngle = new DoubleLogEntry(log, "NavX/Yaw Angle");
-
 
     leftFront = initMotor(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless, true, initialCurrentLimit,
         IdleMode.kBrake, Constants.CanConstants.kRampRate, leftFrontError, leftFrontErrorText);
