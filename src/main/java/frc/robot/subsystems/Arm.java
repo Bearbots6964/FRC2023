@@ -71,7 +71,7 @@ public class Arm extends PIDSubsystem {
         // PIDController
         new PIDController(kP, kI, kD));
     m_controller.setTolerance(0.1);
-    m_controller.setSetpoint(0);
+    m_controller.setSetpoint(0.625);
     going = false;
 
     // kP = 0.0001;
@@ -129,29 +129,40 @@ public class Arm extends PIDSubsystem {
     setPoint1 = Shuffleboard.getTab("Motors").add("Set Point 1", 0).getEntry();
     setPoint2 = Shuffleboard.getTab("Motors").add("Set Point 2", 0).getEntry();
     setPoint3 = Shuffleboard.getTab("Motors").add("Set Point 3", 0).getEntry();
+
+
+    addChild("Arm PID", m_controller);
+
+
+
+
+    Shuffleboard.getTab("Motors").add("Arm motor", armMotor);
   }
 
   @Override
   public void periodic() {
+    super.periodic();
     // SmartDashboard.putBoolean("zeroDeg", allTheWayDownRear.get());
     double encoderValue = armMotor.getEncoder().getPosition();
     double change = encoderValue - lastEncoderValue;
-    if (Math.abs(change) > 0.5) {
-      if (change < 0) {
-        rotations++;
-      } else {
-        rotations--;
-      }
+    if (lastEncoderValue < 0.3 && encoderValue > 0.8) {
+      rotations--;
+    } else if (lastEncoderValue > 0.8 && encoderValue < 0.3) {
+      rotations++;
     }
     lastEncoderValue = encoderValue;
 
     encoderWidget.setDouble(encoderValue);
 
     if (going) {
-      super.periodic();
+
       SmartDashboard.putNumber("caluclated power to arm form PID",
           m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
+    
     }
+
+
+    SmartDashboard.putNumber("rotations", rotations);
 
   }
 
@@ -170,7 +181,7 @@ public class Arm extends PIDSubsystem {
   }
 
   public double getAngle() {
-    return armMotor.getEncoder().getPosition() + rotations;
+    return armMotor.getEncoder().getPosition();
   }
 
   // public void setArmAngle(double angle) {
@@ -182,14 +193,16 @@ public class Arm extends PIDSubsystem {
   // setArmAngle(armToFrontAngle);
   // }
 
-  public void setTarget(double target) {
-    this.target = target;
-    m_controller.setSetpoint(target);
-    going = true;
-    if (target < 0) {
-      going = false;
-    }
-  }
+  // public void setTarget(double target) {
+  //   this.target = target;
+  //   m_controller.setSetpoint(target);
+  //   going = true;
+  //   if (target < 0) {
+  //     going = false;
+  //   }
+  // }
+
+  
 
   @Override
   protected void useOutput(double output, double setpoint) {
@@ -219,14 +232,14 @@ public class Arm extends PIDSubsystem {
   }
 
   public void moveToSetPoint1() {
-    setTarget(setPoint1.getDouble(0));
+    m_controller.setSetpoint(0.75);
   }
 
   public void moveToSetPoint2() {
-    setTarget(setPoint2.getDouble(0));
+    m_controller.setSetpoint(0.25);
   }
 
   public void moveToSetPoint3() {
-    setTarget(setPoint3.getDouble(0));
+    m_controller.setSetpoint(0.5);
   }
 }

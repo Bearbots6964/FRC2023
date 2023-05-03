@@ -22,6 +22,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
+import frc.robot.commands.SetPointCommands.moveToSetPoint1;
+import frc.robot.commands.SetPointCommands.moveToSetPoint2;
+import frc.robot.commands.SetPointCommands.moveToSetPoint3;
 import frc.robot.subsystems.*;
 import io.github.oblarg.oblog.Logger;
 
@@ -37,7 +40,8 @@ import io.github.oblarg.oblog.Logger;
 public class RobotContainer {
   public static boolean inverted = false;
 
-  private ShuffleboardLayout m_widget = Shuffleboard.getTab("Main").getLayout("Arm System", BuiltInLayouts.kList).withPosition(34, 0).withSize(5, 8);
+  private ShuffleboardLayout m_widget = Shuffleboard.getTab("Main").getLayout("Arm System", BuiltInLayouts.kList)
+      .withPosition(34, 0).withSize(5, 8);
 
   // INSTANTIATES ALL JOYSTICKS
 
@@ -75,12 +79,14 @@ public class RobotContainer {
 
   private final AutoCommands m_AutoCommands = new AutoCommands();
   // auto commands
-  private final AutoCommands.MiddleAutoWCone m_MiddleAutoWCone = m_AutoCommands.new MiddleAutoWCone(m_Balance, m_Tank, m_Arm,
+  private final AutoCommands.MiddleAutoWCone m_MiddleAutoWCone = m_AutoCommands.new MiddleAutoWCone(m_Balance, m_Tank,
+      m_Arm,
       m_Claw);
 
-  private final AutoCommands.MiddleAutoWCube m_MiddleAutoWCube = m_AutoCommands.new MiddleAutoWCube(m_Balance, m_Tank, m_Arm,
+  private final AutoCommands.MiddleAutoWCube m_MiddleAutoWCube = m_AutoCommands.new MiddleAutoWCube(m_Balance, m_Tank,
+      m_Arm,
       m_Claw);
-  
+
   private final AutoCommands.SideAutoWCone m_SideAutoWCone = m_AutoCommands.new SideAutoWCone(m_Balance, m_Tank, m_Arm,
       m_Claw);
 
@@ -91,10 +97,14 @@ public class RobotContainer {
 
   private final AutoCommands.JustBalance m_JustBalance = m_AutoCommands.new JustBalance(m_Balance, m_Tank);
 
-      SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+  private final SetPointCommands m_SetPointCommands = new SetPointCommands();
+  // set point commands
+  private final moveToSetPoint1 m_SetPoint1 = m_SetPointCommands.new moveToSetPoint1(m_Arm);
+  private final moveToSetPoint2 m_SetPoint2 = m_SetPointCommands.new moveToSetPoint2(m_Arm);
+  private final moveToSetPoint3 m_SetPoint3 = m_SetPointCommands.new moveToSetPoint3(m_Arm);
 
-  
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   // private final XTracking m_XTracking = new XTracking(m_Tank, null, m_Target);
   // private final YTracking m_YTracking = new YTr
@@ -117,15 +127,19 @@ public class RobotContainer {
 
     var mainTab = Shuffleboard.getTab("Main");
 
-    // add the basic fms info widget to the main tab (we can just get it from networktables)
+    var armTab = Shuffleboard.getTab("Arm");
+    armTab.add(m_SetPoint1);
+    armTab.add(m_SetPoint2);
+    armTab.add(m_SetPoint3);
 
+    // add the basic fms info widget to the main tab (we can just get it from
+    // networktables)
 
     mainTab.getLayout("Arm System", BuiltInLayouts.kList).withPosition(34, 0).withSize(5, 8);
     Logger.configureLoggingAndConfig(this, false);
 
-
     // add the limelight stream to the main tab
-    mainTab.addCamera("Limelight", "limelight", "http://10.69.64.11:5800").withPosition(8, 0).withSize(22, 19);
+    // mainTab.addCamera("Limelight", "limelight", "http://10.69.64.11:5800").withPosition(8, 0).withSize(22, 19);
 
   }
 
@@ -154,6 +168,12 @@ public class RobotContainer {
 
     new JoystickButton(m_armController2, XboxController.Button.kX.value).whileTrue(m_TrackPiece);
     new JoystickButton(m_armController2, XboxController.Button.kB.value).whileTrue(m_TrackPole);
+
+
+
+    new JoystickButton(m_armController2, XboxController.Button.kStart.value).whileTrue(m_SetPoint1);
+    new JoystickButton(m_armController2, XboxController.Button.kBack.value).whileTrue(m_SetPoint2);
+    new JoystickButton(m_armController2, XboxController.Button.kRightBumper.value).whileTrue(m_SetPoint3);
 
     // new JoystickButton(m_armController2, XboxController.Button.kB.value)
     // .whileTrue(m_PlaceConeSecondLevelCommand);
