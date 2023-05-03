@@ -14,7 +14,7 @@ import frc.robot.subsystems.*;
 public class AutoCommands {
   public class SideAutoWCone extends SequentialCommandGroup {
 
-    public SideAutoWCone(AutoBalence m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+    public SideAutoWCone(AutoBalance m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
 
       // pick one
       // sideAutoWCone(m_pid,m_driveBase,m_arm,m_claw);
@@ -28,7 +28,7 @@ public class AutoCommands {
 
   public class SideAutoWCube extends SequentialCommandGroup {
 
-    public SideAutoWCube(AutoBalence m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+    public SideAutoWCube(AutoBalance m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
 
       // pick one
       // sideAutoWCone(m_pid,m_driveBase,m_arm,m_claw);
@@ -42,7 +42,7 @@ public class AutoCommands {
 
   public class MiddleAutoWCone extends SequentialCommandGroup {
 
-    public MiddleAutoWCone(AutoBalence m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+    public MiddleAutoWCone(AutoBalance m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
 
       // pick one
       // sideAutoWCone(m_pid,m_driveBase,m_arm,m_claw);
@@ -57,7 +57,7 @@ public class AutoCommands {
 
   public class MiddleAutoWCube extends SequentialCommandGroup {
 
-    public MiddleAutoWCube(AutoBalence m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
+    public MiddleAutoWCube(AutoBalance m_pid, Tank m_driveBase, Arm m_arm, Claw m_claw) {
 
       // pick one
       // sideAutoWCone(m_pid,m_driveBase,m_arm,m_claw);
@@ -86,7 +86,7 @@ public class AutoCommands {
 
   public class JustBalance extends SequentialCommandGroup {
 
-    public JustBalance(AutoBalence m_pid, Tank m_driveBase) {
+    public JustBalance(AutoBalance m_pid, Tank m_driveBase) {
 
       // pick one
       // sideAutoWCone(m_pid,m_driveBase,m_arm,m_claw);
