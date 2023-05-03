@@ -1,0 +1,3 @@
+[submodule "NetworkAlerts"]
+	path = NetworkAlerts
+	url = https://github.com/Mechanical-Advantage/NetworkAlerts

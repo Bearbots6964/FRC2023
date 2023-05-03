@@ -1,25 +1,27 @@
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.REVPhysicsSim;
+import com.revrobotics.REVLibError;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.util.datalog.BooleanLogEntry;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.shuffleboard.*;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.interfaces.*;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.SPI;
+import frc.robot.util.Alert;
+import frc.robot.util.Alert.AlertType;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.SPI.Port;
 
 public class Tank extends SubsystemBase {
   public CANSparkMax leftFront;
@@ -31,104 +33,100 @@ public class Tank extends SubsystemBase {
   public MotorControllerGroup right;
   public MotorControllerGroup all;
 
-  public static DifferentialDrive drive;
+  public DifferentialDrive drive;
 
   public boolean brakeMode;
-  private GenericEntry stallWidget;
-  private GenericEntry freeWidget;
-  private int stallLimit;
-  private int freeLimit;
-
-  private SimpleWidget idleModeWidget;
-  private GenericEntry idleModeSwitch;
-
-  private double rampRate;
-  private GenericEntry rampRateWidget;
 
   private double maxSpeed;
   public SimpleWidget maxSpeedWidget;
   private GenericEntry maxSpeedEntry;
 
-  private ShuffleboardLayout tankLayout;
-
-  private ShuffleboardTab motorsTab;
-
-  private DifferentialDriveOdometry odometry;
-
-  public static AHRS gyro;
-
-  private Field2d field2d;
-
   private int initialCurrentLimit = 30; // TODO tune this
 
-  private REVPhysicsSim physicsSim;
+  public static AHRS navx;
+
+  private DataLog log = DataLogManager.getLog();
+
+  // gyro logging
+  private DoubleLogEntry pitchAngle;
+  private BooleanLogEntry isCalibrating;
+  private DoubleLogEntry yawAngle;
+  
+
+  // errors
+  // Credit goes to Mechanical Advantage 6328 for the framework for this
+
+  // errors for each of the motors
+  private String leftFrontErrorText = "The left front drive motor has encountered an error!";
+  private String leftRearErrorText = "The left rear drive motor has encountered an error!";
+  private String rightFrontErrorText = "The right front drive motor has encountered an error!";
+  private String rightRearErrorText = "The right rear drive motor has encountered an error!";
+
+  private Alert leftFrontError = new Alert("Drivebase", leftFrontErrorText, AlertType.ERROR);
+  private Alert leftRearError = new Alert("Drivebase", leftRearErrorText, AlertType.ERROR);
+  private Alert rightFrontError = new Alert("Drivebase", rightFrontErrorText, AlertType.ERROR);
+  private Alert rightRearError = new Alert("Drivebase", rightRearErrorText, AlertType.ERROR);
+
+  // quick little function that can throw an error just by passing in another
+  // function (e.g.
+  // leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate).withError(leftFrontError)
+  // and have that automatically handle the error)
+  private REVLibError withError(REVLibError error, Alert alert, String text) {
+    if (error != REVLibError.kOk) {
+      alert.set(true);
+      alert.setText(text.concat(" Error: " + error.toString() + ""));
+    }
+    return error;
+  }
+
+  private CANSparkMax initMotor(int port, MotorType motorType, boolean isInverted, int smartCurrentLimit,
+      IdleMode idleMode, double rampRate, Alert alert, String text) {
+    CANSparkMax motor = new CANSparkMax(port, motorType);
+    withError(motor.restoreFactoryDefaults(), alert, text);
+    motor.setInverted(isInverted);
+    withError(motor.setIdleMode(idleMode), alert, text);
+    withError(motor.setSmartCurrentLimit(smartCurrentLimit), alert, text);
+    withError(motor.setOpenLoopRampRate(rampRate), alert, text);
+    motor.burnFlash();
+    return motor;
+  }
 
   /** */
   public Tank() {
+    navx = new AHRS(Port.kMXP);
+    addChild("NavX", navx);
 
-    gyro = new AHRS(SPI.Port.kMXP);
-    addChild("Gyro", gyro);
-    Shuffleboard.getTab("Driver").add("Gyro", gyro);
+    // start logging the navx data to the WPILib logger
+    pitchAngle = new DoubleLogEntry(log, "NavX/Pitch Angle");
+    isCalibrating = new BooleanLogEntry(log, "NavX/Is Calibrating");
+    yawAngle = new DoubleLogEntry(log, "NavX/Yaw Angle");
 
-    motorsTab = Shuffleboard.getTab("Motors");
 
-    leftFront = new CANSparkMax(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless);
-    leftFront.restoreFactoryDefaults();
-    leftFront.setInverted(true);
-    leftFront.setIdleMode(IdleMode.kBrake);
-    leftFront.setSmartCurrentLimit(initialCurrentLimit);
-    leftFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-    leftFront.burnFlash();
-    motorsTab.add("Left Front", leftFront);
-    addChild("Left Front", leftFront);
+    leftFront = initMotor(Constants.CanConstants.kLeftFrontMotorPort, MotorType.kBrushless, true, initialCurrentLimit,
+        IdleMode.kBrake, Constants.CanConstants.kRampRate, leftFrontError, leftFrontErrorText);
 
-    leftRear = new CANSparkMax(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless);
-    leftRear.restoreFactoryDefaults();
-    leftRear.setInverted(true);
-    leftRear.setIdleMode(IdleMode.kBrake);
-    leftRear.setSmartCurrentLimit(initialCurrentLimit);
-    leftRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-    leftRear.burnFlash();
-    motorsTab.add("Left Rear", leftRear);
-    addChild("Left Rear", leftRear);
+    leftRear = initMotor(Constants.CanConstants.kLeftRearMotorPort, MotorType.kBrushless, true, initialCurrentLimit,
+        IdleMode.kBrake, Constants.CanConstants.kRampRate, leftRearError, leftRearErrorText);
 
     left = new MotorControllerGroup(leftFront, leftRear);
     addChild("Left Side", left);
-    motorsTab.add("Left", left);
 
-    rightFront = new CANSparkMax(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless);
-    rightFront.restoreFactoryDefaults();
-    rightFront.setInverted(false);
+    rightFront = initMotor(Constants.CanConstants.kRightFrontMotorPort, MotorType.kBrushless, false,
+        initialCurrentLimit, IdleMode.kBrake, Constants.CanConstants.kRampRate, rightFrontError, rightFrontErrorText);
 
-    rightFront.setIdleMode(IdleMode.kBrake);
-    rightFront.setSmartCurrentLimit(initialCurrentLimit);
-    rightFront.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-    rightFront.burnFlash();
-    motorsTab.add("Right Front", rightFront);
-    addChild("Right Front", rightFront);
-
-    rightRear = new CANSparkMax(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless);
-    rightRear.restoreFactoryDefaults();
-    rightRear.setInverted(false);
-    rightRear.setIdleMode(IdleMode.kBrake);
-    rightRear.setSmartCurrentLimit(initialCurrentLimit);
-    rightRear.setOpenLoopRampRate(Constants.CanConstants.kRampRate);
-    rightRear.burnFlash();
-    motorsTab.add("Right Rear", rightRear);
+    rightRear = initMotor(Constants.CanConstants.kRightRearMotorPort, MotorType.kBrushless, false, initialCurrentLimit,
+        IdleMode.kBrake, Constants.CanConstants.kRampRate, rightRearError, rightRearErrorText);
 
     addChild("Right Rear", rightRear);
 
     right = new MotorControllerGroup(rightFront, rightRear);
     addChild("Right Side", right);
-    motorsTab.add("Right", right);
 
     all = new MotorControllerGroup(leftFront, leftRear, rightFront, rightRear);
     addChild("All", all);
-    motorsTab.add("All", all);
 
     drive = new DifferentialDrive(left, right);
     addChild("Drive", drive);
-    motorsTab.add("Drive", drive).withWidget(BuiltInWidgets.kDifferentialDrive);
     // create a differential drive widget
 
     drive.setSafetyEnabled(false);
@@ -148,48 +146,19 @@ public class Tank extends SubsystemBase {
     rightFront.setSmartCurrentLimit(40, 50);
     rightRear.setSmartCurrentLimit(40, 50);
 
-    // implement odometry
-    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(gyro.getAngle()),
-        Units.inchesToMeters(
-            (leftFront.getEncoder().getPosition() / 10) * (leftFront.getEncoder().getPosition() / 10)
-                * Math.PI),
-        Units.inchesToMeters(
-            (rightFront.getEncoder().getPosition() / 10) * (rightFront.getEncoder().getPosition() / 10)
-                * Math.PI));
-
-    field2d = new Field2d();
-    SmartDashboard.putData(field2d);
-
-    // create a physics simulation for the robot
-    if (RobotBase.isSimulation()) {
-      physicsSim = new REVPhysicsSim();
-      // add all the spark maxes to the simulation
-      physicsSim.addSparkMax(leftFront, (float) 2.6, 445);
-      physicsSim.addSparkMax(leftRear, (float) 2.6, 445);
-      physicsSim.addSparkMax(rightFront, (float) 2.6, 445);
-      physicsSim.addSparkMax(rightRear, (float) 2.6, 445);
-      // run the simulation
-      physicsSim.run();
-    }
+    Shuffleboard.getTab("Main").getLayout("Arm System").addNumber("Max Speed", this::getMaxSpeed)
+        .withProperties(Map.of("Min", 0, "Max", 1));
 
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("leftStickY", RobotContainer.getTurningStickInput());
-    SmartDashboard.putNumber("rightStickX", RobotContainer.getForwardStickInput());
+    // This method will be called once per scheduler run
 
-    // i hate my life
-
-    odometry.update(Rotation2d.fromDegrees(gyro.getAngle()),
-        Units.inchesToMeters(
-            (leftFront.getEncoder().getPosition() / 10) * (leftFront.getEncoder().getPosition() / 10)
-                * Math.PI),
-        Units.inchesToMeters(
-            (rightFront.getEncoder().getPosition() / 10) * (rightFront.getEncoder().getPosition() / 10)
-                * Math.PI));
-
-    field2d.setRobotPose(odometry.getPoseMeters());
+    // log gyro data
+    pitchAngle.append(navx.getPitch());
+    isCalibrating.append(navx.isCalibrating());
+    yawAngle.append(navx.getYaw());
   }
 
   public double getMaxSpeed() {

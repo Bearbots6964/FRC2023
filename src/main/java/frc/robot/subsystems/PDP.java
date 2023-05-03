@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
@@ -20,11 +22,12 @@ public class PDP extends SubsystemBase {
 
   public PDP() {
     pdp = new PowerDistribution(0, ModuleType.kCTRE);
-    tab = Shuffleboard.getTab("PDP");
     pdp.clearStickyFaults();
-    tab = Shuffleboard.getTab("PDP");
+    tab = Shuffleboard.getTab("Main");
     addChild("PDP", pdp);
-    widget = tab.add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution);
+    widget = tab.add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution).withPosition(0, 3).withSize(8, 11).withProperties(Map.of("Show voltage and current values", true));
+      
+    
     if (!RobotBase.isReal()) {
       // this is a simulation, so add a simulated PDP
       pdpSim = new PDPSim(pdp);

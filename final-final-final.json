@@ -65,19 +65,6 @@
                 },
                 {
                   "_type": "Number Bar",
-                  "_source0": "network_table:///Shuffleboard/Motors/Turret/Applied Output",
-                  "_title": "Turret",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Range/Min": -1.0,
-                  "Range/Max": 1.0,
-                  "Range/Center": 0.0,
-                  "Visuals/Num tick marks": 5,
-                  "Visuals/Show text": true,
-                  "Visuals/Orientation": "HORIZONTAL"
-                },
-                {
-                  "_type": "Number Bar",
                   "_source0": "network_table:///Shuffleboard/Motors/Arm/Applied Output",
                   "_title": "Arm",
                   "_glyph": 148,
@@ -103,24 +90,6 @@
                   "Visuals/Orientation": "HORIZONTAL"
                 }
               ]
-            }
-          },
-          "30,0": {
-            "size": [
-              3,
-              3
-            ],
-            "content": {
-              "_type": "Match Time",
-              "_source0": "network_table:///Shuffleboard/stuff/time",
-              "_title": "Shuffleboard/stuff/time",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Appearance/Colors on": true,
-              "Appearance/Font size": 60,
-              "Match length/Autonomous length": 15.0,
-              "Match length/Teleop length": 105.0,
-              "Match length/Endgame length": 30.0
             }
           },
           "32,8": {

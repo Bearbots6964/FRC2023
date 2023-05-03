@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class AutoBalence extends SubsystemBase {
+public class AutoBalance extends SubsystemBase {
 
   private final double kP = 0.18;
   private final double kI = 0.025;
@@ -21,11 +21,11 @@ public class AutoBalence extends SubsystemBase {
   public ShuffleboardTab tab;
   public ShuffleboardTab dash;
 
-  public AHRS gyro = Tank.gyro;
+  public AHRS gyro = Tank.navx;
 
   private float initPitch;
 
-  public AutoBalence() {
+  public AutoBalance() {
     toleranceDeg = 0.5;
     iLimit = 2.0;
 

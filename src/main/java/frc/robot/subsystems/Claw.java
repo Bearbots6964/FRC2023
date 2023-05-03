@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.GenericEntry;
@@ -29,7 +31,7 @@ public class Claw extends SubsystemBase {
     clawMotor.burnFlash();
     addChild("Claw Motor", clawMotor);
 
-    Shuffleboard.getTab("Motors").add("Claw", clawMotor);
+    Shuffleboard.getTab("Main").getLayout("Arm System").addNumber("Claw", () -> clawMotor.getAppliedOutput()).withProperties(Map.of("Min", -1, "Max", 1));
 
   }
 

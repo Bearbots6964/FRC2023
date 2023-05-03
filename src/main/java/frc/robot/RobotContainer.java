@@ -4,13 +4,18 @@
 
 package frc.robot;
 
+import java.util.Map;
+
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,6 +37,8 @@ import io.github.oblarg.oblog.Logger;
 public class RobotContainer {
   public static boolean inverted = false;
 
+  private ShuffleboardLayout m_widget = Shuffleboard.getTab("Main").getLayout("Arm System", BuiltInLayouts.kList).withPosition(34, 0).withSize(5, 8);
+
   // INSTANTIATES ALL JOYSTICKS
 
   /** @deprecated The drivers are much more comfortable with an xbox controller */
@@ -45,7 +52,7 @@ public class RobotContainer {
   private final Arm m_Arm = new Arm();
   private final Claw m_Claw = new Claw();
   private final Tank m_Tank = new Tank();
-  private final AutoBalence m_Balance = new AutoBalence();
+  private final AutoBalance m_Balance = new AutoBalance();
   private final PDP m_PDP = new PDP();
   private final AutoPiecePickUp m_Vision = new AutoPiecePickUp(m_Tank, m_Claw);
   private final PoleTracking m_PoleTracking = new PoleTracking(m_Tank);
@@ -108,27 +115,17 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    // add a few things to the shuffleboard
-    // joysticks
-    var subsystemsTab = Shuffleboard.getTab("Subsystems");
     var mainTab = Shuffleboard.getTab("Main");
-    subsystemsTab.add(m_Arm);
-    subsystemsTab.add(m_BalanceCommand);
-    subsystemsTab.add(m_DecreaseMaxSpeedCommand);
-    subsystemsTab.add(m_DriveCommand);
-    subsystemsTab.add(m_FineDriveCommand);
-    subsystemsTab.add(m_IncreaseMaxSpeedCommand);
-    subsystemsTab.add(m_MoveArmYCommand);
-    subsystemsTab.add(m_PDP);
-    subsystemsTab.add(m_PlaceCubeSecondLevelCommand);
-    subsystemsTab.add(m_Vision);
 
-    subsystemsTab.add(m_Balance);
-    subsystemsTab.add(m_PlaceConeSecondLevelCommand);
-    subsystemsTab.add(m_Tank);
-    subsystemsTab.add(m_Claw);
+    // add the basic fms info widget to the main tab (we can just get it from networktables)
 
+
+    mainTab.getLayout("Arm System", BuiltInLayouts.kList).withPosition(34, 0).withSize(5, 8);
     Logger.configureLoggingAndConfig(this, false);
+
+
+    // add the limelight stream to the main tab
+    mainTab.addCamera("Limelight", "limelight", "http://10.69.64.11:5800").withPosition(8, 0).withSize(22, 19);
 
   }
 
