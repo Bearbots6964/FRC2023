@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -131,6 +132,9 @@ public class Arm extends PIDSubsystem {
     setPoint3 = Shuffleboard.getTab("Motors").add("Set Point 3", 0).getEntry();
 
 
+    Shuffleboard.getTab("Motors").add("Arm PID", m_controller);
+
+
     addChild("Arm PID", m_controller);
 
 
@@ -142,27 +146,36 @@ public class Arm extends PIDSubsystem {
   @Override
   public void periodic() {
     super.periodic();
+    double roundedVelocity = ((double) ((int) ((encoder.getVelocity() / 20) * 1000))) / 1000;
+
     // SmartDashboard.putBoolean("zeroDeg", allTheWayDownRear.get());
-    double encoderValue = armMotor.getEncoder().getPosition();
+    double encoderValue = encoder.getPosition();
     double change = encoderValue - lastEncoderValue;
+    double roundedPosition = ((double) ((int) (encoderValue * 100))) / 100;
     if (lastEncoderValue < 0.3 && encoderValue > 0.8) {
-      rotations--;
+    rotations--;
     } else if (lastEncoderValue > 0.8 && encoderValue < 0.3) {
-      rotations++;
+    rotations++;
     }
+    // get the velocity of the encoder (in rotations per second) and if there is a
+    // change between the signs of the velocity and the change in encoder value,
+    // then there has been a Full Rotation(tm)
+    // if (Math.signum(roundedVelocity) != Math.signum(roundedPosition)) {
+    //   rotations += Math.signum(roundedVelocity);
+    // }
     lastEncoderValue = encoderValue;
 
     encoderWidget.setDouble(encoderValue);
 
-    if (going) {
-
-      SmartDashboard.putNumber("caluclated power to arm form PID",
-          m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
-    
-    }
 
 
     SmartDashboard.putNumber("rotations", rotations);
+    SmartDashboard.putNumber("velocity", encoder.getVelocity());
+    SmartDashboard.putNumber("roundedVelocity", roundedVelocity);
+    SmartDashboard.putNumber("roundedPosition", roundedPosition);
+
+    // round velocity to the hundredths place
+    
 
   }
 
@@ -181,7 +194,7 @@ public class Arm extends PIDSubsystem {
   }
 
   public double getAngle() {
-    return armMotor.getEncoder().getPosition();
+    return encoder.getPosition() + rotations;
   }
 
   // public void setArmAngle(double angle) {
@@ -206,7 +219,17 @@ public class Arm extends PIDSubsystem {
 
   @Override
   protected void useOutput(double output, double setpoint) {
-    moveArm(output);
+    if (0.50 < output) {
+      output = 0.50;
+    } else if (-0.50 > output) {
+      output = -0.50;
+    } else if (0.1 < output && output < 0.40) {
+      output = 0.40;
+    } else if (-0.40 < output && output < -0.1) {
+      output = -0.40;
+    }
+
+    moveArm(-output);
   }
 
   @Override
@@ -232,14 +255,14 @@ public class Arm extends PIDSubsystem {
   }
 
   public void moveToSetPoint1() {
-    m_controller.setSetpoint(0.75);
+    m_controller.setSetpoint(0.64);
   }
 
   public void moveToSetPoint2() {
-    m_controller.setSetpoint(0.25);
+    m_controller.setSetpoint(3.4);
   }
 
   public void moveToSetPoint3() {
-    m_controller.setSetpoint(0.5);
+    m_controller.setSetpoint(1.67);
   }
 }
