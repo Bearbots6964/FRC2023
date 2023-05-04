@@ -1,33 +1,34 @@
 package frc.robot.subsystems;
 
-import java.util.Map;
-
 import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.util.Map;
 
 public class PDP extends SubsystemBase {
   public PowerDistribution m_pdp;
   ShuffleboardTab tab;
   ComplexWidget widget;
-  
 
   public PDP() {
     m_pdp = new PowerDistribution(0, ModuleType.kCTRE);
     m_pdp.clearStickyFaults();
     tab = Shuffleboard.getTab("Main");
     addChild("PDP", m_pdp);
-    widget = tab.add("PDP", m_pdp).withWidget(BuiltInWidgets.kPowerDistribution).withPosition(0, 3).withSize(8, 11).withProperties(Map.of("Show voltage and current values", true));
-      
-    
+    widget =
+        tab.add("PDP", m_pdp)
+            .withWidget(BuiltInWidgets.kPowerDistribution)
+            .withPosition(0, 3)
+            .withSize(8, 11)
+            .withProperties(Map.of("Show voltage and current values", true));
+
     if (!RobotBase.isReal()) {
       // this is a simulation, so add a simulated PDP
-      
 
     }
   }
@@ -53,18 +54,13 @@ public class PDP extends SubsystemBase {
   }
 
   /**
-   * @param param the channel to get the current from, or any string to get the
-   *              total current
-   * @return the current drawn from the specified channel, or all channels, in
-   *         Amps
+   * @param param the channel to get the current from, or any string to get the total current
+   * @return the current drawn from the specified channel, or all channels, in Amps
    */
   public double getCurrent(Object param) {
-    if (param instanceof Integer)
-      return m_pdp.getCurrent((int) param);
-    else if (param instanceof String)
-      return m_pdp.getTotalCurrent();
-    else
-      return 0;
+    if (param instanceof Integer) return m_pdp.getCurrent((int) param);
+    else if (param instanceof String) return m_pdp.getTotalCurrent();
+    else return 0;
   }
 
   /**

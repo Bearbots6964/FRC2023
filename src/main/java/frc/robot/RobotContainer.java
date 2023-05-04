@@ -4,10 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -27,22 +27,19 @@ import frc.robot.util.SystemChecks;
 import io.github.oblarg.oblog.Logger;
 
 /**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
+ * This class is where the bulk of the robot should be declared. Since Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   public boolean inverted = false;
 
-  // private ShuffleboardLayout m_widget = Shuffleboard.getTab("Main").getLayout("Arm System", BuiltInLayouts.kList)
+  // private ShuffleboardLayout m_widget = Shuffleboard.getTab("Main").getLayout("Arm System",
+  // BuiltInLayouts.kList)
   //     .withPosition(34, 0).withSize(5, 8);
 
   // INSTANTIATES ALL JOYSTICKS
-
 
   public static final Joystick m_buttonPad = new Joystick(0);
 
@@ -64,35 +61,37 @@ public class RobotContainer {
   private final DriveCommand m_DriveCommand = new DriveCommand(m_Tank);
   private final BalanceCommand m_BalanceCommand = new BalanceCommand(m_Balance, m_Tank);
   private final InvertDriveCommand m_InvertDriveCommand = new InvertDriveCommand(m_Tank, this);
-  private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand = new PlaceConeSecondLevelCommand(m_Tank,
-      m_Arm, m_Claw);
-  private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand = new IncreaseMaxSpeedCommand(m_Tank);
-  private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand = new DecreaseMaxSpeedCommand(m_Tank);
+  private final PlaceConeSecondLevelCommand m_PlaceConeSecondLevelCommand =
+      new PlaceConeSecondLevelCommand(m_Tank, m_Arm, m_Claw);
+  private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand =
+      new IncreaseMaxSpeedCommand(m_Tank);
+  private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand =
+      new DecreaseMaxSpeedCommand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
-  // private final PlaceCubeSecondLevelCommand m_PlaceCubeSecondLevelCommand = new PlaceCubeSecondLevelCommand(m_Tank,
+  // private final PlaceCubeSecondLevelCommand m_PlaceCubeSecondLevelCommand = new
+  // PlaceCubeSecondLevelCommand(m_Tank,
   //     m_Arm, m_Claw);
   private final TrackPiece m_TrackPiece = new TrackPiece(m_Vision, m_Tank, m_Claw);
   private final TrackPole m_TrackPole = new TrackPole(m_PoleTracking, m_Tank);
 
   private final AutoCommands m_AutoCommands = new AutoCommands();
   // auto commands
-  private final AutoCommands.MiddleAutoWCone m_MiddleAutoWCone = m_AutoCommands.new MiddleAutoWCone(m_Balance, m_Tank,
-      m_Arm,
-      m_Claw);
+  private final AutoCommands.MiddleAutoWCone m_MiddleAutoWCone =
+      m_AutoCommands.new MiddleAutoWCone(m_Balance, m_Tank, m_Arm, m_Claw);
 
-  private final AutoCommands.MiddleAutoWCube m_MiddleAutoWCube = m_AutoCommands.new MiddleAutoWCube(m_Balance, m_Tank,
-      m_Arm,
-      m_Claw);
+  private final AutoCommands.MiddleAutoWCube m_MiddleAutoWCube =
+      m_AutoCommands.new MiddleAutoWCube(m_Balance, m_Tank, m_Arm, m_Claw);
 
-  private final AutoCommands.SideAutoWCone m_SideAutoWCone = m_AutoCommands.new SideAutoWCone(m_Balance, m_Tank, m_Arm,
-      m_Claw);
+  private final AutoCommands.SideAutoWCone m_SideAutoWCone =
+      m_AutoCommands.new SideAutoWCone(m_Balance, m_Tank, m_Arm, m_Claw);
 
-  private final AutoCommands.SideAutoWCube m_SideAutoWCube = m_AutoCommands.new SideAutoWCube(m_Balance, m_Tank, m_Arm,
-      m_Claw);
+  private final AutoCommands.SideAutoWCube m_SideAutoWCube =
+      m_AutoCommands.new SideAutoWCube(m_Balance, m_Tank, m_Arm, m_Claw);
 
   private final AutoCommands.None m_None = m_AutoCommands.new None();
 
-  private final AutoCommands.JustBalance m_JustBalance = m_AutoCommands.new JustBalance(m_Balance, m_Tank);
+  private final AutoCommands.JustBalance m_JustBalance =
+      m_AutoCommands.new JustBalance(m_Balance, m_Tank);
 
   private final SetPointCommands m_SetPointCommands = new SetPointCommands();
   // set point commands
@@ -103,16 +102,15 @@ public class RobotContainer {
   private final moveToSetPoint5 m_SetPoint5 = m_SetPointCommands.new moveToSetPoint5(m_Arm);
   private final moveToSetPoint6 m_SetPoint6 = m_SetPointCommands.new moveToSetPoint6(m_Arm);
 
-  private final CancelSetPointCommands m_CancelSetPointCommands = m_SetPointCommands.new CancelSetPointCommands(m_Arm);
+  private final CancelSetPointCommands m_CancelSetPointCommands =
+      m_SetPointCommands.new CancelSetPointCommands(m_Arm);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   // private final XTracking m_XTracking = new XTracking(m_Tank, null, m_Target);
   // private final YTracking m_YTracking = new YTr
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_chooser.setDefaultOption("Middle Auto W/ Cone", m_MiddleAutoWCone);
     m_chooser.addOption("Middle Auto W/ Cube", m_MiddleAutoWCube);
@@ -141,15 +139,21 @@ public class RobotContainer {
 
     // add the limelight stream to the main tab
     try {
-      mainTab.addCamera("Limelight", "limelight", "http://10.69.64.11:5800").withPosition(8, 0).withSize(22, 19);
+      mainTab
+          .addCamera("Limelight", "limelight", "http://10.69.64.11:5800")
+          .withPosition(8, 0)
+          .withSize(22, 19);
     } catch (Exception e) {
       System.out.println("limelight not found!");
       SystemChecks.alert.set(true);
     }
 
     // add the time widget to the main tab
-    mainTab.addNumber("Timer", Timer::getMatchTime).withWidget("Match Time").withPosition(30, 0).withSize(4, 4);
-
+    mainTab
+        .addNumber("Timer", Timer::getMatchTime)
+        .withWidget("Match Time")
+        .withPosition(30, 0)
+        .withSize(4, 4);
   }
 
   /**
@@ -173,7 +177,8 @@ public class RobotContainer {
     // .whileTrue(m_OpenClawCommand);
     new JoystickButton(m_armController, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_FineDriveCommand);
-    new JoystickButton(m_armController, XboxController.Button.kY.value).whileTrue(m_PlaceConeSecondLevelCommand);
+    new JoystickButton(m_armController, XboxController.Button.kY.value)
+        .whileTrue(m_PlaceConeSecondLevelCommand);
 
     new JoystickButton(m_armController, XboxController.Button.kX.value).whileTrue(m_TrackPiece);
     new JoystickButton(m_armController, XboxController.Button.kB.value).whileTrue(m_TrackPole);
@@ -199,10 +204,7 @@ public class RobotContainer {
     // .whileTrue(m_PlaceConeSecondLevelCommand);
   }
 
-  /**
-   * gets the value of the left stick on the driver controller to be used for
-   * turning
-   */
+  /** gets the value of the left stick on the driver controller to be used for turning */
   public static double getTurningStickInput() {
     // uses the left stick on the driver controller
     double axis = m_driverController.getRawAxis(1);
@@ -213,9 +215,7 @@ public class RobotContainer {
     return axis * -1;
   }
 
-  /**
-   * returns value used for turning
-   */
+  /** returns value used for turning */
   public static double getAdjustedTurningStickInput() {
     double val = getTurningStickInput();
     if (val > 0) {
@@ -228,8 +228,8 @@ public class RobotContainer {
   }
 
   /**
-   * gets the value of the right stick on the driver controller to be used for
-   * forward and backward movement
+   * gets the value of the right stick on the driver controller to be used for forward and backward
+   * movement
    */
   public static double getForwardStickInput() {
     double axis = m_driverController.getRawAxis(4);
@@ -252,11 +252,10 @@ public class RobotContainer {
   }
 
   /**
-   * This function gets the joystick value of the left stick on the arm controller
-   * The left stick is used to move the arm up and down
-   * The function returns the value of the left stick
-   * The value of the left stick is put on the smart dashboard
-   * 
+   * This function gets the joystick value of the left stick on the arm controller The left stick is
+   * used to move the arm up and down The function returns the value of the left stick The value of
+   * the left stick is put on the smart dashboard
+   *
    * @deprecated This controller is no longer used
    */
   @Deprecated
@@ -271,18 +270,17 @@ public class RobotContainer {
   }
 
   /**
-   * This function gets the joystick x-value of the right stick on the arm
-   * controller
-   * The right stick is used to move the arm left and right
-   * The function returns the value of the right stick
+   * This function gets the joystick x-value of the right stick on the arm controller The right
+   * stick is used to move the arm left and right The function returns the value of the right stick
    * The value of the right stick is put on the smart dashboard
-   * 
-   * @deprecated The turret is no longer on the arm, and this controller is no
-   *             longer used
+   *
+   * @deprecated The turret is no longer on the arm, and this controller is no longer used
    */
   @Deprecated
-  public static double getJoystickArmControllerRightStickX() { // "do not forget to remove this deprecated code someday"
-                                                               // lmao never
+  public static double
+      getJoystickArmControllerRightStickX() { // "do not forget to remove this deprecated code
+    // someday"
+    // lmao never
     double axis = m_armController.getRawAxis(4);
     SmartDashboard.putNumber("arm right stick x", axis);
 
@@ -293,9 +291,8 @@ public class RobotContainer {
   }
 
   /**
-   * This function gets the y-value of the left stick on the arm controller
-   * The left stick is used to move the arm up and down
-   * The function returns the value of the left stick
+   * This function gets the y-value of the left stick on the arm controller The left stick is used
+   * to move the arm up and down The function returns the value of the left stick
    */
   public static double getControllerLeftStickY() {
     double axis = m_armController.getRawAxis(1);
@@ -326,11 +323,7 @@ public class RobotContainer {
     controller.setRumble(RumbleType.kBothRumble, rumble);
   }
 
-  /**
-   * gets value from the right trigger axis (yes, it's an axis) for grabbing up
-   * the game piece
-   */
-
+  /** gets value from the right trigger axis (yes, it's an axis) for grabbing up the game piece */
   public static double getClawInValue() {
     double axis = m_armController.getRightTriggerAxis();
     if (Math.abs(axis) < 0.01) {
@@ -339,10 +332,7 @@ public class RobotContainer {
     return axis;
   }
 
-  /**
-   * gets value from the left trigger axis (yes, it's an axis) for ejecting the
-   * game piece
-   */
+  /** gets value from the left trigger axis (yes, it's an axis) for ejecting the game piece */
   public static double getClawOutValue() {
     double axis = m_armController.getLeftTriggerAxis();
     if (Math.abs(axis) < 0.01) {
@@ -364,7 +354,6 @@ public class RobotContainer {
     }
     m_Arm.setDefaultCommand(m_MoveArmYCommand);
     m_Claw.setDefaultCommand(m_MoveClawCommand);
-
   }
 
   public void initTest() {
@@ -374,7 +363,5 @@ public class RobotContainer {
 
   public void robotPeriodic() {
     Logger.updateEntries();
-
   }
-
 }

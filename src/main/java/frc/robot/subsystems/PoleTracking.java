@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 public class PoleTracking extends PIDSubsystem {
   /** Creates a new Vision. */
   private static double kP = 0.1;
+
   private static double kI = 0;
   private static double kD = 0.01;
 
@@ -31,7 +32,6 @@ public class PoleTracking extends PIDSubsystem {
     m_controller.setIntegratorRange(-0.43, 0.43);
 
     Shuffleboard.getTab(getName()).add(m_controller);
-
   }
 
   @Override
@@ -49,7 +49,6 @@ public class PoleTracking extends PIDSubsystem {
     }
 
     m_tank.arcadeDrive(0, output * 1);
-
   }
 
   @Override
@@ -78,7 +77,8 @@ public class PoleTracking extends PIDSubsystem {
   @Override
   public void periodic() {
     super.periodic();
-    SmartDashboard.putNumber("calculated turning output from vision (pole)",
+    SmartDashboard.putNumber(
+        "calculated turning output from vision (pole)",
         m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
   }
 
@@ -93,5 +93,4 @@ public class PoleTracking extends PIDSubsystem {
     super.enable();
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(1);
   }
-
 }

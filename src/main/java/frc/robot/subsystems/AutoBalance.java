@@ -27,7 +27,6 @@ public class AutoBalance extends SubsystemBase {
     iLimit = 2.0;
 
     initPitch = gyro.getPitch();
-
   }
 
   @Override

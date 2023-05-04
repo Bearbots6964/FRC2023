@@ -90,8 +90,9 @@ public class Arm extends PIDSubsystem {
      * addChild("Arm Motor", armMotor);
      */
 
-    armMotor = CANSparkMax.initMotor(
-        7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
+    armMotor =
+        CANSparkMax.initMotor(
+            7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
 
     // armPID = armMotor.getPIDController();
 
@@ -146,7 +147,7 @@ public class Arm extends PIDSubsystem {
 
     // SmartDashboard.putBoolean("zeroDeg", allTheWayDownRear.get());
     double encoderValue = encoder.getPosition();
-    
+
     double roundedPosition = ((double) ((int) (encoderValue * 100))) / 100;
     if (lastEncoderValue < 0.3 && encoderValue > 0.8) {
       rotations--;
@@ -229,7 +230,6 @@ public class Arm extends PIDSubsystem {
     } else {
       return m_controller.atSetpoint();
     }
-
   }
 
   @Override
@@ -274,5 +274,4 @@ public class Arm extends PIDSubsystem {
   public void moveToSetPoint6() {
     m_controller.setSetpoint(3.5);
   }
-
 }

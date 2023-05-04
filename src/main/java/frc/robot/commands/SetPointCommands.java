@@ -166,7 +166,6 @@ public class SetPointCommands {
     }
   }
 
-
   public class CancelSetPointCommands extends InstantCommand {
     private Arm arm;
 
