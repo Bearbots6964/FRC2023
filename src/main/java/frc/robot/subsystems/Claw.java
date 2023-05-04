@@ -27,7 +27,7 @@ public class Claw extends SubsystemBase {
   public Claw() {
     clawMotor = new CANSparkMax(8, MotorType.kBrushless);
     clawMotor.setIdleMode(IdleMode.kBrake);
-    clawMotor.setSmartCurrentLimit(20);
+    clawMotor.setSmartCurrentLimit(30);
     clawMotor.burnFlash();
     addChild("Claw Motor", clawMotor);
 

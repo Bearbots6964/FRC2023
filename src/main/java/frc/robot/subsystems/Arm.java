@@ -219,14 +219,10 @@ public class Arm extends PIDSubsystem {
 
   @Override
   protected void useOutput(double output, double setpoint) {
-    if (0.50 < output) {
-      output = 0.50;
-    } else if (-0.50 > output) {
-      output = -0.50;
-    } else if (0.1 < output && output < 0.40) {
-      output = 0.40;
-    } else if (-0.40 < output && output < -0.1) {
-      output = -0.40;
+    if (0.1 < output && output < 0.75) {
+      output = 0.75;
+    } else if (-0.75 < output && output < -0.1) {
+      output = -0.75;
     }
 
     moveArm(-output);

@@ -13,7 +13,7 @@ import frc.robot.RobotContainer;
 
 public class AutoPiecePickUp extends PIDSubsystem {
   /** Creates a new Vision. */
-  private static double kP = 0.1;
+  private static double kP = 0.05;
   private static double kI = 0;
   private static double kD = 0;
 
@@ -62,10 +62,10 @@ public class AutoPiecePickUp extends PIDSubsystem {
       output = 0.50;
     } else if (-0.50 > output) {
       output = -0.50;
-    } else if (0.1 < output && output < 0.40) {
-      output = 0.40;
-    } else if (-0.40 < output && output < -0.1) {
-      output = -0.40;
+    } else if (0.1 < output && output < 0.30) {
+      output = 0.30;
+    } else if (-0.30 < output && output < -0.1) {
+      output = -0.30;
     }
 
     m_tank.arcadeDrive(-forward, -output * 1);
@@ -102,6 +102,18 @@ public class AutoPiecePickUp extends PIDSubsystem {
     super.periodic();
     SmartDashboard.putNumber("calculated turning output from vision",
         m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
+  }
+
+  @Override
+  public void disable() {
+    super.disable();
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(0);
+  }
+
+  @Override
+  public void enable() {
+    super.enable();
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(2);
   }
 
 }

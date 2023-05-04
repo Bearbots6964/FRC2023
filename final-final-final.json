@@ -330,6 +330,50 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "33,4": {
+            "size": [
+              6,
+              11
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/PoleTracking",
+              "_title": "LiveWindow/PoleTracking",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/PoleTracking/p",
+                  "_title": "p",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/PoleTracking/i",
+                  "_title": "i",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/PoleTracking/d",
+                  "_title": "d",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/PoleTracking/setpoint",
+                  "_title": "setpoint",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
+            }
           }
         }
       }
@@ -666,7 +710,7 @@
           "7,9": {
             "size": [
               2,
-              2
+              1
             ],
             "content": {
               "_type": "Text View",
@@ -698,6 +742,84 @@
               "_type": "PID Controller",
               "_source0": "network_table:///Shuffleboard/Motors/Arm PID",
               "_title": "Shuffleboard/Motors/Arm PID",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/a",
+              "_title": "a",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "1,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/TrackPole",
+              "_title": "TrackPole",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "4,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/TrackPiece",
+              "_title": "TrackPiece",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "5,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/will this work?",
+              "_title": "will this work?",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "6,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/setpoint",
+              "_title": "setpoint",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "15,8": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///limelight/pipeline",
+              "_title": "limelight/pipeline",
               "_glyph": 148,
               "_showGlyph": false
             }

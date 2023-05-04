@@ -24,9 +24,9 @@ public class MoveClawCommand extends CommandBase {
   @Override
   public void execute() {
     if (Math.abs(RobotContainer.getClawOutValue()) < 0.2) {
-      m_subsystem.clawMotor.set(RobotContainer.getClawInValue() * 0.7);
+      m_subsystem.clawMotor.set(RobotContainer.getClawInValue() * 0.85);
     } else {
-      m_subsystem.clawMotor.set(-RobotContainer.getClawOutValue() * 0.7);
+      m_subsystem.clawMotor.set(-RobotContainer.getClawOutValue() * 0.85);
     }
   }
 

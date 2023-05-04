@@ -15,7 +15,7 @@ public class PoleTracking extends PIDSubsystem {
   /** Creates a new Vision. */
   private static double kP = 0.1;
   private static double kI = 0;
-  private static double kD = 0;
+  private static double kD = 0.01;
 
   public PIDController pidController;
   public Tank m_tank;
@@ -49,7 +49,7 @@ public class PoleTracking extends PIDSubsystem {
       output = -0.40;
     }
 
-    m_tank.arcadeDrive(0, -output * 1);
+    m_tank.arcadeDrive(0, output * 1);
 
   }
 
@@ -81,6 +81,18 @@ public class PoleTracking extends PIDSubsystem {
     super.periodic();
     SmartDashboard.putNumber("calculated turning output from vision (pole)",
         m_controller.calculate(getMeasurement(), m_controller.getSetpoint()));
+  }
+
+  @Override
+  public void disable() {
+    super.disable();
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(0);
+  }
+
+  @Override
+  public void enable() {
+    super.enable();
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setDouble(1);
   }
 
 }
