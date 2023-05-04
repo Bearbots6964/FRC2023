@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.AutoBalance;
-import frc.robot.subsystems.AutoPiecePickUp;
 import frc.robot.subsystems.Tank;
 
 /**
@@ -20,7 +19,8 @@ public class BalanceCommand extends CommandBase {
   private final AutoBalance pidLoop;
 
   private final Tank driveBase;
-  private double initPitch, maxPitch;
+  private double initPitch;
+  private double maxPitch;
   private boolean onRamp;
 
   /** Create a new {@link BalanceCommand}. */

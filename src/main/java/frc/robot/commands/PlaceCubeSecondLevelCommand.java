@@ -18,8 +18,8 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
   private int counter;
   private boolean finalStep;
   private boolean firstStep = true;
-  private boolean done;
-
+  
+  
   public PlaceCubeSecondLevelCommand(Tank drive, Arm arm, Claw claw) {
     this.drive = drive;
     this.arm = arm;
@@ -39,7 +39,7 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
      */
     counter = 0;
     finalStep = false;
-    done = false;
+    
     arm.armMotor.getEncoder().setPosition(0);
     widget = Shuffleboard.getTab("stuff").add("arm thing", arm.armMotor.getEncoder().getPosition()).getEntry();
     claw.closeClaw();
@@ -56,7 +56,7 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
       firstStep = false;
       arm.armMotor.set(0);
       claw.openClaw();
-      int counter = 0;
+      
     }
 
     // go over charge station
@@ -70,7 +70,8 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
 
     if (Math.abs(drive.getAverageDistance()) >= 4.95 && finalStep) {
       drive.setAllMotors(0);
-      done = true;
+      
+      
     }
 
   }

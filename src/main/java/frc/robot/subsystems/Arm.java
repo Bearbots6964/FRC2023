@@ -61,6 +61,8 @@ public class Arm extends PIDSubsystem {
   private String errorText = "The arm has encountered an error!";
   private Alert alert = new Alert(errorText, Alert.AlertType.ERROR);
 
+  public boolean commandsAreCanceled = false;
+
   public Arm() {
     super(
         // PIDController
@@ -88,9 +90,8 @@ public class Arm extends PIDSubsystem {
      * addChild("Arm Motor", armMotor);
      */
 
-    armMotor =
-        CANSparkMax.initMotor(
-            7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
+    armMotor = CANSparkMax.initMotor(
+        7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
 
     // armPID = armMotor.getPIDController();
 
@@ -145,7 +146,7 @@ public class Arm extends PIDSubsystem {
 
     // SmartDashboard.putBoolean("zeroDeg", allTheWayDownRear.get());
     double encoderValue = encoder.getPosition();
-    double change = encoderValue - lastEncoderValue;
+    
     double roundedPosition = ((double) ((int) (encoderValue * 100))) / 100;
     if (lastEncoderValue < 0.3 && encoderValue > 0.8) {
       rotations--;
@@ -207,9 +208,9 @@ public class Arm extends PIDSubsystem {
 
   @Override
   protected void useOutput(double output, double setpoint) {
-    if (0.1 < output && output < 0.75) {
+    if (0.01 < output && output < 0.75) {
       output = 0.75;
-    } else if (-0.75 < output && output < -0.1) {
+    } else if (-0.75 < output && output < -0.01) {
       output = -0.75;
     }
 
@@ -222,7 +223,13 @@ public class Arm extends PIDSubsystem {
   }
 
   public boolean atSetpoint() {
-    return m_controller.atSetpoint();
+    if (commandsAreCanceled) {
+      commandsAreCanceled = false;
+      return true;
+    } else {
+      return m_controller.atSetpoint();
+    }
+
   }
 
   @Override
@@ -238,15 +245,34 @@ public class Arm extends PIDSubsystem {
     m_controller.setTolerance(tolerance);
   }
 
+  // this is for button 7- picking up cubes and downed cones
   public void moveToSetPoint1() {
     m_controller.setSetpoint(0.64);
   }
 
+  // this is for button 8- picking up the upright cones
   public void moveToSetPoint2() {
-    m_controller.setSetpoint(3.4);
+    m_controller.setSetpoint(3.36);
   }
 
+  // this is for button 12- arm up for when we are driving
   public void moveToSetPoint3() {
     m_controller.setSetpoint(1.67);
   }
+
+  // this is for button 11- balancing at the end of the match
+  public void moveToSetPoint4() {
+    m_controller.setSetpoint(0.7);
+  }
+
+  // this is for button 9- general cube placing
+  public void moveToSetPoint5() {
+    m_controller.setSetpoint(3.0);
+  }
+
+  // this is for button 10- general cone placing
+  public void moveToSetPoint6() {
+    m_controller.setSetpoint(3.5);
+  }
+
 }

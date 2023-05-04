@@ -9,28 +9,25 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.simulation.BatterySim;
-import edu.wpi.first.wpilibj.simulation.PDPSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PDP extends SubsystemBase {
-  public PowerDistribution pdp;
+  public PowerDistribution m_pdp;
   ShuffleboardTab tab;
   ComplexWidget widget;
-  private PDPSim pdpSim;
+  
 
   public PDP() {
-    pdp = new PowerDistribution(0, ModuleType.kCTRE);
-    pdp.clearStickyFaults();
+    m_pdp = new PowerDistribution(0, ModuleType.kCTRE);
+    m_pdp.clearStickyFaults();
     tab = Shuffleboard.getTab("Main");
-    addChild("PDP", pdp);
-    widget = tab.add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution).withPosition(0, 3).withSize(8, 11).withProperties(Map.of("Show voltage and current values", true));
+    addChild("PDP", m_pdp);
+    widget = tab.add("PDP", m_pdp).withWidget(BuiltInWidgets.kPowerDistribution).withPosition(0, 3).withSize(8, 11).withProperties(Map.of("Show voltage and current values", true));
       
     
     if (!RobotBase.isReal()) {
       // this is a simulation, so add a simulated PDP
-      pdpSim = new PDPSim(pdp);
+      
 
     }
   }
@@ -45,14 +42,14 @@ public class PDP extends SubsystemBase {
    * @return the voltage of the PDP in Volts
    */
   public double getVoltage() {
-    return pdp.getVoltage();
+    return m_pdp.getVoltage();
   }
 
   /**
    * @return the temperature of the PDP in degrees Celsius
    */
   public double getTemperature() {
-    return pdp.getTemperature();
+    return m_pdp.getTemperature();
   }
 
   /**
@@ -63,9 +60,9 @@ public class PDP extends SubsystemBase {
    */
   public double getCurrent(Object param) {
     if (param instanceof Integer)
-      return pdp.getCurrent((int) param);
+      return m_pdp.getCurrent((int) param);
     else if (param instanceof String)
-      return pdp.getTotalCurrent();
+      return m_pdp.getTotalCurrent();
     else
       return 0;
   }
@@ -74,20 +71,20 @@ public class PDP extends SubsystemBase {
    * @return the total current drawn from the PDP in Amps
    */
   public double getTotalCurrent() {
-    return pdp.getTotalCurrent();
+    return m_pdp.getTotalCurrent();
   }
 
   /**
    * @return the total power drawn from the PDP in Watts
    */
   public double getTotalPower() {
-    return pdp.getTotalPower();
+    return m_pdp.getTotalPower();
   }
 
   /**
    * @return the total energy drawn from the PDP in Joules
    */
   public double getTotalEnergy() {
-    return pdp.getTotalEnergy();
+    return m_pdp.getTotalEnergy();
   }
 }

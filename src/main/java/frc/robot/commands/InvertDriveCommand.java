@@ -4,29 +4,27 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
 public class InvertDriveCommand extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Tank m_drivebase;
-  private final RobotContainer robot;
+  private final RobotContainer m_robot;
 
   public InvertDriveCommand(Tank subsystem, RobotContainer robot) {
     m_drivebase = subsystem;
-    this.robot = robot;
+    m_robot = robot;
 
     addRequirements(m_drivebase);
   }
 
   @Override
   public void initialize() {
-    RobotContainer.inverted = true;
-    robot.initTeleop();
+    m_robot.inverted = true;
+    m_robot.initTeleop();
   }
 
   @Override
@@ -40,8 +38,8 @@ public class InvertDriveCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drivebase.arcadeDrive(0, 0);
-    RobotContainer.inverted = false;
-    robot.initTeleop();
+    m_robot.inverted = false;
+    m_robot.initTeleop();
   }
 
   @Override

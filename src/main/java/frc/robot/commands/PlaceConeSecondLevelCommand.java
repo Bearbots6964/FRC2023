@@ -15,7 +15,7 @@ public class PlaceConeSecondLevelCommand extends CommandBase {
   private final Arm arm;
   private boolean coneOut;
   private boolean clawDown;
-  private boolean firstStep = true;
+  
   private boolean armBack;
 
   public PlaceConeSecondLevelCommand(Tank drive, Arm arm, Claw claw) {
