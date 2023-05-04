@@ -8,7 +8,6 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RebindHat;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Tank;
 
@@ -26,7 +25,7 @@ public class FineDriveCommand extends CommandBase {
 
   @Override
   public void initialize() {
-
+    // nothing to do here
   }
 
   @Override

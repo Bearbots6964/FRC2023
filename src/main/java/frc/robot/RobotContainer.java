@@ -4,30 +4,25 @@
 
 package frc.robot;
 
-import java.util.Map;
-
-import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
+import frc.robot.commands.SetPointCommands.CancelSetPointCommands;
 import frc.robot.commands.SetPointCommands.moveToSetPoint1;
 import frc.robot.commands.SetPointCommands.moveToSetPoint2;
 import frc.robot.commands.SetPointCommands.moveToSetPoint3;
+import frc.robot.commands.SetPointCommands.moveToSetPoint4;
+import frc.robot.commands.SetPointCommands.moveToSetPoint5;
+import frc.robot.commands.SetPointCommands.moveToSetPoint6;
 import frc.robot.subsystems.*;
-import frc.robot.util.Alert;
 import frc.robot.util.SystemChecks;
 import io.github.oblarg.oblog.Logger;
 
@@ -41,18 +36,17 @@ import io.github.oblarg.oblog.Logger;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  public static boolean inverted = false;
+  public boolean inverted = false;
 
-  private ShuffleboardLayout m_widget = Shuffleboard.getTab("Main").getLayout("Arm System", BuiltInLayouts.kList)
-      .withPosition(34, 0).withSize(5, 8);
+  // private ShuffleboardLayout m_widget = Shuffleboard.getTab("Main").getLayout("Arm System", BuiltInLayouts.kList)
+  //     .withPosition(34, 0).withSize(5, 8);
 
   // INSTANTIATES ALL JOYSTICKS
 
-  /** @deprecated The drivers are much more comfortable with an xbox controller */
-  @Deprecated
-  public static final Joystick m_armController = new Joystick(0);
 
-  public static final XboxController m_armController2 = new XboxController(1);
+  public static final Joystick m_buttonPad = new Joystick(0);
+
+  public static final XboxController m_armController = new XboxController(1);
   public static final XboxController m_driverController = new XboxController(2);
 
   // INSTANTIATES ALL SUBSYSTEMS
@@ -75,8 +69,8 @@ public class RobotContainer {
   private final IncreaseMaxSpeedCommand m_IncreaseMaxSpeedCommand = new IncreaseMaxSpeedCommand(m_Tank);
   private final DecreaseMaxSpeedCommand m_DecreaseMaxSpeedCommand = new DecreaseMaxSpeedCommand(m_Tank);
   private final FineDriveCommand m_FineDriveCommand = new FineDriveCommand(m_Tank);
-  private final PlaceCubeSecondLevelCommand m_PlaceCubeSecondLevelCommand = new PlaceCubeSecondLevelCommand(m_Tank,
-      m_Arm, m_Claw);
+  // private final PlaceCubeSecondLevelCommand m_PlaceCubeSecondLevelCommand = new PlaceCubeSecondLevelCommand(m_Tank,
+  //     m_Arm, m_Claw);
   private final TrackPiece m_TrackPiece = new TrackPiece(m_Vision, m_Tank, m_Claw);
   private final TrackPole m_TrackPole = new TrackPole(m_PoleTracking, m_Tank);
 
@@ -105,6 +99,11 @@ public class RobotContainer {
   private final moveToSetPoint1 m_SetPoint1 = m_SetPointCommands.new moveToSetPoint1(m_Arm);
   private final moveToSetPoint2 m_SetPoint2 = m_SetPointCommands.new moveToSetPoint2(m_Arm);
   private final moveToSetPoint3 m_SetPoint3 = m_SetPointCommands.new moveToSetPoint3(m_Arm);
+  private final moveToSetPoint4 m_SetPoint4 = m_SetPointCommands.new moveToSetPoint4(m_Arm);
+  private final moveToSetPoint5 m_SetPoint5 = m_SetPointCommands.new moveToSetPoint5(m_Arm);
+  private final moveToSetPoint6 m_SetPoint6 = m_SetPointCommands.new moveToSetPoint6(m_Arm);
+
+  private final CancelSetPointCommands m_CancelSetPointCommands = m_SetPointCommands.new CancelSetPointCommands(m_Arm);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -150,7 +149,6 @@ public class RobotContainer {
 
     // add the time widget to the main tab
     mainTab.addNumber("Timer", Timer::getMatchTime).withWidget("Match Time").withPosition(30, 0).withSize(4, 4);
-    
 
   }
 
@@ -173,16 +171,29 @@ public class RobotContainer {
     // .whileTrue(m_CloseClawCommand);
     // new JoystickButton(m_armController2, XboxController.Button.kY.value)
     // .whileTrue(m_OpenClawCommand);
-    new JoystickButton(m_armController2, XboxController.Button.kLeftBumper.value)
+    new JoystickButton(m_armController, XboxController.Button.kLeftBumper.value)
         .whileTrue(m_FineDriveCommand);
-    new JoystickButton(m_armController2, XboxController.Button.kY.value).whileTrue(m_PlaceConeSecondLevelCommand);
+    new JoystickButton(m_armController, XboxController.Button.kY.value).whileTrue(m_PlaceConeSecondLevelCommand);
 
-    new JoystickButton(m_armController2, XboxController.Button.kX.value).whileTrue(m_TrackPiece);
-    new JoystickButton(m_armController2, XboxController.Button.kB.value).whileTrue(m_TrackPole);
+    new JoystickButton(m_armController, XboxController.Button.kX.value).whileTrue(m_TrackPiece);
+    new JoystickButton(m_armController, XboxController.Button.kB.value).whileTrue(m_TrackPole);
 
-    new JoystickButton(m_armController2, XboxController.Button.kStart.value).whileTrue(m_SetPoint1);
-    new JoystickButton(m_armController2, XboxController.Button.kBack.value).whileTrue(m_SetPoint2);
-    new JoystickButton(m_armController2, XboxController.Button.kRightBumper.value).whileTrue(m_SetPoint3);
+    // joystick button 7 -> set point 1
+    new JoystickButton(m_buttonPad, 7).onTrue(m_SetPoint1);
+    // joystick button 8 -> set point 2
+    new JoystickButton(m_buttonPad, 8).onTrue(m_SetPoint2);
+    // joystick button 9 -> set point 5
+    new JoystickButton(m_buttonPad, 9).onTrue(m_SetPoint5);
+    // joystick button 10 -> set point 6
+    new JoystickButton(m_buttonPad, 10).onTrue(m_SetPoint6);
+    // joystick button 11 -> set point 4
+    new JoystickButton(m_buttonPad, 11).onTrue(m_SetPoint4);
+    // joystick button 12 -> set point 3
+    new JoystickButton(m_buttonPad, 12).onTrue(m_SetPoint3);
+
+    // right bumper on the arm controller cancels all set point commands
+    new JoystickButton(m_armController, XboxController.Button.kRightBumper.value)
+        .whileTrue(m_CancelSetPointCommands);
 
     // new JoystickButton(m_armController2, XboxController.Button.kB.value)
     // .whileTrue(m_PlaceConeSecondLevelCommand);
@@ -287,7 +298,7 @@ public class RobotContainer {
    * The function returns the value of the left stick
    */
   public static double getControllerLeftStickY() {
-    double axis = m_armController2.getRawAxis(1);
+    double axis = m_armController.getRawAxis(1);
     if (Math.abs(axis) < 0.1) {
       axis = 0;
     }
@@ -295,7 +306,7 @@ public class RobotContainer {
   }
 
   public static double getControllerRightStickX() {
-    double axis = m_armController2.getRawAxis(4);
+    double axis = m_armController.getRawAxis(4);
     if (Math.abs(axis) < 0.4) {
       axis = 0;
     }
@@ -303,7 +314,7 @@ public class RobotContainer {
   }
 
   public static double getControllerRightStickY() {
-    double axis = m_armController2.getRawAxis(5);
+    double axis = m_armController.getRawAxis(5);
     if (Math.abs(axis) < 0.4) {
       axis = 0;
     }
@@ -321,7 +332,7 @@ public class RobotContainer {
    */
 
   public static double getClawInValue() {
-    double axis = m_armController2.getRightTriggerAxis();
+    double axis = m_armController.getRightTriggerAxis();
     if (Math.abs(axis) < 0.01) {
       axis = 0;
     }
@@ -333,7 +344,7 @@ public class RobotContainer {
    * game piece
    */
   public static double getClawOutValue() {
-    double axis = m_armController2.getLeftTriggerAxis();
+    double axis = m_armController.getLeftTriggerAxis();
     if (Math.abs(axis) < 0.01) {
       axis = 0;
     }

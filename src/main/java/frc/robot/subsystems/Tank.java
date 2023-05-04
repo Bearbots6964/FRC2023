@@ -41,7 +41,7 @@ public class Tank extends SubsystemBase {
   public SimpleWidget maxSpeedWidget;
   private GenericEntry maxSpeedEntry;
 
-  private int initialCurrentLimit = 30; // TODO tune this
+  private int initialCurrentLimit = 30;
 
   public static AHRS navx;
 
@@ -198,14 +198,14 @@ public class Tank extends SubsystemBase {
   }
 
   public void switchIdleMode() {
-    if (brakeMode == true) {
+    if (brakeMode) {
       leftFront.setIdleMode(IdleMode.kCoast);
       leftRear.setIdleMode(IdleMode.kCoast);
       rightFront.setIdleMode(IdleMode.kCoast);
       rightRear.setIdleMode(IdleMode.kCoast);
     }
 
-    if (brakeMode == false) {
+    if (!brakeMode) {
       leftFront.setIdleMode(IdleMode.kBrake);
       leftRear.setIdleMode(IdleMode.kBrake);
       rightFront.setIdleMode(IdleMode.kBrake);
