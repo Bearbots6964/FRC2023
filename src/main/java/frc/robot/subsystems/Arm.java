@@ -4,17 +4,11 @@
 
 package frc.robot.subsystems;
 
-import java.util.Map;
-
 import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.REVPhysicsSim;
-import com.revrobotics.SparkMaxAlternateEncoder;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
-
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -23,9 +17,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.interfaces.CANSparkMax;
 import frc.robot.util.Alert;
+import java.util.Map;
 
 public class Arm extends PIDSubsystem {
 
@@ -94,7 +88,9 @@ public class Arm extends PIDSubsystem {
      * addChild("Arm Motor", armMotor);
      */
 
-    armMotor = CANSparkMax.initMotor(7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
+    armMotor =
+        CANSparkMax.initMotor(
+            7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
 
     // armPID = armMotor.getPIDController();
 
@@ -112,7 +108,9 @@ public class Arm extends PIDSubsystem {
     encoder = armMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
     ShuffleboardLayout armLayout = Shuffleboard.getTab("Main").getLayout("Arm System");
-    armLayout.addNumber("Arm Output", () -> armMotor.getAppliedOutput()).withProperties(Map.of("Min", -1, "Max", 1));
+    armLayout
+        .addNumber("Arm Output", () -> armMotor.getAppliedOutput())
+        .withProperties(Map.of("Min", -1, "Max", 1));
 
     encoderWidget = Shuffleboard.getTab("stuff").add("Arm Encoder", 0).getEntry();
 
@@ -173,9 +171,7 @@ public class Arm extends PIDSubsystem {
 
   }
 
-  /**
-   * uses input double value to set the motor speed of the arm
-   */
+  /** uses input double value to set the motor speed of the arm */
   public void moveArm(double value) {
     double speed = 0.8;
     double motorDrive = value * speed;
