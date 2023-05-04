@@ -9,7 +9,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Claw;
 
 public class MoveClawCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Claw m_subsystem;
 
   public MoveClawCommand(Claw subsystem) {
@@ -18,8 +18,7 @@ public class MoveClawCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
