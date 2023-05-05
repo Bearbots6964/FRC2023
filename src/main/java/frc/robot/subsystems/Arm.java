@@ -8,8 +8,8 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.REVPhysicsSim;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -112,8 +112,11 @@ public class Arm extends PIDSubsystem {
     // using the absolute encoder adapter
     encoder = armMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
-    ShuffleboardLayout armLayout = Shuffleboard.getTab("Main").getLayout("Arm System", BuiltInLayouts.kList)
-        .withPosition(34, 0).withSize(5, 8);
+    ShuffleboardLayout armLayout =
+        Shuffleboard.getTab("Main")
+            .getLayout("Arm System", BuiltInLayouts.kList)
+            .withPosition(34, 0)
+            .withSize(5, 8);
     armLayout
         .addNumber("Arm Output", () -> armMotor.getAppliedOutput())
         .withProperties(Map.of("Min", -1, "Max", 1));
@@ -154,8 +157,9 @@ public class Arm extends PIDSubsystem {
 
     double roundedPosition = ((double) ((int) (encoderValue * 100))) / 100;
 
-    double roundedDifference = ((double) ((int) (lastEncoderValue * 100))) / 100
-        - ((double) ((int) (encoderValue * 100))) / 100;
+    double roundedDifference =
+        ((double) ((int) (lastEncoderValue * 100))) / 100
+            - ((double) ((int) (encoderValue * 100))) / 100;
     // if (lastEncoderValue < 0.3 && encoderValue > 0.8) {
     //   rotations--;
     // } else if (lastEncoderValue > 0.8 && encoderValue < 0.3) {
