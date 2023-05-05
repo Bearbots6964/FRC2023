@@ -8,11 +8,13 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.REVPhysicsSim;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,12 +46,12 @@ public class Arm extends PIDSubsystem {
 
   public REVPhysicsSim physicsSim;
 
-  // public SparkMaxPIDController armPID;
+  public SparkMaxPIDController armPID;
 
   public AbsoluteEncoder encoder;
 
   double lastEncoderValue;
-  int rotations = 1;
+  int rotations = 2;
 
   public double target;
 
@@ -67,7 +69,7 @@ public class Arm extends PIDSubsystem {
     super(
         // PIDController
         new PIDController(kP, kI, kD));
-    m_controller.setTolerance(0.1);
+    m_controller.setTolerance(0.02);
     m_controller.setSetpoint(0.625);
     going = false;
 
@@ -93,14 +95,15 @@ public class Arm extends PIDSubsystem {
     armMotor = CANSparkMax.initMotor(
         7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
 
-    // armPID = armMotor.getPIDController();
+    armPID = armMotor.getPIDController();
 
-    // armPID.setP(kP);
-    // armPID.setI(kI);
-    // armPID.setD(kD);
+    armPID.setP(0.4);
+    armPID.setI(0);
+    armPID.setD(0.08);
     // armPID.setIZone(kIz);
-    // armPID.setFF(kFF);
-    // armPID.setOutputRange(kMinOutput, kMaxOutput);
+    armPID.setFF(0.08);
+    armPID.setOutputRange(-0.8, 0.8);
+    armPID.setFeedbackDevice(encoder);
 
     // set the spark max to alternate encoder mode
 
@@ -108,7 +111,8 @@ public class Arm extends PIDSubsystem {
     // using the absolute encoder adapter
     encoder = armMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
-    ShuffleboardLayout armLayout = Shuffleboard.getTab("Main").getLayout("Arm System");
+    ShuffleboardLayout armLayout = Shuffleboard.getTab("Main").getLayout("Arm System", BuiltInLayouts.kList)
+        .withPosition(34, 0).withSize(5, 8);
     armLayout
         .addNumber("Arm Output", () -> armMotor.getAppliedOutput())
         .withProperties(Map.of("Min", -1, "Max", 1));
@@ -116,7 +120,7 @@ public class Arm extends PIDSubsystem {
     encoderWidget = Shuffleboard.getTab("stuff").add("Arm Encoder", 0).getEntry();
 
     // will cause it to pick rotation zero if it is just under one rotation
-    lastEncoderValue = .01;
+    lastEncoderValue = 0.01;
 
     // configure the PID loop to use the alternate encoder
     // armPID.setFeedbackDevice(encoder);
@@ -142,23 +146,26 @@ public class Arm extends PIDSubsystem {
   @Override
   public void periodic() {
     super.periodic();
-    double roundedVelocity = ((double) ((int) ((encoder.getVelocity() / 20) * 1000))) / 1000;
+    double roundedVelocity = ((double) ((int) ((encoder.getVelocity() - 0.265) * 100))) / 100;
 
     // SmartDashboard.putBoolean("zeroDeg", allTheWayDownRear.get());
     double encoderValue = encoder.getPosition();
-    
+
     double roundedPosition = ((double) ((int) (encoderValue * 100))) / 100;
-    if (lastEncoderValue < 0.3 && encoderValue > 0.8) {
-      rotations--;
-    } else if (lastEncoderValue > 0.8 && encoderValue < 0.3) {
-      rotations++;
-    }
+
+    double roundedDifference = ((double) ((int) (lastEncoderValue * 100))) / 100
+        - ((double) ((int) (encoderValue * 100))) / 100;
+    // if (lastEncoderValue < 0.3 && encoderValue > 0.8) {
+    //   rotations--;
+    // } else if (lastEncoderValue > 0.8 && encoderValue < 0.3) {
+    //   rotations++;
+    // }
     // get the velocity of the encoder (in rotations per second) and if there is a
     // change between the signs of the velocity and the change in encoder value,
     // then there has been a Full Rotation(tm)
-    // if (Math.signum(roundedVelocity) != Math.signum(roundedPosition)) {
-    // rotations += Math.signum(roundedVelocity);
-    // }
+    if (Math.signum(roundedVelocity) != Math.signum(roundedDifference)) {
+      rotations += Math.signum(roundedVelocity);
+    }
     lastEncoderValue = encoderValue;
 
     encoderWidget.setDouble(encoderValue);
@@ -176,7 +183,7 @@ public class Arm extends PIDSubsystem {
   public void moveArm(double value) {
     double speed = 0.8;
     double motorDrive = value * speed;
-    armMotor.set(motorDrive);
+    armMotor.set(-motorDrive);
   }
 
   @Override
@@ -208,10 +215,14 @@ public class Arm extends PIDSubsystem {
 
   @Override
   protected void useOutput(double output, double setpoint) {
-    if (0.01 < output && output < 0.75) {
+    if (0.05 < output && output < 0.75) {
       output = 0.75;
-    } else if (-0.75 < output && output < -0.01) {
+    } else if (-0.75 < output && output < -0.05) {
       output = -0.75;
+    } else if (0 < output && output < 0.05) {
+      output = 0.25;
+    } else if (-0.05 < output && output < 0) {
+      output = -0.25;
     }
 
     moveArm(-output);
@@ -247,32 +258,32 @@ public class Arm extends PIDSubsystem {
 
   // this is for button 7- picking up cubes and downed cones
   public void moveToSetPoint1() {
-    m_controller.setSetpoint(0.64);
+    m_controller.setSetpoint(2.98);
   }
 
   // this is for button 8- picking up the upright cones
   public void moveToSetPoint2() {
-    m_controller.setSetpoint(3.36);
+    m_controller.setSetpoint(0.17);
   }
 
   // this is for button 12- arm up for when we are driving
   public void moveToSetPoint3() {
-    m_controller.setSetpoint(1.67);
+    m_controller.setSetpoint(2);
   }
 
   // this is for button 11- balancing at the end of the match
   public void moveToSetPoint4() {
-    m_controller.setSetpoint(0.7);
+    m_controller.setSetpoint(2.15);
   }
 
   // this is for button 9- general cube placing
   public void moveToSetPoint5() {
-    m_controller.setSetpoint(3.0);
+    m_controller.setSetpoint(1.02);
   }
 
   // this is for button 10- general cone placing
   public void moveToSetPoint6() {
-    m_controller.setSetpoint(3.5);
+    m_controller.setSetpoint(0.85);
   }
 
 }

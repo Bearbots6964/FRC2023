@@ -24,20 +24,6 @@
               "_showGlyph": false
             }
           },
-          "0,3": {
-            "size": [
-              8,
-              11
-            ],
-            "content": {
-              "_type": "PDP",
-              "_source0": "network_table:///Shuffleboard/PDP/PDP",
-              "_title": "PDP",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Visuals/Show voltage and current values": true
-            }
-          },
           "34,0": {
             "size": [
               5,
@@ -92,35 +78,9 @@
               ]
             }
           },
-          "32,8": {
-            "size": [
-              9,
-              4
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///Shuffleboard/Motors/Arm/Encoder Position",
-              "_title": "Shuffleboard/Motors/Arm/Encoder Position",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "32,12": {
-            "size": [
-              9,
-              3
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///Shuffleboard/Motors/Arm/Encoder Velocity",
-              "_title": "Shuffleboard/Motors/Arm/Encoder Velocity",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
           "8,0": {
             "size": [
-              22,
+              23,
               19
             ],
             "content": {
@@ -139,37 +99,7 @@
               "imageHeight": 0
             }
           },
-          "33,15": {
-            "size": [
-              9,
-              4
-            ],
-            "content": {
-              "_type": "Number Slider",
-              "_source0": "network_table:///Shuffleboard/Motors/Arm/Conversion Factor",
-              "_title": "Shuffleboard/Motors/Arm/Conversion Factor",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Slider Settings/Min": -1.0,
-              "Slider Settings/Max": 1.0,
-              "Slider Settings/Block increment": 0.0625,
-              "Visuals/Display value": true
-            }
-          },
-          "31,4": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/a",
-              "_title": "/SmartDashboard/a",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "30,15": {
+          "37,17": {
             "size": [
               2,
               1
@@ -182,23 +112,7 @@
               "_showGlyph": false
             }
           },
-          "0,14": {
-            "size": [
-              8,
-              5
-            ],
-            "content": {
-              "_type": "3-Axis Accelerometer",
-              "_title": "3-Axis Accelerometer",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Accelerometer/Range": "k16G",
-              "Visuals/Show value": true,
-              "Visuals/Precision": 2,
-              "Visuals/Show tick marks": false
-            }
-          },
-          "30,0": {
+          "34,8": {
             "size": [
               4,
               2
@@ -206,6 +120,33 @@
             "content": {
               "_type": "Alerts",
               "_title": "Alerts",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,3": {
+            "size": [
+              8,
+              11
+            ],
+            "content": {
+              "_type": "PDP",
+              "_source0": "network_table:///Shuffleboard/Main/PDP",
+              "_title": "/Shuffleboard/Main/PDP",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Visuals/Show voltage and current values": true
+            }
+          },
+          "0,14": {
+            "size": [
+              8,
+              5
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///Shuffleboard/Main/SendableChooser[0]",
+              "_title": "/Shuffleboard/Main/SendableChooser[0]",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -820,6 +761,60 @@
               "_type": "Text View",
               "_source0": "network_table:///limelight/pipeline",
               "_title": "limelight/pipeline",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "7,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/inital pitch",
+              "_title": "inital pitch",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "8,1": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/onRamp",
+              "_title": "onRamp",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "10,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/max offset",
+              "_title": "max offset",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "11,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/motor speed",
+              "_title": "motor speed",
               "_glyph": 148,
               "_showGlyph": false
             }

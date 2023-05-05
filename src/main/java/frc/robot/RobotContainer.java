@@ -134,7 +134,6 @@ public class RobotContainer {
     // add the basic fms info widget to the main tab (we can just get it from
     // networktables)
 
-    mainTab.getLayout("Arm System", BuiltInLayouts.kList).withPosition(34, 0).withSize(5, 8);
     Logger.configureLoggingAndConfig(this, false);
 
     mainTab.add(m_chooser).withPosition(0, 14).withSize(8, 5);
