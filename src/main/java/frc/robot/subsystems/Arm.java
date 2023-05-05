@@ -92,8 +92,9 @@ public class Arm extends PIDSubsystem {
      * addChild("Arm Motor", armMotor);
      */
 
-    armMotor = CANSparkMax.initMotor(
-        7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
+    armMotor =
+        CANSparkMax.initMotor(
+            7, MotorType.kBrushless, false, 40, IdleMode.kBrake, 0, alert, errorText);
 
     armPID = armMotor.getPIDController();
 
@@ -240,7 +241,6 @@ public class Arm extends PIDSubsystem {
     } else {
       return m_controller.atSetpoint();
     }
-
   }
 
   @Override
@@ -285,5 +285,4 @@ public class Arm extends PIDSubsystem {
   public void moveToSetPoint6() {
     m_controller.setSetpoint(0.85);
   }
-
 }

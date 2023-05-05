@@ -10,23 +10,22 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
 public class PlaceCubeSecondLevelCommand extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Tank drive;
+
   private final Claw claw;
   private final Arm arm;
   private GenericEntry widget;
   private int counter;
   private boolean finalStep;
   private boolean firstStep = true;
-  
-  
+
   public PlaceCubeSecondLevelCommand(Tank drive, Arm arm, Claw claw) {
     this.drive = drive;
     this.arm = arm;
     this.claw = claw;
     addRequirements(drive);
     addRequirements(arm);
-
   }
 
   @Override
@@ -39,9 +38,12 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
      */
     counter = 0;
     finalStep = false;
-    
+
     arm.armMotor.getEncoder().setPosition(0);
-    widget = Shuffleboard.getTab("stuff").add("arm thing", arm.armMotor.getEncoder().getPosition()).getEntry();
+    widget =
+        Shuffleboard.getTab("stuff")
+            .add("arm thing", arm.armMotor.getEncoder().getPosition())
+            .getEntry();
     claw.closeClaw();
     arm.armMotor.set(0.25);
   }
@@ -56,7 +58,6 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
       firstStep = false;
       arm.armMotor.set(0);
       claw.openClaw();
-      
     }
 
     // go over charge station
@@ -70,10 +71,7 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
 
     if (Math.abs(drive.getAverageDistance()) >= 4.95 && finalStep) {
       drive.setAllMotors(0);
-      
-      
     }
-
   }
 
   @Override
@@ -88,7 +86,6 @@ public class PlaceCubeSecondLevelCommand extends CommandBase {
 
     // drive.setAllMotors(0);
     arm.armMotor.set(0); // stop the arm motor
-
   }
 
   @Override
