@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.REVPhysicsSim;
@@ -65,6 +66,8 @@ public class Arm extends PIDSubsystem {
 
   public boolean commandsAreCanceled = false;
 
+  private double absoluteEncoderMultiplicity;
+
   public Arm() {
     super(
         // PIDController
@@ -104,7 +107,12 @@ public class Arm extends PIDSubsystem {
     // armPID.setIZone(kIz);
     armPID.setFF(0.08);
     armPID.setOutputRange(-0.8, 0.8);
-    armPID.setFeedbackDevice(encoder);
+    
+
+    // disable the spark max's internal PID loop
+    armMotor.getPIDController().setReference(0, ControlType.kDutyCycle);
+
+    armMotor.set(0); // just to make sure we don't fuck up anything else
 
     // set the spark max to alternate encoder mode
 
@@ -123,9 +131,6 @@ public class Arm extends PIDSubsystem {
     // will cause it to pick rotation zero if it is just under one rotation
     lastEncoderValue = 0.01;
 
-    // configure the PID loop to use the alternate encoder
-    // armPID.setFeedbackDevice(encoder);
-
     // add simulation data
     if (RobotBase.isSimulation()) {
       physicsSim = new REVPhysicsSim();
@@ -142,6 +147,33 @@ public class Arm extends PIDSubsystem {
     addChild("Arm PID", m_controller);
 
     Shuffleboard.getTab("Motors").add("Arm motor", armMotor);
+
+
+
+    // now comes the fun part
+    // ENCODER CO-CALIBRATION
+    // FINAL BOSS ~ 100% ------------------------------
+
+    // first store the current encoder value from both the absolute encoder and the integrated, relative encoder
+    // the relative encoder is nice because it provides a value that actually increments, unlike the absolute encoder which is just a value from 0 to 1
+    // that's a pain to increment
+
+    double currentAbsoluteEncoderValue = encoder.getPosition();
+    double currentRelativeEncoderValue = armMotor.getEncoder().getPosition();
+
+    // so likely the absolute encoder value is going to be something like 0.5, and the relative encoder value is going to be something like 0
+    // our challenge is to multiply the absolute encoder value by some number and add that to the relative encoder value
+    // the benefit of this is that we can now use the relative encoder value to determine everything, because unlike the normal approach, the value persists
+    // across power cycles
+
+    double absoluteEncoderCenter = 0.5;
+    absoluteEncoderMultiplicity = 75;
+
+    // okay so now we plug the difference between the current absolute encoder value and the center into the gear ratio to get us the relative encoder value (or, should I say, the relative encoder value we know is accurate)
+
+    double relativeEncoderValue = (currentAbsoluteEncoderValue - absoluteEncoderCenter) * absoluteEncoderMultiplicity;
+
+    armMotor.getEncoder().setPosition(relativeEncoderValue);
   }
 
   @Override
@@ -156,6 +188,8 @@ public class Arm extends PIDSubsystem {
 
     double roundedDifference = ((double) ((int) (lastEncoderValue * 100))) / 100
         - ((double) ((int) (encoderValue * 100))) / 100;
+
+    double supposedPosition = armMotor.getEncoder().getPosition() / absoluteEncoderMultiplicity; // this /should/ correspond roughly to the absolute encoder value
     // if (lastEncoderValue < 0.3 && encoderValue > 0.8) {
     //   rotations--;
     // } else if (lastEncoderValue > 0.8 && encoderValue < 0.3) {
@@ -175,6 +209,7 @@ public class Arm extends PIDSubsystem {
     SmartDashboard.putNumber("velocity", encoder.getVelocity());
     SmartDashboard.putNumber("roundedVelocity", roundedVelocity);
     SmartDashboard.putNumber("roundedPosition", roundedPosition);
+    SmartDashboard.putNumber("Supposed position", supposedPosition);
 
     // round velocity to the hundredths place
 
@@ -259,30 +294,36 @@ public class Arm extends PIDSubsystem {
   // this is for button 7- picking up cubes and downed cones
   public void moveToSetPoint1() {
     m_controller.setSetpoint(2.98);
+    // armPID.setReference(223.5, CANSparkMax.ControlType.kPosition);
   }
 
   // this is for button 8- picking up the upright cones
   public void moveToSetPoint2() {
     m_controller.setSetpoint(0.17);
+    // armPID.setReference(12.75, CANSparkMax.ControlType.kPosition);
   }
 
   // this is for button 12- arm up for when we are driving
   public void moveToSetPoint3() {
     m_controller.setSetpoint(2);
+    // armPID.setReference(150, CANSparkMax.ControlType.kPosition);
   }
 
   // this is for button 11- balancing at the end of the match
   public void moveToSetPoint4() {
     m_controller.setSetpoint(2.15);
+    // armPID.setReference(161.25, CANSparkMax.ControlType.kPosition);
   }
 
   // this is for button 9- general cube placing
   public void moveToSetPoint5() {
     m_controller.setSetpoint(1.02);
+    // armPID.setReference(76.5, CANSparkMax.ControlType.kPosition);
   }
 
   // this is for button 10- general cone placing
   public void moveToSetPoint6() {
     m_controller.setSetpoint(0.85);
+    // armPID.setReference(63.75, CANSparkMax.ControlType.kPosition);
   }
 }
