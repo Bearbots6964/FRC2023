@@ -9,8 +9,8 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.REVPhysicsSim;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -107,7 +107,6 @@ public class Arm extends PIDSubsystem {
     // armPID.setIZone(kIz);
     armPID.setFF(0.08);
     armPID.setOutputRange(-0.8, 0.8);
-    
 
     // disable the spark max's internal PID loop
     armMotor.getPIDController().setReference(0, ControlType.kDutyCycle);
@@ -120,8 +119,11 @@ public class Arm extends PIDSubsystem {
     // using the absolute encoder adapter
     encoder = armMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
-    ShuffleboardLayout armLayout = Shuffleboard.getTab("Main").getLayout("Arm System", BuiltInLayouts.kList)
-        .withPosition(34, 0).withSize(5, 8);
+    ShuffleboardLayout armLayout =
+        Shuffleboard.getTab("Main")
+            .getLayout("Arm System", BuiltInLayouts.kList)
+            .withPosition(34, 0)
+            .withSize(5, 8);
     armLayout
         .addNumber("Arm Output", () -> armMotor.getAppliedOutput())
         .withProperties(Map.of("Min", -1, "Max", 1));
@@ -148,30 +150,36 @@ public class Arm extends PIDSubsystem {
 
     Shuffleboard.getTab("Motors").add("Arm motor", armMotor);
 
-
-
     // now comes the fun part
     // ENCODER CO-CALIBRATION
     // FINAL BOSS ~ 100% ------------------------------
 
-    // first store the current encoder value from both the absolute encoder and the integrated, relative encoder
-    // the relative encoder is nice because it provides a value that actually increments, unlike the absolute encoder which is just a value from 0 to 1
+    // first store the current encoder value from both the absolute encoder and the integrated,
+    // relative encoder
+    // the relative encoder is nice because it provides a value that actually increments, unlike the
+    // absolute encoder which is just a value from 0 to 1
     // that's a pain to increment
 
     double currentAbsoluteEncoderValue = encoder.getPosition();
     double currentRelativeEncoderValue = armMotor.getEncoder().getPosition();
 
-    // so likely the absolute encoder value is going to be something like 0.5, and the relative encoder value is going to be something like 0
-    // our challenge is to multiply the absolute encoder value by some number and add that to the relative encoder value
-    // the benefit of this is that we can now use the relative encoder value to determine everything, because unlike the normal approach, the value persists
+    // so likely the absolute encoder value is going to be something like 0.5, and the relative
+    // encoder value is going to be something like 0
+    // our challenge is to multiply the absolute encoder value by some number and add that to the
+    // relative encoder value
+    // the benefit of this is that we can now use the relative encoder value to determine
+    // everything, because unlike the normal approach, the value persists
     // across power cycles
 
     double absoluteEncoderCenter = 0.5;
     absoluteEncoderMultiplicity = 75;
 
-    // okay so now we plug the difference between the current absolute encoder value and the center into the gear ratio to get us the relative encoder value (or, should I say, the relative encoder value we know is accurate)
+    // okay so now we plug the difference between the current absolute encoder value and the center
+    // into the gear ratio to get us the relative encoder value (or, should I say, the relative
+    // encoder value we know is accurate)
 
-    double relativeEncoderValue = (currentAbsoluteEncoderValue - absoluteEncoderCenter) * absoluteEncoderMultiplicity;
+    double relativeEncoderValue =
+        (currentAbsoluteEncoderValue - absoluteEncoderCenter) * absoluteEncoderMultiplicity;
 
     armMotor.getEncoder().setPosition(relativeEncoderValue);
   }
@@ -186,10 +194,14 @@ public class Arm extends PIDSubsystem {
 
     double roundedPosition = ((double) ((int) (encoderValue * 100))) / 100;
 
-    double roundedDifference = ((double) ((int) (lastEncoderValue * 100))) / 100
-        - ((double) ((int) (encoderValue * 100))) / 100;
+    double roundedDifference =
+        ((double) ((int) (lastEncoderValue * 100))) / 100
+            - ((double) ((int) (encoderValue * 100))) / 100;
 
-    double supposedPosition = armMotor.getEncoder().getPosition() / absoluteEncoderMultiplicity; // this /should/ correspond roughly to the absolute encoder value
+    double supposedPosition =
+        armMotor.getEncoder().getPosition()
+            / absoluteEncoderMultiplicity; // this /should/ correspond roughly to the absolute
+    // encoder value
     // if (lastEncoderValue < 0.3 && encoderValue > 0.8) {
     //   rotations--;
     // } else if (lastEncoderValue > 0.8 && encoderValue < 0.3) {
